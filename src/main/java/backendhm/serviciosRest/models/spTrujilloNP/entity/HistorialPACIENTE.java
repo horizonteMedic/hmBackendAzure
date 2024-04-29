@@ -1,4 +1,4 @@
-package backendhm.serviciosRest.models.azure.entity;
+package backendhm.serviciosRest.models.spTrujilloNP.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,31 +8,27 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
 @Table(name = "historial_paciente")
-public class HistorialPaciente implements Serializable {
+public class HistorialPACIENTE implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id_historial_paciente")
     private Long id;
 
-    private String codigo_sucursal;
+    private String codigo;
 
-    private Long dni;
-
-    @Column(length = 50)
-    private String apellidos;
+    private Integer dni;
 
     @Column(length = 50)
-    private String nombres;
+    private String apellido;
+
+    @Column(length = 50)
+    private String nombre;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_examen")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fecha_examen;
-
+    private LocalDate fecha;
 }

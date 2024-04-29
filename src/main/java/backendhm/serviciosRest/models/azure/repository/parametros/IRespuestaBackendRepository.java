@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.azure.repository.parametros;
 
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,11 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
 
     @Query(value = "select *from usar_codigo_generado(:emailUser,:codigoGenerado);", nativeQuery=true)
     Optional<RespuestaBackend> usarCodigoGenerado(String emailUser, String codigoGenerado);
+
+    @Query(value = "select *from tipo_usuario(:user_name)", nativeQuery=true)
+    Optional<RespuestaBackend> obtenerTipoUsuario(String user_name);
+
+    @Query(value = "select *from obtener_ruc_por_username(:user_name)", nativeQuery=true)
+    Optional<RespuestaBackend> obtenerRucUsuario(String user_name);
+
 }

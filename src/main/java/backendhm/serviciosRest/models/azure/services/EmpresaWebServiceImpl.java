@@ -152,7 +152,7 @@ public class EmpresaWebServiceImpl implements IEmpresaWebService{
         listadoHistorialPacienteDTO.setDni(historialPaciente.getDni());
         listadoHistorialPacienteDTO.setNombres(historialPaciente.getNombres());
         listadoHistorialPacienteDTO.setApellidos(historialPaciente.getApellidos());
-        listadoHistorialPacienteDTO.setFechaExamen(historialPaciente.getFechaExamen());
+        listadoHistorialPacienteDTO.setFechaExamen(historialPaciente.getFecha_examen());
 
         return listadoHistorialPacienteDTO;
     }
