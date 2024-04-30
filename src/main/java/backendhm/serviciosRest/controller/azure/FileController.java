@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.controller.azure;
 
 import backendhm.serviciosRest.models.azure.dtos.ArchivoServidorDTO;
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.services.IArchivoServidorService;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ public class FileController {
 
 
     @GetMapping("/detalleArchivo/{hc}/{ta}")
-    public ResponseEntity<ArchivoServidorDTO> obtenerArchivoDetalle(@PathVariable Long hc, @PathVariable Long ta) {
+    public ResponseEntity<ArchivoServidorDTO> obtenerArchivoDetalle(@PathVariable String hc, @PathVariable Long ta) {
         System.out.println("EL HC ES:"+hc);
         System.out.println("EL TA ES:"+ta);
         return ResponseEntity.ok(archivoServidorService.detalleArchivoServidor(hc,ta));
@@ -36,6 +37,12 @@ public class FileController {
         return ResponseEntity.ok(archivoServidorService.listadoArchivoServidor());
     }
 
+    @GetMapping("/busquedaPorHC/{hc}")
+    public ResponseEntity<List<ArchivoServidorDTO>> obtenerListadoArchivosPorHc(@PathVariable(name = "hc") String hc){
+
+        return ResponseEntity.ok(archivoServidorService.listadoArchivoPorHC(hc));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ArchivoServidorDTO> obtenerArchivoServidorPorID(@PathVariable(name = "id") long id) {
 
@@ -46,6 +53,13 @@ public class FileController {
     public ResponseEntity<ArchivoServidorDTO> guardarArchivoServidor(@Valid @RequestBody ArchivoServidorDTO archivoServidorDTO) {
 
         return new ResponseEntity<>(archivoServidorService.creararchivoServidor(archivoServidorDTO), HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/registrarArchivo")
+    public ResponseEntity<RespuestaBackendDTO> guardarOActualizarArchivoServidor(@Valid @RequestBody ArchivoServidorDTO archivoServidorDTO) {
+
+        return new ResponseEntity<>(archivoServidorService.registrarArchivoOActualizar(archivoServidorDTO), HttpStatus.CREATED);
 
     }
 

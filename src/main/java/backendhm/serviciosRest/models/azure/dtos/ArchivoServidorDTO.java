@@ -18,7 +18,9 @@ public class ArchivoServidorDTO {
 
     private Long dni;
 
-    private Long historiaClinica;
+    private String historiaClinica;
+
+    private Long orden;
 
     private String rutaArchivo;
 

@@ -18,6 +18,10 @@ public class TipoArchivoDTO {
 
     private String nombre;
 
+    private String extension;
+
+    private String color;
+
     private String codigo;
 
     private Boolean estado;

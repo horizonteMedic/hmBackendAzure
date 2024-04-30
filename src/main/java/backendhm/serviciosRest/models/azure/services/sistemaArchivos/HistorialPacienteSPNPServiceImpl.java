@@ -5,9 +5,13 @@ import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.SedeHmWeb;
 import backendhm.serviciosRest.models.azure.repository.ISedeHmRepository;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.HistorialPacienteSPNPDto;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestHistorialPacienteSPTNP;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.DetalleHistorialPacienteMultiservidorDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.HistorialPacienteMultiservidorDto;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDetalleHistorialPacienteMultiservidorDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestHistorialPacienteMultiservidor;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.DetalleHistorialPaciente;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.HistorialPACIENTE;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IDetalleHistorialUsuarioRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IPruebRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +29,13 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
     private ISedeHmRepository sedeHmRepository;
 
     @Autowired
+    private IDetalleHistorialUsuarioRepository detalleHistorialUsuarioRepository;
+
+    @Autowired
     private IRespuestaBackendRepository respuestaBackendRepository;
 
     @Override
-    public List<HistorialPacienteSPNPDto> listadoHistorialPaciente(RequestHistorialPacienteSPTNP request) {
+    public List<HistorialPacienteMultiservidorDto> listadoHistorialPaciente(RequestHistorialPacienteMultiservidor request) {
         String sede=request.getSedeUser();
         RespuestaBackend resp=respuestaBackendRepository.obtenerRucUsuario(request.getUserName()).orElseThrow();
         RespuestaBackend resp2=respuestaBackendRepository.obtenerTipoUsuario(request.getUserName()).orElseThrow();
@@ -54,6 +61,44 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
         return listadoSedes.stream().map(this::mapearDTOListaSede).collect(Collectors.toList());
     }
 
+    @Override
+    public List<DetalleHistorialPacienteMultiservidorDTO> detalleHistoruialUsuario(RequestDetalleHistorialPacienteMultiservidorDTO request) {
+        String sede=request.getSedeUser();
+        RespuestaBackend resp=respuestaBackendRepository.obtenerRucUsuario(request.getUserName()).orElseThrow();
+        RespuestaBackend resp2=respuestaBackendRepository.obtenerTipoUsuario(request.getUserName()).orElseThrow();
+        List<DetalleHistorialPaciente> detalleHistorialPaciente=null;
+
+        if(sede.contains("T-NP") || sede.contains("HNCY"))
+        {
+            request.setTipoUsuario(resp2.getId());
+            request.setRucUser(String.valueOf(resp.getId()));
+            System.out.println("EL detalle del historial usaurio: "+request);
+            detalleHistorialPaciente=detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipoUsuario(), request.getRucUser(), request.getSedeUser(),request.getDniUser()).orElseThrow();
+        }
+
+
+        return detalleHistorialPaciente.stream().map(this::mapearDTOdetalleHistorialPaciente).collect(Collectors.toList());
+    }
+
+    public DetalleHistorialPacienteMultiservidorDTO mapearDTOdetalleHistorialPaciente(DetalleHistorialPaciente detalleHistorialPaciente){
+
+        DetalleHistorialPacienteMultiservidorDTO detalleHP=new DetalleHistorialPacienteMultiservidorDTO();
+
+        detalleHP.setHistoriaClinica(detalleHistorialPaciente.getHistoriaClinica());
+        detalleHP.setOrden(detalleHistorialPaciente.getOrden());
+        detalleHP.setEmpresa(detalleHistorialPaciente.getEmpresa());
+        detalleHP.setContrata(detalleHistorialPaciente.getContrata());
+        detalleHP.setFechaExamen(detalleHistorialPaciente.getFechaExamen());
+        detalleHP.setExamen(detalleHistorialPaciente.getExamen());
+        detalleHP.setEstado(detalleHistorialPaciente.getEstado());
+        detalleHP.setCargo(detalleHistorialPaciente.getCargo());
+        detalleHP.setArea(detalleHistorialPaciente.getArea());
+        detalleHP.setGrupoSanguineo(detalleHistorialPaciente.getGrupoSanguineo());
+
+        return detalleHP;
+
+    }
+
     public SedePorUserDTO mapearDTOListaSede(SedeHmWeb sedeHmWeb){
         SedePorUserDTO sedePorUserDTO=new SedePorUserDTO();
 
@@ -63,8 +108,8 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
     }
 
 
-    public HistorialPacienteSPNPDto mapearDTO(HistorialPACIENTE historialPaciente ){
-        HistorialPacienteSPNPDto historialPacienteSPNPDto=new HistorialPacienteSPNPDto();
+    public HistorialPacienteMultiservidorDto mapearDTO(HistorialPACIENTE historialPaciente ){
+        HistorialPacienteMultiservidorDto historialPacienteSPNPDto=new HistorialPacienteMultiservidorDto();
 
         historialPacienteSPNPDto.setCodigo_sucursal(historialPaciente.getCodigo());
         historialPacienteSPNPDto.setDni(historialPaciente.getDni());

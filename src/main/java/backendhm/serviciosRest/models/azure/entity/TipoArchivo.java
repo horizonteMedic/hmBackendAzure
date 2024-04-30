@@ -29,6 +29,12 @@ public class TipoArchivo implements Serializable {
     private String nombre;
 
     @Column(length = 20)
+    private String extension;
+
+    @Column(length = 20)
+    private String color;
+
+    @Column(length = 20)
     private String codigo;
 
     private Boolean estado;
@@ -49,7 +55,4 @@ public class TipoArchivo implements Serializable {
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 
-    @JsonBackReference
-    @OneToMany(mappedBy="tipoArchivo", cascade= CascadeType.ALL,orphanRemoval = true)
-    private Set<ArchivosServidor> archivosServidor=new HashSet<>();
 }

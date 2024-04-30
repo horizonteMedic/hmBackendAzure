@@ -13,4 +13,8 @@ public interface IPruebRepository extends JpaRepository<HistorialPACIENTE,Long> 
 
     @Query(value = "select *from listadoHistorialUsuarios(?,?,?,?,?,?)", nativeQuery=true)
     Optional<List<HistorialPACIENTE>> obtenerHistorialPacienteUsuariosNP(String userName, String fechaInicio, String fechaFin, long tipoUsuario, String rucUser, String sedeUser );
+
+
+
+
 }

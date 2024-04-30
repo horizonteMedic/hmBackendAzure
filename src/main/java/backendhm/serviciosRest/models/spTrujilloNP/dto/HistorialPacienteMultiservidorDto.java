@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistorialPacienteSPNPDto {
+public class HistorialPacienteMultiservidorDto {
 
     private String codigo_sucursal;
 

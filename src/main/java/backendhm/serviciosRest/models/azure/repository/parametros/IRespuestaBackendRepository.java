@@ -24,4 +24,7 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
     @Query(value = "select *from obtener_ruc_por_username(:user_name)", nativeQuery=true)
     Optional<RespuestaBackend> obtenerRucUsuario(String user_name);
 
+    @Query(value = "select count(orden) as id_resp, 'validar existencia' as mensaje from archivos_servidores where historia_clinica= ? and id_tipo_archivo=?;", nativeQuery=true)
+    Optional<RespuestaBackend> existenciaDelArchivo(String hc, long ta);
+
 }

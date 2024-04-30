@@ -7,6 +7,7 @@ import java.util.List;
 public interface ITipoArchivoService {
     TipoArchivoDTO crearTipoArchivo(TipoArchivoDTO tipoArchivoDTO);
     List<TipoArchivoDTO> listadoTipoArchivo();
+    List<TipoArchivoDTO> listadoTipoArchivoHabilitados();
     TipoArchivoDTO obtenerTipoArchivoPorID(long id);
     TipoArchivoDTO actualizarTipoArchivo(TipoArchivoDTO tipoArchivoDTO, long id);
     void eliminarTipoArchivo(long id);

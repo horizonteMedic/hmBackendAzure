@@ -34,6 +34,12 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
     }
 
     @Override
+    public List<TipoArchivoDTO> listadoTipoArchivoHabilitados() {
+        List<TipoArchivo> listadoTipoArchivoHabilitado=archivoRepository.listadoTipoArchivosHabilitados().orElseThrow();
+        return listadoTipoArchivoHabilitado.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public TipoArchivoDTO obtenerTipoArchivoPorID(long id) {
         TipoArchivo tipoArchivo=archivoRepository.findById(id).
                 orElseThrow(()-> new ResourceNotFoundException("Tipo archivo","id tipo archivo",id));
@@ -60,6 +66,8 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
         TipoArchivoDTO tipoArchivoDTO=new TipoArchivoDTO();
         tipoArchivoDTO.setId(tipoArchivo.getId());
         tipoArchivoDTO.setNombre(tipoArchivo.getNombre());
+        tipoArchivoDTO.setExtension(tipoArchivo.getExtension());
+        tipoArchivoDTO.setColor(tipoArchivo.getColor());
         tipoArchivoDTO.setCodigo(tipoArchivo.getCodigo());
         tipoArchivoDTO.setEstado(tipoArchivo.getEstado());
         tipoArchivoDTO.setFechaRegistro(tipoArchivo.getFechaRegistro());
@@ -73,8 +81,10 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
         TipoArchivo tipoArchivo=new TipoArchivo();
 
         tipoArchivo.setNombre(tipoArchivoDTO.getNombre());
-        tipoArchivo.setEstado(tipoArchivoDTO.getEstado());
+        tipoArchivo.setColor(tipoArchivoDTO.getColor());
+        tipoArchivo.setExtension(tipoArchivoDTO.getExtension());
         tipoArchivo.setCodigo(tipoArchivoDTO.getCodigo());
+        tipoArchivo.setEstado(tipoArchivoDTO.getEstado());
         tipoArchivo.setFechaRegistro(tipoArchivoDTO.getFechaRegistro());
         tipoArchivo.setUserRegistro(tipoArchivoDTO.getUserRegistro());
         tipoArchivo.setFechaActualizacion(tipoArchivoDTO.getFechaActualizacion());
@@ -85,8 +95,10 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
 
     private TipoArchivo actualizarTipoArchivoEntidad(TipoArchivoDTO tipoArchivoDTO,TipoArchivo tipoArchivo){
         tipoArchivo.setNombre(tipoArchivoDTO.getNombre());
-        tipoArchivo.setEstado(tipoArchivoDTO.getEstado());
+        tipoArchivo.setColor(tipoArchivoDTO.getColor());
+        tipoArchivo.setExtension(tipoArchivoDTO.getExtension());
         tipoArchivo.setCodigo(tipoArchivoDTO.getCodigo());
+        tipoArchivo.setEstado(tipoArchivoDTO.getEstado());
         tipoArchivo.setFechaRegistro(tipoArchivoDTO.getFechaRegistro());
         tipoArchivo.setUserRegistro(tipoArchivoDTO.getUserRegistro());
         tipoArchivo.setFechaActualizacion(tipoArchivoDTO.getFechaActualizacion());

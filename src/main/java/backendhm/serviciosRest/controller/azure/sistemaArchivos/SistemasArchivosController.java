@@ -1,11 +1,11 @@
 package backendhm.serviciosRest.controller.azure.sistemaArchivos;
 
-import backendhm.serviciosRest.models.azure.dtos.RolDTO;
-import backendhm.serviciosRest.models.azure.dtos.SedeDTO;
 import backendhm.serviciosRest.models.azure.dtos.SedePorUserDTO;
 import backendhm.serviciosRest.models.azure.services.sistemaArchivos.IHistorialPacienteSPNPService;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.HistorialPacienteSPNPDto;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestHistorialPacienteSPTNP;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.DetalleHistorialPacienteMultiservidorDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.HistorialPacienteMultiservidorDto;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDetalleHistorialPacienteMultiservidorDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestHistorialPacienteMultiservidor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,20 @@ public class SistemasArchivosController {
     private IHistorialPacienteSPNPService historialPacienteSPNPService;
 
     @PostMapping("/listadoHistorialPacientesConFiltros")
-    public ResponseEntity<List<HistorialPacienteSPNPDto>> multiservidores(@Valid @RequestBody RequestHistorialPacienteSPTNP requestHistorialPacienteSPTNP) {
+    public ResponseEntity<List<HistorialPacienteMultiservidorDto>> multiservidores(@Valid @RequestBody RequestHistorialPacienteMultiservidor requestHistorialPacienteSPTNP) {
 
         return new ResponseEntity<>(historialPacienteSPNPService.listadoHistorialPaciente(requestHistorialPacienteSPTNP), HttpStatus.OK);
 
     }
+
+
+    @PostMapping("/detalleListadoHistorialPacientesConFiltros")
+    public ResponseEntity<List<DetalleHistorialPacienteMultiservidorDTO>> detalleMultiservidores(@Valid @RequestBody RequestDetalleHistorialPacienteMultiservidorDTO requestDetalleHistorialPacienteMultiservidorDTO) {
+
+        return new ResponseEntity<>(historialPacienteSPNPService.detalleHistoruialUsuario(requestDetalleHistorialPacienteMultiservidorDTO), HttpStatus.OK);
+
+    }
+
 
     @GetMapping("/sedePorUsuario/{username}")
     public ResponseEntity<List<SedePorUserDTO>> obtenerSedeOorUsuario(@PathVariable(name = "username") String username) {

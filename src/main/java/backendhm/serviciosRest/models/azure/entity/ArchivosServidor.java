@@ -22,14 +22,16 @@ public class ArchivosServidor implements Serializable {
     @Column(name = "id_archivos")
     private Long id;
 
-    @Column(name = "historia_clinica",nullable = false,length = 20)
-    private Long historiaClinica;
+    @Column(name = "historia_clinica",length=20)
+    private String historiaClinica;
 
-    @Column(length = 150, name = "ruta_archivo", nullable = false)
+    private Long orden;
+
+    @Column(length = 150, name = "ruta_archivo")
     private String rutaArchivo;
 
-    @Column(length = 50, nullable = false)
-    private String nombreArchivo;
+    @Column(length = 50)
+    private String nombre;
 
     @Column(length = 30, nullable = false)
     private String servidor;
@@ -52,7 +54,6 @@ public class ArchivosServidor implements Serializable {
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_archivo", nullable = false)
-    private TipoArchivo tipoArchivo;
+    @Column( nullable = false)
+    private long id_tipo_archivo;
 }

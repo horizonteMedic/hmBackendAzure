@@ -27,6 +27,12 @@ public class TipoArchivoController {
         return  ResponseEntity.ok(tipoArchivoService.listadoTipoArchivo());
     }
 
+
+    @GetMapping("/listadoArchivosHabilitados")
+    public ResponseEntity<List<TipoArchivoDTO>> obtenerListadoTipoArchivoHabilitado(){
+        return  ResponseEntity.ok(tipoArchivoService.listadoTipoArchivoHabilitados());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<TipoArchivoDTO> obtenerTipoArchivoPorID(@PathVariable(name = "id") long id) {
 
