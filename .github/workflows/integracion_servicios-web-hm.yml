@@ -50,4 +50,4 @@ jobs:
           app-name: 'servicios-web-hm'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63100A578D8540079F402E34644D41D8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1B69744B442341E1AC4E8C356BDD45AD }}
