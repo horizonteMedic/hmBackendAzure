@@ -4,6 +4,7 @@ import backendhm.serviciosRest.models.azure.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Usuario,Long> {
@@ -12,5 +13,9 @@ public interface UserRepository extends JpaRepository<Usuario,Long> {
 
     @Query(value = "select *from obtener_datos_actualizar(:email);", nativeQuery=true)
     Optional<Usuario> detalleUsuario(String email);
+
+    @Query(value = "select *from usuario where id_empleado=?;", nativeQuery=true)
+    Optional<List<Usuario>> listadoUsuarioPorIDEmpleado(long idEmpleado);
+
 
 }

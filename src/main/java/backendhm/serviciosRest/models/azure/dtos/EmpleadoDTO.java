@@ -27,6 +27,8 @@ public class EmpleadoDTO {
 
     private String cargo;
 
+    private String sexo;
+
     private String ubigeo;
 
     private String cip;

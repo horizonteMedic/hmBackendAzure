@@ -37,6 +37,8 @@ public class Empleado implements Serializable {
     @Column(length = 50)
     private String apellidos;
 
+    private String sexo;
+
     @Column(length = 50)
     private String cargo;
 

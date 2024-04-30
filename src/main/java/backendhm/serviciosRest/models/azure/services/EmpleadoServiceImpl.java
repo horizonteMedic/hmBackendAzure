@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.azure.services;
 
+import backendhm.serviciosRest.models.azure.dtos.DatosEmpleadoDTO;
 import backendhm.serviciosRest.models.azure.dtos.EmpleadoDTO;
 import backendhm.serviciosRest.models.azure.entity.Empleado;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
@@ -47,6 +48,17 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
     }
 
     @Override
+    public DatosEmpleadoDTO obtenerDatosEmpleadoPorNroDoc(long nroDoc) {
+        Empleado empleado=empleadoRepository.datosEmpleadoPorNroDoc(nroDoc).orElseThrow();
+        DatosEmpleadoDTO datosEmpleadoDTO=new DatosEmpleadoDTO();
+
+        datosEmpleadoDTO.setIdEmpleado(empleado.getId());
+        datosEmpleadoDTO.setApellidos(empleado.getApellidos());
+        datosEmpleadoDTO.setNombres(empleado.getNombres());
+        return datosEmpleadoDTO;
+    }
+
+    @Override
     public EmpleadoDTO actualizarEmpleado(EmpleadoDTO empleadoDTO, long id) {
 
         Empleado empleado=empleadoRepository.
@@ -75,6 +87,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         empleadoDTO.setApellidos(empleado.getApellidos());
         empleadoDTO.setCargo(empleado.getCargo());
         empleadoDTO.setUbigeo(empleado.getUbigeo());
+        empleadoDTO.setSexo(empleado.getSexo());
         empleadoDTO.setCip(empleado.getCip());
         empleadoDTO.setCorreoElect(empleado.getCorreoElect());
         empleadoDTO.setCelular(empleado.getCelular());
@@ -99,6 +112,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         empleado.setNombres(empleadoDTO.getNombres());
         empleado.setApellidos(empleadoDTO.getApellidos());
         empleado.setCargo(empleadoDTO.getCargo());
+        empleado.setSexo(empleado.getSexo());
         empleado.setUbigeo(empleadoDTO.getUbigeo());
         empleado.setCip(empleadoDTO.getCip());
         empleado.setCorreoElect(empleadoDTO.getCorreoElect());
@@ -124,6 +138,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         empleado.setCargo(empleadoDTO.getCargo());
         empleado.setUbigeo(empleadoDTO.getUbigeo());
         empleado.setCip(empleadoDTO.getCip());
+        empleado.setSexo(empleado.getSexo());
         empleado.setCorreoElect(empleadoDTO.getCorreoElect());
         empleado.setCelular(empleadoDTO.getCelular());
         empleado.setTelFijo(empleadoDTO.getTelFijo());

@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.controller.azure;
 
 
+import backendhm.serviciosRest.models.azure.dtos.DatosEmpleadoDTO;
 import backendhm.serviciosRest.models.azure.dtos.EmpleadoDTO;
 import backendhm.serviciosRest.models.azure.services.IEmpleadoService;
 import jakarta.validation.Valid;
@@ -26,6 +27,12 @@ public class EmpleadoController {
     public ResponseEntity<List<EmpleadoDTO>> obtenerListadoEmpleado(){
 
         return ResponseEntity.ok(empleadoService.listadoEmpleados());
+    }
+
+    @GetMapping("/busquedaPorNroDoc/{nroDoc}")
+    public ResponseEntity<DatosEmpleadoDTO> obtenerListadoEmpleado(@PathVariable(name = "nroDoc") long nroDoc){
+
+        return ResponseEntity.ok(empleadoService.obtenerDatosEmpleadoPorNroDoc(nroDoc));
     }
 
     @GetMapping("/{id}")

@@ -34,6 +34,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
     }
 
     @Override
+    public List<UsuarioDTO> listadoUsuarioPorIDEmpleado(long idEmpleado) {
+        List<Usuario> listaUsuarios = userRepository.listadoUsuarioPorIDEmpleado(idEmpleado).orElseThrow();
+        return listaUsuarios.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public UsuarioDTO obtenerUsuarioPorID(long id) {
         Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
         return mapearDTO(usuario);
