@@ -66,7 +66,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
         usuarioDTO.setUsername(usuario.getUsername());
         usuarioDTO.setEstado(usuario.getEstado());
-        usuarioDTO.setRuc(usuario.getRuc());
         usuarioDTO.setId_empleado(usuario.getEmpleado().getId());
 
         return usuarioDTO;
@@ -78,7 +77,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
         usuario.setUsername(usuarioDTO.getUsername());
         usuario.setEstado(usuarioDTO.getEstado());
-        usuario.setRuc(usuarioDTO.getRuc());
         usuario.setEmpleado(empleado);
 
         return usuario;
@@ -92,7 +90,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
         usuario.setEstado(usuarioDTO.getEstado());
         usuario.setRole(Role.USER);
         usuario.setEmpleado(empleado);
-        usuario.setRuc(usuarioDTO.getRuc());
         usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         return usuario;
     }

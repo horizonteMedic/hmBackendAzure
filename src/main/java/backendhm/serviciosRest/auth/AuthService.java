@@ -50,7 +50,6 @@ public class AuthService {
         usuario.setUsername(request.getUsername());
         usuario.setEstado(request.getEstado());
         usuario.setRole(Role.USER);
-        usuario.setRuc(request.getRuc());
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
         empleadoDTO=empleadoService.obtenerEmpleadoPorID(request.getIdEmpleado());
         usuario.setEmpleado(mapearEntidad(empleadoDTO));
