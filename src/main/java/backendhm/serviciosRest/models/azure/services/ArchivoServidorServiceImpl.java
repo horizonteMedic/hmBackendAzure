@@ -9,10 +9,10 @@ import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
 import com.microsoft.azure.storage.blob.CloudBlockBlob;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
-import backendhm.serviciosRest.models.azure.repository.ITipoArchivoRepository;
-import backendhm.serviciosRest.models.azure.dtos.ArchivoServidorDTO;
-import backendhm.serviciosRest.models.azure.entity.ArchivosServidor;
-import backendhm.serviciosRest.models.azure.repository.IArchivoServidorRepository;
+import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.ITipoArchivoRepository;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
+import backendhm.serviciosRest.models.azure.entity.sistemaArchivos.ArchivosServidor;
+import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.IArchivoServidorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,9 +71,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         RespuestaBackend respuestaBackend=respuestaBackendRepository.existenciaDelArchivo(archivoServidorDTO.getHistoriaClinica(),archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         ArchivoServidorDTO archivosServidor=new ArchivoServidorDTO();
-
         if(respuestaBackend.getId()==0){
-                System.out.println("el id respuesta es:"+respuestaBackend.getId());
             archivosServidor=creararchivoServidor(archivoServidorDTO);
                 respuestaBackendDTO.setId(Long.valueOf(1));
                 respuestaBackendDTO.setMensaje("Se registro con exito!");
@@ -83,8 +81,6 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
            // System.out.println("el id respuesta es:"+respuestaBackend.getId());
 
             ArchivosServidor archivosServidor1=archivoServidorRepository.detalleArchivoServidor(archivoServidorDTO.getHistoriaClinica(), archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
-            System.out.println("el archivo servidor 1 es:"+archivosServidor1);
-            System.out.println("\n \n\n\n\n\n\n\n");
             ArchivoServidorDTO archivoServidorDTO1=actualizarArchivoServidor(archivoServidorDTO,archivosServidor1.getId());
             respuestaBackendDTO.setId(Long.valueOf(2));
             respuestaBackendDTO.setMensaje("Se actualizo con exito!");
@@ -118,7 +114,6 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         }
         ArchivosServidor archivosServidor=mapearEntidad(archivoServidorDTO);
 
-        System.out.println("Antes de agregar el objeto esss:"+archivosServidor);
         ArchivosServidor archivosServidorNuevo= archivoServidorRepository.save(archivosServidor);
 
         ArchivoServidorDTO archivoServidorDTORespuesta=mapearDTO(archivosServidorNuevo);
@@ -198,7 +193,6 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         }
         ArchivoServidorDTO archivoServidorDTO=mapearDTO(archivosServidor);
         archivoServidorDTO.setFileBase64(base64File);
-
         return archivoServidorDTO;
     }
 

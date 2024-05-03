@@ -1,6 +1,6 @@
 package backendhm.serviciosRest.models.azure.services;
 
-import backendhm.serviciosRest.models.azure.dtos.ArchivoServidorDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 
 import java.util.List;

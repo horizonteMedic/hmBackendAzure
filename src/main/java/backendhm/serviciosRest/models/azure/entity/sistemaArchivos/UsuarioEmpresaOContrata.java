@@ -1,4 +1,5 @@
-package backendhm.serviciosRest.models.azure.entity;
+package backendhm.serviciosRest.models.azure.entity.sistemaArchivos;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,23 +10,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "privilegio_rol", uniqueConstraints ={@UniqueConstraint(columnNames = {"id_rol","id_opcion_interfaz"})})
-public class PrivilegioRol implements Serializable {
-
+@Table(name = "usuario_empresa_contrada", uniqueConstraints ={@UniqueConstraint(columnNames = {"id_user","ruc"})})
+public class UsuarioEmpresaOContrata implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_privilegio_rol")
-    private Long id;
+    @Column(name = "id_user_eoc")
+    private long id;
 
-    @Column(length = 200)
-    private String descripcion;
+    @Column(length = 11)
+    private String ruc;
+
+    @Column(name = "id_user")
+    private long idUser;
+
+    @Column(length = 8)
+    private String tipo;
 
     private Boolean estado;
 
@@ -45,11 +51,6 @@ public class PrivilegioRol implements Serializable {
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_rol", nullable = false)
-    private Rol rol;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_opcion_interfaz", nullable = false)
-    private OpcionesInterfazPrivilegios opcionesInterfazPrivilegios;
+
 }

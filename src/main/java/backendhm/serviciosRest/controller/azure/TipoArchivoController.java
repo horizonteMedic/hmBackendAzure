@@ -1,6 +1,6 @@
 package backendhm.serviciosRest.controller.azure;
 
-import backendhm.serviciosRest.models.azure.dtos.TipoArchivoDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.services.ITipoArchivoService;
 import jakarta.validation.Valid;
 import org.json.JSONObject;

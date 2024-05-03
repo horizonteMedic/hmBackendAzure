@@ -36,6 +36,7 @@ public class EmailServiceImpl implements IEmailService{
     @Override
     public RespuestaBackendDTO enviarCorreo(EmailDTO emailDTO) {
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
+        RespuestaBackend respuestaBackend=respuestaBackendRepository.generarCodigo(emailDTO.getDestinatario()).orElseThrow();
 
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -45,10 +46,10 @@ public class EmailServiceImpl implements IEmailService{
 
             // Procesar la plantilla Thymeleaf
             Context context = new Context();
-            RespuestaBackend respuestaBackend=respuestaBackendRepository.generarCodigo(emailDTO.getDestinatario()).orElseThrow();
             context.setVariable("codigo", respuestaBackend.getId());
             String contenidoHtml = templateEngine.process("re_password", context);
 
+            System.out.println("el codigo generado en entity es:"+respuestaBackend);
 
             helper.setText(contenidoHtml, true);
 

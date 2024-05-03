@@ -1,8 +1,8 @@
 package backendhm.serviciosRest.models.azure.services;
 
-import backendhm.serviciosRest.models.azure.dtos.TipoArchivoDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
-import backendhm.serviciosRest.models.azure.repository.ITipoArchivoRepository;
+import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.ITipoArchivoRepository;
 import backendhm.serviciosRest.models.azure.entity.TipoArchivo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

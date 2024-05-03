@@ -1,4 +1,4 @@
-package backendhm.serviciosRest.models.azure.dtos;
+package backendhm.serviciosRest.models.azure.dtos.sistemaArchivos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

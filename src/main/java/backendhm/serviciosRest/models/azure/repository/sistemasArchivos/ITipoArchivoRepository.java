@@ -1,4 +1,4 @@
-package backendhm.serviciosRest.models.azure.repository;
+package backendhm.serviciosRest.models.azure.repository.sistemasArchivos;
 
 import backendhm.serviciosRest.models.azure.entity.TipoArchivo;
 import org.springframework.data.jpa.repository.JpaRepository;

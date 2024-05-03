@@ -1,6 +1,5 @@
 package backendhm.serviciosRest.models.azure.repository.parametros;
 
-import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBackend,Long> {
 
-    @Query(value = "select *from generar_codigo_validar_email(:emailUser);", nativeQuery=true)
+    @Query(value = "select *from generar_codigo_validar_email(?);", nativeQuery=true)
     Optional<RespuestaBackend> generarCodigo(String emailUser);
 
 

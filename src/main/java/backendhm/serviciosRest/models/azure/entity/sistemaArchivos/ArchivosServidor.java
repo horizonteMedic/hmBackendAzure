@@ -1,4 +1,4 @@
-package backendhm.serviciosRest.models.azure.entity;
+package backendhm.serviciosRest.models.azure.entity.sistemaArchivos;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
