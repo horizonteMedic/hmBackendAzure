@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,5 +26,9 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
 
     @Query(value = "select count(orden) as id_resp, 'validar existencia' as mensaje from archivos_servidores where historia_clinica= ? and id_tipo_archivo=?;", nativeQuery=true)
     Optional<RespuestaBackend> existenciaDelArchivo(String hc, long ta);
+
+    @Query(value = "select us.id_user as id_resp, emp.correo_elect as mensaje from usuario as us inner join empleado as emp on  us.id_empleado=emp.id_empleado\n" +
+            "\t where emp.correo_elect=?;", nativeQuery=true)
+    Optional<List<RespuestaBackend>> listadoUsuarioPorCorreo(String correo);
 
 }

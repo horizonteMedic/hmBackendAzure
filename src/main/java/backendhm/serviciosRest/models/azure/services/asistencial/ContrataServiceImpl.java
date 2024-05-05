@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.azure.services.asistencial;
 
 import backendhm.serviciosRest.models.azure.dtos.asistencial.ContrataDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpContDTO;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
@@ -34,6 +35,13 @@ public class ContrataServiceImpl implements IContrataService{
     }
 
     @Override
+    public List<EmpContDTO> listadoContrataPorUsername(String userName, String tipoEmpCont) {
+
+        List<Contrata> listado=contrataRepository.PorUsernameContrata(userName,tipoEmpCont);
+        return listado.stream().map(this::mapearDTOContrataPorUsername).collect(Collectors.toList());
+    }
+
+    @Override
     public ContrataDTO obtenerContrataPorRuc(String ruc) {
         Contrata contrata=contrataRepository.findById(ruc)
                 .orElseThrow(()-> new ResourceNotFoundException("Contrata","ruc contrata",Long.parseLong(ruc)));
@@ -54,6 +62,17 @@ public class ContrataServiceImpl implements IContrataService{
         Contrata contrata=contrataRepository.findById(ruc)
                 .orElseThrow(()-> new ResourceNotFoundException("Contrata","ruc contrata",Long.parseLong(ruc)));
         contrataRepository.delete(contrata);
+    }
+
+    private EmpContDTO mapearDTOContrataPorUsername(Contrata contrata){
+
+        EmpContDTO empContDTO=new EmpContDTO();
+
+        empContDTO.setRuc(contrata.getId());
+        empContDTO.setRazonSocial(contrata.getRazonContrata());
+
+        return empContDTO;
+
     }
 
     private ContrataDTO mapearDTO(Contrata contrata){

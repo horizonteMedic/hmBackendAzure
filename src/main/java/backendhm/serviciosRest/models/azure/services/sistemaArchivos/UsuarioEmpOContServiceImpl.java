@@ -81,7 +81,7 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
         userDTO.setId(user.getId());
         userDTO.setRuc(user.getRuc());
         userDTO.setIdUser(user.getIdUser());
-        userDTO.setTipo(user.getTipo());
+        userDTO.setTipo(user.getTipo().toUpperCase());
         userDTO.setEstado(user.getEstado());
         userDTO.setFechaRegistro(user.getFechaRegistro());
         userDTO.setUserRegistro(user.getUserRegistro());
@@ -95,7 +95,7 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
         UsuarioEmpresaOContrata user=new UsuarioEmpresaOContrata();
 
         user.setRuc(userDTO.getRuc());
-        user.setTipo(userDTO.getTipo());
+        user.setTipo(userDTO.getTipo().toUpperCase());
         user.setIdUser(userDTO.getIdUser());
         user.setEstado(userDTO.getEstado());
         user.setFechaRegistro(userDTO.getFechaRegistro());
@@ -108,7 +108,7 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
 
     private UsuarioEmpresaOContrata actualizaruserEOCEntidad(UsuarioEmpresaOContraTaDTO userDTO,UsuarioEmpresaOContrata user){
         user.setRuc(userDTO.getRuc());
-        user.setTipo(userDTO.getTipo());
+        user.setTipo(userDTO.getTipo().toUpperCase());
         user.setIdUser(userDTO.getIdUser());
         user.setEstado(userDTO.getEstado());
         user.setFechaRegistro(userDTO.getFechaRegistro());

@@ -1,8 +1,11 @@
 package backendhm.serviciosRest.controller.azure.sistemaArchivos;
 
 import backendhm.serviciosRest.models.azure.dtos.SedePorUserDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpContDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.UsuarioEmpresaOContraTaDTO;
+import backendhm.serviciosRest.models.azure.services.asistencial.IContrataService;
+import backendhm.serviciosRest.models.azure.services.asistencial.IEmpresaService;
 import backendhm.serviciosRest.models.azure.services.sistemaArchivos.IHistorialPacienteSPNPService;
 import backendhm.serviciosRest.models.azure.services.sistemaArchivos.IUsuarioEmpresaOContrataService;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.DetalleHistorialPacienteMultiservidorDTO;
@@ -29,7 +32,25 @@ public class SistemasArchivosController {
     @Autowired
     IUsuarioEmpresaOContrataService usuarioEmpresaOContrataService;
 
+    @Autowired
+    IEmpresaService empresaService;
+
+    IContrataService contrataService;
+
     private static JSONObject json=null;
+
+
+    @GetMapping("/busquedaEmpresaContrata/{userName}/{tipo}")
+    public ResponseEntity<List<EmpContDTO>> listadoEmpresaContrataDeUsername(@PathVariable String userName, @PathVariable String tipo) {
+            if (tipo.toUpperCase().contains("EMPRESA")){
+                return ResponseEntity.ok(empresaService.listadoEmpresaPorUsername(userName,tipo));
+            }
+            else {
+                return ResponseEntity.ok(contrataService.listadoContrataPorUsername(userName,tipo));
+
+            }
+
+    }
 
     @GetMapping("/listadoUsuarioAsingacionEmpCont")
     public ResponseEntity<List<UsuarioEmpresaOContraTaDTO>> obtenerListado(){

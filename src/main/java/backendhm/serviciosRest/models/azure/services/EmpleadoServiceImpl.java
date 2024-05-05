@@ -112,7 +112,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         empleado.setNombres(empleadoDTO.getNombres());
         empleado.setApellidos(empleadoDTO.getApellidos());
         empleado.setCargo(empleadoDTO.getCargo());
-        empleado.setSexo(empleado.getSexo());
+        empleado.setSexo(empleadoDTO.getSexo());
         empleado.setUbigeo(empleadoDTO.getUbigeo());
         empleado.setCip(empleadoDTO.getCip());
         empleado.setCorreoElect(empleadoDTO.getCorreoElect());
@@ -138,7 +138,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         empleado.setCargo(empleadoDTO.getCargo());
         empleado.setUbigeo(empleadoDTO.getUbigeo());
         empleado.setCip(empleadoDTO.getCip());
-        empleado.setSexo(empleado.getSexo());
+        empleado.setSexo(empleadoDTO.getSexo());
         empleado.setCorreoElect(empleadoDTO.getCorreoElect());
         empleado.setCelular(empleadoDTO.getCelular());
         empleado.setTelFijo(empleadoDTO.getTelFijo());

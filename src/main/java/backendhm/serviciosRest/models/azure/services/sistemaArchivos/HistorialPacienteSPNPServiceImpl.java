@@ -37,16 +37,24 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
     @Override
     public List<HistorialPacienteMultiservidorDto> listadoHistorialPaciente(RequestHistorialPacienteMultiservidor request) {
         String sede=request.getSedeUser();
-        RespuestaBackend resp=respuestaBackendRepository.obtenerRucUsuario(request.getUserName()).orElseThrow();
-        RespuestaBackend resp2=respuestaBackendRepository.obtenerTipoUsuario(request.getUserName()).orElseThrow();
+        String tipo=null;
+        if(request.getRucEmpresa().length() >1){
+            tipo="EMPRESA";
+            request.setTipo(tipo);
+        }
+        if(request.getRucContrata().length()>1)
+        {
+            tipo="CONTRATA";
+            request.setTipo(tipo);
+
+        }
 
         List<HistorialPACIENTE> listadoHP=null;
         if(sede.contains("T-NP") || sede.contains("HNCY"))
         {
-            request.setTipoUsuario(resp2.getId());
-            request.setRucUser(String.valueOf(resp.getId()));
+
             System.out.println("el objeto es:"+request);
-           listadoHP= pruebRepository.obtenerHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipoUsuario(), request.getRucUser(), request.getSedeUser()).orElseThrow();
+           listadoHP= pruebRepository.obtenerHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser()).orElseThrow();
 
         }
 
@@ -64,16 +72,23 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
     @Override
     public List<DetalleHistorialPacienteMultiservidorDTO> detalleHistoruialUsuario(RequestDetalleHistorialPacienteMultiservidorDTO request) {
         String sede=request.getSedeUser();
-        RespuestaBackend resp=respuestaBackendRepository.obtenerRucUsuario(request.getUserName()).orElseThrow();
-        RespuestaBackend resp2=respuestaBackendRepository.obtenerTipoUsuario(request.getUserName()).orElseThrow();
-        List<DetalleHistorialPaciente> detalleHistorialPaciente=null;
+        String tipo=null;
+       List<DetalleHistorialPaciente> detalleHistorialPaciente=null;
+        if(request.getRucEmpresa().length() >1){
+            tipo="EMPRESA";
+            request.setTipo(tipo);
+        }
+        if(request.getRucContrata().length()>1)
+        {
+            tipo="CONTRATA";
+            request.setTipo(tipo);
 
+        }
         if(sede.contains("T-NP") || sede.contains("HNCY"))
         {
-            request.setTipoUsuario(resp2.getId());
-            request.setRucUser(String.valueOf(resp.getId()));
+
             System.out.println("EL detalle del historial usaurio: "+request);
-            detalleHistorialPaciente=detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipoUsuario(), request.getRucUser(), request.getSedeUser(),request.getDniUser()).orElseThrow();
+            detalleHistorialPaciente=detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(),request.getSedeUser(),request.getDniUser()).orElseThrow();
         }
 
 

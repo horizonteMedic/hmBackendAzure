@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.azure.services.asistencial;
 
 import backendhm.serviciosRest.models.azure.dtos.asistencial.EmpresaDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpContDTO;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
@@ -33,6 +34,12 @@ public class EmpresaServiceImpl implements IEmpresaService {
     }
 
     @Override
+    public List<EmpContDTO> listadoEmpresaPorUsername(String userName, String tipoEmpCont) {
+        List<Empresa> listado=empresaRepository.busquedaEmpresaPorUsernameEmpresa(userName,tipoEmpCont);
+        return listado.stream().map(this::mapearDTOEmpresaPorUsername).collect(Collectors.toList());
+    }
+
+    @Override
     public EmpresaDTO obtenerEmpresaPorRuc(String ruc) {
 
         Empresa empresa=empresaRepository.findById(ruc)
@@ -55,6 +62,16 @@ public class EmpresaServiceImpl implements IEmpresaService {
                 .orElseThrow(()-> new ResourceNotFoundException("Empresa","ruc empresa",Long.parseLong(ruc)));
 
         empresaRepository.delete(empresa);
+    }
+
+    private EmpContDTO mapearDTOEmpresaPorUsername(Empresa empresa){
+
+        EmpContDTO empContDTO=new EmpContDTO();
+
+        empContDTO.setRuc(empresa.getId());
+        empContDTO.setRazonSocial(empresa.getRazonEmpresa());
+
+        return  empContDTO;
     }
 
     private EmpresaDTO mapearDTO(Empresa empresa){

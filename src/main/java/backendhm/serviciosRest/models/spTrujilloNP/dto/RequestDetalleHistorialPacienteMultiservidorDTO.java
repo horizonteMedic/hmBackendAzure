@@ -16,9 +16,11 @@ public class RequestDetalleHistorialPacienteMultiservidorDTO {
 
     private String fechaFin;
 
-    private long tipoUsuario;
+    private String tipo;
 
-    private String rucUser;
+    private String rucEmpresa;
+
+    private String rucContrata;
 
     private String sedeUser;
 

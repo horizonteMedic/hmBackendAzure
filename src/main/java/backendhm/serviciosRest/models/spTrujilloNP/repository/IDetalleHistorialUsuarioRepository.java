@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface IDetalleHistorialUsuarioRepository extends JpaRepository<DetalleHistorialPaciente,Long> {
-    @Query(value = "select *from listadodetalleHistorialUsuarios(?,?,?,?,?,?,?)", nativeQuery=true)
-    Optional<List<DetalleHistorialPaciente>> obtenerdetalleHistorialPacienteUsuariosNP(String userName, String fechaInicio, String fechaFin, long tipoUsuario, String rucUser, String sedeUser, String dniUser );
+    @Query(value = "select *from listadodetalleHistorialUsuarios(?,?,?,?,?,?,?,?)", nativeQuery=true)
+    Optional<List<DetalleHistorialPaciente>> obtenerdetalleHistorialPacienteUsuariosNP(String userName, String fechaInicio, String fechaFin, String tipo, String rucContrataUser, String rucEmpresaUser, String sedeUser, String dniUser );
 
 }
