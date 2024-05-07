@@ -22,7 +22,7 @@ public class UsuarioEmpresaOContraTaDTO {
 
     private long idUser;
 
-    private String razonSoial;
+    private String razonSocial;
 
     private String tipo;
 

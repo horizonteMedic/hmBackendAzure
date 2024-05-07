@@ -9,11 +9,10 @@ import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
 import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.UserEmpresaContrataRepository;
-import ch.qos.logback.core.joran.spi.ElementSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,11 +86,11 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
         UsuarioEmpresaOContraTaDTO userDTO=new UsuarioEmpresaOContraTaDTO();
         if(user.getTipo().contains("EMPRESA")) {
             Empresa empresa = empresaRepository.findById(user.getRuc()).orElseThrow();
-            userDTO.setRazonSoial(empresa.getRazonEmpresa());
+            userDTO.setRazonSocial(empresa.getRazonEmpresa());
         }
         if(user.getTipo().contains("CONTRATA")) {
             Contrata contrata = contrataRepository.findById(user.getRuc()).orElseThrow();
-            userDTO.setRazonSoial(contrata.getRazonContrata());
+            userDTO.setRazonSocial(contrata.getRazonContrata());
         }
 
         userDTO.setId(user.getId());
