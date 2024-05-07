@@ -8,6 +8,7 @@ import java.util.List;
 public interface IEmpresaService {
     EmpresaDTO crearEmpresa(EmpresaDTO empresaDTO);
     List<EmpresaDTO> listadoEmpresas();
+    List<EmpContDTO> listadocONTPorUsername(String userName, String tipoEmpCont);
 
     List<EmpContDTO> listadoEmpresaPorUsername(String userName, String tipoEmpCont);
     EmpresaDTO obtenerEmpresaPorRuc(String ruc);

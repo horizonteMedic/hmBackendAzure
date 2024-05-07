@@ -9,7 +9,6 @@ public interface IContrataService {
     ContrataDTO crearContrata(ContrataDTO contrataDTO);
     List<ContrataDTO> listadoContratas();
 
-    List<EmpContDTO> listadoContrataPorUsername(String userName, String tipoEmpCont);
     ContrataDTO obtenerContrataPorRuc(String ruc);
     ContrataDTO actualizarContrata(ContrataDTO contrataDTO, String ruc);
     void eliminarContrata(String ruc);

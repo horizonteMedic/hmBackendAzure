@@ -1,12 +1,15 @@
 package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.auth.user.Role;
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.entity.Empleado;
+import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.Usuario;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.IEmpleadoRepository;
 import backendhm.serviciosRest.models.azure.repository.UserRepository;
 import backendhm.serviciosRest.models.azure.dtos.UsuarioDTO;
+import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +24,9 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private IRespuestaBackendRepository respuestaBackendRepository;
 
     @Autowired
     private IEmpleadoRepository empleadoRepository;
@@ -43,6 +49,18 @@ public class UsuarioServiceImpl implements IUsuarioService{
     public UsuarioDTO obtenerUsuarioPorID(long id) {
         Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
         return mapearDTO(usuario);
+    }
+
+    @Override
+    public RespuestaBackendDTO actualizarParteUsuario(UsuarioDTO usuarioDTO, long id) {
+
+        System.out.println("El objeto usuarioDTO ES: "+usuarioDTO);
+        Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
+        RespuestaBackend respuestaBackend=respuestaBackendRepository.actualizarUserParcial(usuarioDTO.getEstado(), usuario.getUsername(), usuarioDTO.getId_empleado(), id).orElseThrow();
+        RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
+        respuestaBackendDTO.setId(respuestaBackend.getId());
+        respuestaBackendDTO.setMensaje(respuestaBackend.getMensaje());
+        return respuestaBackendDTO;
     }
 
     @Override

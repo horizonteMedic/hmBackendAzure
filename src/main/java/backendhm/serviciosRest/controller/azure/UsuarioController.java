@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.controller.azure;
 
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.dtos.UsuarioDTO;
 import backendhm.serviciosRest.models.azure.services.IUsuarioService;
 import jakarta.validation.Valid;
@@ -47,6 +48,14 @@ public class UsuarioController {
 
         UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(usuarioDTO, id);
         return new ResponseEntity<>(usuarioActualizado, HttpStatus.OK);
+    }
+
+    @PutMapping("/actualizacionParcial/{id}")
+    public ResponseEntity<RespuestaBackendDTO> actualizarUsuarioParcial(@Valid @RequestBody UsuarioDTO usuarioDTO,
+                                                                        @PathVariable(name = "id") long id) {
+
+        RespuestaBackendDTO respuestaBackendDTO = usuarioService.actualizarParteUsuario(usuarioDTO, id);
+        return new ResponseEntity<>(respuestaBackendDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

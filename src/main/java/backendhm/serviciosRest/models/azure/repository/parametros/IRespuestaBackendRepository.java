@@ -31,4 +31,7 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
             "\t where emp.correo_elect=?;", nativeQuery=true)
     Optional<List<RespuestaBackend>> listadoUsuarioPorCorreo(String correo);
 
+    @Query(value = "select *from actualizar_user_parcial(?,?,?,?)", nativeQuery=true)
+    Optional<RespuestaBackend> actualizarUserParcial(Boolean estado,String user_name, long id_emp, long id_user);
+
 }

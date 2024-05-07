@@ -22,6 +22,8 @@ public class UsuarioEmpresaOContraTaDTO {
 
     private long idUser;
 
+    private String razonSoial;
+
     private String tipo;
 
     private Boolean estado;

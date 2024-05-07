@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface IContrataRepository extends JpaRepository<Contrata,String> {
-    @Query(value = "select * from contratas where ruc_contrata IN (select uec.ruc from usuario_empresa_contrada as uec inner join usuario as us on uec.id_user=us.id_user\n" +
-            "\t where us.username=? and tipo=?);", nativeQuery=true)
-    List<Contrata> PorUsernameContrata(String userName, String tipoEmpCont);
+    @Query(value = "select *FROM listado_cont_por_busqueda(?,?)", nativeQuery=true)
+    List<Contrata> porUsernameContrata(String userName, String tipoEmpCont);
 }

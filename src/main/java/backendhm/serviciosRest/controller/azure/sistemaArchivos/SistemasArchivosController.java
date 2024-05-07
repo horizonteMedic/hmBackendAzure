@@ -1,7 +1,6 @@
 package backendhm.serviciosRest.controller.azure.sistemaArchivos;
 
 import backendhm.serviciosRest.models.azure.dtos.SedePorUserDTO;
-import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpContDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.UsuarioEmpresaOContraTaDTO;
 import backendhm.serviciosRest.models.azure.services.asistencial.IContrataService;
@@ -19,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -41,16 +42,25 @@ public class SistemasArchivosController {
 
 
     @GetMapping("/busquedaEmpresaContrata/{userName}/{tipo}")
-    public ResponseEntity<List<EmpContDTO>> listadoEmpresaContrataDeUsername(@PathVariable String userName, @PathVariable String tipo) {
-            if (tipo.toUpperCase().contains("EMPRESA")){
-                return ResponseEntity.ok(empresaService.listadoEmpresaPorUsername(userName,tipo));
+    public ResponseEntity<List<EmpContDTO>> listadoEmpresaContrataDeUsername(@PathVariable String userName, @PathVariable String tipo)
+    {
+            System.out.println("el valor del username es: "+userName+" , el valor del tipo: "+tipo);
+            if (tipo.toUpperCase().contains("EMPRESA")) {
+                return ResponseEntity.ok(empresaService.listadoEmpresaPorUsername(userName, tipo));
             }
-            else {
-                return ResponseEntity.ok(contrataService.listadoContrataPorUsername(userName,tipo));
+        if (tipo.toUpperCase().contains("CONTRATA"))
+            return ResponseEntity.ok(empresaService.listadocONTPorUsername(userName, tipo));
 
-            }
+        else return null;
+
 
     }
+
+    @GetMapping("/listadoEmpContIdUser/{id}")
+    public ResponseEntity<List<UsuarioEmpresaOContraTaDTO>> obtenerListadoEmpContIDUSer(@PathVariable(name = "id") long id){
+        return  ResponseEntity.ok(usuarioEmpresaOContrataService.listadoUEOCPorIdUser(id));
+    }
+
 
     @GetMapping("/listadoUsuarioAsingacionEmpCont")
     public ResponseEntity<List<UsuarioEmpresaOContraTaDTO>> obtenerListado(){

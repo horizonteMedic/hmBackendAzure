@@ -34,12 +34,6 @@ public class ContrataServiceImpl implements IContrataService{
         return listaContratas.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
 
-    @Override
-    public List<EmpContDTO> listadoContrataPorUsername(String userName, String tipoEmpCont) {
-
-        List<Contrata> listado=contrataRepository.PorUsernameContrata(userName,tipoEmpCont);
-        return listado.stream().map(this::mapearDTOContrataPorUsername).collect(Collectors.toList());
-    }
 
     @Override
     public ContrataDTO obtenerContrataPorRuc(String ruc) {
@@ -63,6 +57,7 @@ public class ContrataServiceImpl implements IContrataService{
                 .orElseThrow(()-> new ResourceNotFoundException("Contrata","ruc contrata",Long.parseLong(ruc)));
         contrataRepository.delete(contrata);
     }
+
 
     private EmpContDTO mapearDTOContrataPorUsername(Contrata contrata){
 

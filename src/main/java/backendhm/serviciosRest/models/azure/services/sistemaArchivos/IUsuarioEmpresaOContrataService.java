@@ -11,6 +11,7 @@ public interface IUsuarioEmpresaOContrataService {
     List<EmpContDTO> listadoEmpOCont(String descripcion);
     UsuarioEmpresaOContraTaDTO Crear(UsuarioEmpresaOContraTaDTO usuarioEOCDto);
     List<UsuarioEmpresaOContraTaDTO> listadoUserEOC();
+    List<UsuarioEmpresaOContraTaDTO> listadoUEOCPorIdUser(long idUser);
     UsuarioEmpresaOContraTaDTO obtenerUserEOCPorID(long id);
     UsuarioEmpresaOContraTaDTO actualizarUserEOC(UsuarioEmpresaOContraTaDTO usuarioEOCDto, long id);
     void eliminarUserEOC(long id);

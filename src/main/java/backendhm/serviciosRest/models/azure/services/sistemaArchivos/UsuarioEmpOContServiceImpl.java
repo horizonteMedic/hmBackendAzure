@@ -9,9 +9,11 @@ import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
 import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.UserEmpresaContrataRepository;
+import ch.qos.logback.core.joran.spi.ElementSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +58,12 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
         return listaUserEOC.stream().map(this::mapearDTO).collect(Collectors.toList());    }
 
     @Override
+    public List<UsuarioEmpresaOContraTaDTO> listadoUEOCPorIdUser(long idUser) {
+        List<UsuarioEmpresaOContrata> listadoUserEOCPorIdUser= userEmpresaContrataRepository.listadoEmpresasContratasPorIdUser(idUser).orElseThrow();
+        return listadoUserEOCPorIdUser.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public UsuarioEmpresaOContraTaDTO obtenerUserEOCPorID(long id) {
         UsuarioEmpresaOContrata user=userEmpresaContrataRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("userEOC","id",id));
         return mapearDTO(user);
@@ -77,6 +85,14 @@ public class UsuarioEmpOContServiceImpl implements IUsuarioEmpresaOContrataServi
 
     private UsuarioEmpresaOContraTaDTO mapearDTO(UsuarioEmpresaOContrata user){
         UsuarioEmpresaOContraTaDTO userDTO=new UsuarioEmpresaOContraTaDTO();
+        if(user.getTipo().contains("EMPRESA")) {
+            Empresa empresa = empresaRepository.findById(user.getRuc()).orElseThrow();
+            userDTO.setRazonSoial(empresa.getRazonEmpresa());
+        }
+        if(user.getTipo().contains("CONTRATA")) {
+            Contrata contrata = contrataRepository.findById(user.getRuc()).orElseThrow();
+            userDTO.setRazonSoial(contrata.getRazonContrata());
+        }
 
         userDTO.setId(user.getId());
         userDTO.setRuc(user.getRuc());

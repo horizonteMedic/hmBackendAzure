@@ -9,8 +9,7 @@ import java.util.List;
 
 @Repository
 public interface IEmpresaRepository extends JpaRepository<Empresa,String> {
-    @Query(value = "select * from empresas where ruc_empresa IN (select uec.ruc from usuario_empresa_contrada as uec inner join usuario as us on uec.id_user=us.id_user\n" +
-            "\t where us.username=? and tipo=?);", nativeQuery=true)
+    @Query(value = "select *from listado_emp_por_busqueda(?,?)", nativeQuery=true)
     List<Empresa> busquedaEmpresaPorUsernameEmpresa(String userName, String tipoEmpCont);
 
 }

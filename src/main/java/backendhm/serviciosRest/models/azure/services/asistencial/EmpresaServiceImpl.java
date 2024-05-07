@@ -2,8 +2,10 @@ package backendhm.serviciosRest.models.azure.services.asistencial;
 
 import backendhm.serviciosRest.models.azure.dtos.asistencial.EmpresaDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpContDTO;
+import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
+import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class EmpresaServiceImpl implements IEmpresaService {
 
     @Autowired
     private IEmpresaRepository empresaRepository;
+
+    @Autowired
+    private IContrataRepository contrataRepository;
 
     @Override
     public EmpresaDTO crearEmpresa(EmpresaDTO empresaDTO) {
@@ -34,7 +39,15 @@ public class EmpresaServiceImpl implements IEmpresaService {
     }
 
     @Override
+    public List<EmpContDTO> listadocONTPorUsername(String userName, String tipoEmpCont) {
+        List<Contrata> listado=contrataRepository.porUsernameContrata(userName,tipoEmpCont);
+
+        return listado.stream().map(this::mapearDTOContrataPorUsername).collect(Collectors.toList());
+    }
+
+    @Override
     public List<EmpContDTO> listadoEmpresaPorUsername(String userName, String tipoEmpCont) {
+
         List<Empresa> listado=empresaRepository.busquedaEmpresaPorUsernameEmpresa(userName,tipoEmpCont);
         return listado.stream().map(this::mapearDTOEmpresaPorUsername).collect(Collectors.toList());
     }
@@ -73,7 +86,15 @@ public class EmpresaServiceImpl implements IEmpresaService {
 
         return  empContDTO;
     }
+    private EmpContDTO mapearDTOContrataPorUsername(Contrata contrata){
 
+        EmpContDTO empContDTO=new EmpContDTO();
+
+        empContDTO.setRuc(contrata.getId());
+        empContDTO.setRazonSocial(contrata.getRazonContrata());
+
+        return  empContDTO;
+    }
     private EmpresaDTO mapearDTO(Empresa empresa){
         EmpresaDTO empresaDTO=new EmpresaDTO();
 

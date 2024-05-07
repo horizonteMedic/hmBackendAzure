@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<Usuario,Long> {
     Optional<List<Usuario>> listadoUsuarioPorIDEmpleado(long idEmpleado);
 
 
+
+
 }
