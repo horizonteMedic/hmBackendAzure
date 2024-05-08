@@ -30,4 +30,6 @@ public class HistorialUsuarioDTO {
     private long idUser;
 
     private long idUserRol;
+
+    private long idEmpleado;
 }

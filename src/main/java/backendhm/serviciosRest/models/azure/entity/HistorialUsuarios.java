@@ -47,4 +47,7 @@ public class HistorialUsuarios implements Serializable {
 
     @Column(name = "id_user_rol")
     private long idUserRol;
+
+    @Column(name = "id_empleado")
+    private long idEmpleado;
 }
