@@ -23,7 +23,7 @@ public class ConfigBDTrujilloNP {
     @Autowired
     private Environment env;
 
-    @Bean(name= "trujilloNPDtasource")
+    @Bean(name= "trujilloNPDatasource")
     public DataSource trujilloNPDatasource(){
         DriverManagerDataSource dataSource=new DriverManagerDataSource();
 

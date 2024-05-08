@@ -13,6 +13,10 @@ import backendhm.serviciosRest.models.spTrujilloNP.entity.DetalleHistorialPacien
 import backendhm.serviciosRest.models.spTrujilloNP.entity.HistorialPACIENTE;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IDetalleHistorialUsuarioRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IPruebRepository;
+import backendhm.serviciosRest.models.spTrujilloSD.entity.DetalleHistorialPacienteSD;
+import backendhm.serviciosRest.models.spTrujilloSD.entity.HistorialPacienteSD;
+import backendhm.serviciosRest.models.spTrujilloSD.repository.IDetalleHistorialUsuarioRepositorySD;
+import backendhm.serviciosRest.models.spTrujilloSD.repository.IHistorialPacienteRepositorySD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +38,12 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
     @Autowired
     private IRespuestaBackendRepository respuestaBackendRepository;
 
+    @Autowired
+    private IHistorialPacienteRepositorySD historialPacienteRepositorySD;
+
+    @Autowired
+    private IDetalleHistorialUsuarioRepositorySD detalleHistorialUsuarioRepositorySD;
+
     @Override
     public List<HistorialPacienteMultiservidorDto> listadoHistorialPaciente(RequestHistorialPacienteMultiservidor request) {
         String sede=request.getSedeUser();
@@ -50,16 +60,26 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
         }
 
         List<HistorialPACIENTE> listadoHP=null;
-        if(sede.contains("T-NP") || sede.contains("HNCY"))
+        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") )
         {
+            if(sede.contains("T-NP") || sede.contains("HNCY")) {
+                listadoHP = pruebRepository.obtenerHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser()).orElseThrow();
+                return listadoHP.stream().map(this::mapearDTO).collect(Collectors.toList());
+            }
 
-            System.out.println("el objeto es:"+request);
-           listadoHP= pruebRepository.obtenerHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser()).orElseThrow();
+            else
+            if(sede.contains("T-SD"))
+            {
 
+                List<HistorialPacienteSD> listadoSD=null;
+                listadoSD=historialPacienteRepositorySD.obtenerHistorialPacienteUsuariosSD(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser()).orElseThrow();
+                return listadoSD.stream().map(this::mapearDTOSD).collect(Collectors.toList());
+
+            }
         }
 
+    return null;
 
-        return listadoHP.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -84,15 +104,26 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
             request.setTipo(tipo);
 
         }
-        if(sede.contains("T-NP") || sede.contains("HNCY"))
+        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") )
         {
+            if(sede.contains("T-NP") || sede.contains("HNCY")) {
 
-            System.out.println("EL detalle del historial usaurio: "+request);
-            detalleHistorialPaciente=detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(),request.getFechaInicio(),request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(),request.getSedeUser(),request.getDniUser()).orElseThrow();
+                detalleHistorialPaciente = detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser(), request.getDniUser()).orElseThrow();
+                return detalleHistorialPaciente.stream().map(this::mapearDTOdetalleHistorialPaciente).collect(Collectors.toList());
+
+            }
+
+            if(sede.contains("T-SD"))
+            {
+                List<DetalleHistorialPacienteSD>
+                        detalleHistorialPacienteSD=detalleHistorialUsuarioRepositorySD.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser(), request.getDniUser()).orElseThrow();
+                return detalleHistorialPacienteSD.stream().map(this::mapearDTOdetalleHistorialPacienteSD).collect(Collectors.toList());
+
+            }
+
         }
+        return null;
 
-
-        return detalleHistorialPaciente.stream().map(this::mapearDTOdetalleHistorialPaciente).collect(Collectors.toList());
     }
 
     public DetalleHistorialPacienteMultiservidorDTO mapearDTOdetalleHistorialPaciente(DetalleHistorialPaciente detalleHistorialPaciente){
@@ -113,7 +144,24 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
         return detalleHP;
 
     }
+    public DetalleHistorialPacienteMultiservidorDTO mapearDTOdetalleHistorialPacienteSD(DetalleHistorialPacienteSD detalleHistorialPaciente){
 
+        DetalleHistorialPacienteMultiservidorDTO detalleHP=new DetalleHistorialPacienteMultiservidorDTO();
+
+        detalleHP.setHistoriaClinica(detalleHistorialPaciente.getHistoriaClinica());
+        detalleHP.setOrden(detalleHistorialPaciente.getOrden());
+        detalleHP.setEmpresa(detalleHistorialPaciente.getEmpresa());
+        detalleHP.setContrata(detalleHistorialPaciente.getContrata());
+        detalleHP.setFechaExamen(detalleHistorialPaciente.getFechaExamen());
+        detalleHP.setExamen(detalleHistorialPaciente.getExamen());
+        detalleHP.setEstado(detalleHistorialPaciente.getEstado());
+        detalleHP.setCargo(detalleHistorialPaciente.getCargo());
+        detalleHP.setArea(detalleHistorialPaciente.getArea());
+        detalleHP.setGrupoSanguineo(detalleHistorialPaciente.getGrupoSanguineo());
+
+        return detalleHP;
+
+    }
     public SedePorUserDTO mapearDTOListaSede(SedeHmWeb sedeHmWeb){
         SedePorUserDTO sedePorUserDTO=new SedePorUserDTO();
 
@@ -137,4 +185,17 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
 
     }
 
+    public HistorialPacienteMultiservidorDto mapearDTOSD(HistorialPacienteSD historialPaciente ){
+        HistorialPacienteMultiservidorDto historialPacienteSPNPDto=new HistorialPacienteMultiservidorDto();
+
+        historialPacienteSPNPDto.setCodigo_sucursal(historialPaciente.getCodigo());
+        historialPacienteSPNPDto.setDni(historialPaciente.getDni());
+        historialPacienteSPNPDto.setApellidos(historialPaciente.getApellido());
+        historialPacienteSPNPDto.setNombres(historialPaciente.getNombre());
+        historialPacienteSPNPDto.setFecha_examen(historialPaciente.getFecha());
+
+
+        return historialPacienteSPNPDto;
+
+    }
 }
