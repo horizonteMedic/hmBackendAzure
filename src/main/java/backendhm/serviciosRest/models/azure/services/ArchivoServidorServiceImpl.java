@@ -259,7 +259,8 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         archivosServidor.setHistoriaClinica(archivosServidor.getHistoriaClinica());
         archivosServidor.setOrden(archivoServidorDTO.getOrden());
         archivosServidor.setServidor(archivoServidorDTO.getServidor());
-        archivosServidor.setRutaArchivo(archivoServidorDTO.getRutaArchivo());
+        archivosServidor.setRutaArchivo("DNI-"+archivoServidorDTO.getDni()+"/HC-"+archivoServidorDTO.getHistoriaClinica()+"/"+archivoServidorDTO.getNombreArchivo());
+        //archivosServidor.setRutaArchivo(archivoServidorDTO.getRutaArchivo());
         archivosServidor.setEstado(archivoServidorDTO.getEstado());
         archivosServidor.setFechaRegistro(archivoServidorDTO.getFechaRegistro());
         archivosServidor.setUserRegistro(archivoServidorDTO.getUserRegistro());

@@ -54,7 +54,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
     @Override
     public RespuestaBackendDTO actualizarParteUsuario(UsuarioDTO usuarioDTO, long id) {
 
-        System.out.println("El objeto usuarioDTO ES: "+usuarioDTO);
+        System.out.println("El objeto usuarioDTO ES: "+usuarioDTO+", el id_user es:"+id);
         Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
         RespuestaBackend respuestaBackend=respuestaBackendRepository.actualizarUserParcial(usuarioDTO.getEstado(), usuario.getUsername(), usuarioDTO.getId_empleado(), id).orElseThrow();
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();

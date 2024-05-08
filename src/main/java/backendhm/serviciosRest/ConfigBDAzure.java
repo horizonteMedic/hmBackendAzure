@@ -38,7 +38,6 @@ public class ConfigBDAzure {
         config.setMinimumIdle(Integer.parseInt(env.getProperty("azure.datasource.hikari.minimum-idle")));
         config.setIdleTimeout(Long.parseLong(env.getProperty("azure.datasource.hikari.idle-timeout")));
         config.setAutoCommit(Boolean.getBoolean(env.getProperty("azure.datasource.hikari.auto-commit")));
-
         //DriverManagerDataSource dataSource=new DriverManagerDataSource();
 
         //dataSource.setUrl(env.getProperty("azure.datasource.jdbc-url"));
