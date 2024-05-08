@@ -33,6 +33,12 @@ public class SedeServiceImpl implements ISedeService{
     }
 
     @Override
+    public List<SedeDTO> listadoSedesHabilitados() {
+        List<SedeHmWeb> listaSedes=sedeHmRepository.listadoSedesHabilitadas().orElseThrow();
+        return listaSedes.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public SedeDTO obtenerSedePorID(long id) {
         SedeHmWeb sedeHmWeb=sedeHmRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Sede","id",id));
         return mapearDTO(sedeHmWeb);

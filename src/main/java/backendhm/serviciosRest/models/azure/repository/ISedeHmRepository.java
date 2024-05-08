@@ -14,4 +14,7 @@ public interface ISedeHmRepository extends JpaRepository<SedeHmWeb,Long> {
 
     @Query(value = "select *from obtener_sede_usuario(:user_name)", nativeQuery=true)
     Optional<List<SedeHmWeb>> listadoSedes(String user_name);
+
+    @Query(value = "select  * from sede_hm_web where estado=true;", nativeQuery=true)
+    Optional<List<SedeHmWeb>> listadoSedesHabilitadas();
 }

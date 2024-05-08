@@ -21,6 +21,11 @@ public class SedeController {
 
     private static JSONObject json=null;
 
+    @GetMapping("/listadoSedesHabilitados")
+    public ResponseEntity<List<SedeDTO>> obtenerListadoSedesHabilitados(){
+
+        return  ResponseEntity.ok(sedeService.listadoSedesHabilitados());
+    }
 
     @GetMapping()
     public ResponseEntity<List<SedeDTO>> obtenerListadoSedes(){
