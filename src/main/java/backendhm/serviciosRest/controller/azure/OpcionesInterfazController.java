@@ -31,6 +31,13 @@ public class OpcionesInterfazController {
         return ResponseEntity.ok(opcionInterfazService.obtenerOpcionInterdazPorID(id));
     }
 
+
+    @GetMapping("/vistasPorIdRol/{id}")
+    public ResponseEntity<List<OpcionesInterfazDTO>> listadoVistasPorIdRol(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(opcionInterfazService.listadoVistasPorIdRol(id));
+    }
+
     @PostMapping
     public ResponseEntity<OpcionesInterfazDTO> guardarOpcionesInterfaz(@Valid @RequestBody OpcionesInterfazDTO opcionesInterfazDTO) {
 

@@ -26,6 +26,17 @@ public class RolController {
         return  ResponseEntity.ok(rolService.listadoRol());
     }
 
+    @GetMapping("/listadoRolesHabilitados")
+    public ResponseEntity<List<RolDTO>> obtenerListadoRolesHabilitados(){
+        return  ResponseEntity.ok(rolService.listadoRolesHabilitados());
+    }
+
+    @GetMapping("/busquedaRolesPorIdUser/{id}")
+    public ResponseEntity<List<RolDTO>> obtenerRolPorIDUser(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(rolService.listadoRolesIdUser(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RolDTO> obtenerRolPorID(@PathVariable(name = "id") long id) {
 

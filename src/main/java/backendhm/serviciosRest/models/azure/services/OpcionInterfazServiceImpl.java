@@ -33,6 +33,12 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
     }
 
     @Override
+    public List<OpcionesInterfazDTO> listadoVistasPorIdRol(long idRol) {
+        List<OpcionesInterfazPrivilegios> listadoVistas=opcionesInterfazPrivilegio.listadoVistasPorIdRol(idRol).orElseThrow();
+        return listadoVistas.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public OpcionesInterfazDTO obtenerOpcionInterdazPorID(long id) {
         OpcionesInterfazPrivilegios opcionesInterfazPrivilegios=opcionesInterfazPrivilegio.
                 findById(id).orElseThrow(()-> new ResourceNotFoundException("Opciones Interfaz","id-opciones-interfaz",id));

@@ -27,6 +27,13 @@ public class PrivilegioRolController {
         return  ResponseEntity.ok(privilegioRolService.listadoPrivilegioRol());
     }
 
+
+    @GetMapping("/busquedaPorIdRol/{id}")
+    public ResponseEntity<List<PrivilegioRolDTO>> obtenerPrivilegioPorBusquedaRol(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(privilegioRolService.listadoPrivilegioRolPorIdRol(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PrivilegioRolDTO> obtenerPrivilegioRolPorID(@PathVariable(name = "id") long id) {
 

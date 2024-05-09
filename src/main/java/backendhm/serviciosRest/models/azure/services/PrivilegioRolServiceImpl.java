@@ -43,6 +43,12 @@ public class PrivilegioRolServiceImpl implements IPrivilegioRolService{
     }
 
     @Override
+    public List<PrivilegioRolDTO> listadoPrivilegioRolPorIdRol(long idRol) {
+        List<PrivilegioRol> listaPrivilegioRoles=privilegioRolRepository.listadoPrivilegiosRolesPorIdRol(idRol).orElseThrow();
+        return listaPrivilegioRoles.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public PrivilegioRolDTO obtenerPrivilegioRolPorID(long id) {
         PrivilegioRol privilegioRol=privilegioRolRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Privielgio Rol","id privilegio rol",id));
