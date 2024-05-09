@@ -27,7 +27,9 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtService jwtService;
+    @Autowired
+    private JwtService jwtService;
+
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
