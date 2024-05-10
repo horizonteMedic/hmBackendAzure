@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.auth;
 
 import backendhm.serviciosRest.auth.user.Role;
+import backendhm.serviciosRest.models.azure.dtos.ListadoDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.repository.UserRepository;
@@ -10,6 +11,7 @@ import backendhm.serviciosRest.models.azure.entity.Usuario;
 import backendhm.serviciosRest.models.azure.jwt.JwtService;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import backendhm.serviciosRest.models.azure.services.EmpleadoServiceImpl;
+import backendhm.serviciosRest.models.azure.services.IOpcionInterfazService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,9 +20,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
+    @Autowired
+    private IOpcionInterfazService opcionInterfazService;
 
     @Autowired
     private EmpleadoServiceImpl empleadoService;
@@ -46,11 +53,10 @@ public class AuthService {
 
      if (respuestaBackendDTO.getId()==1)
         {   Usuario userd=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
-            UserDetails user=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
-
+            //UserDetails user=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
+            List<ListadoDTO> listado=opcionInterfazService.listadoVistasPorIdUser(userd.getIdUser());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword()));
-
-            String token=jwtService.getToken(user,userd.getIdUser());
+            String token=jwtService.getToken(userd,userd.getIdUser(),listado);
             respuestaBackendDTO.setMensaje(token);
         }
         return respuestaBackendDTO;
@@ -60,6 +66,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         Usuario usuario=new Usuario();
+        List<ListadoDTO> listadoDTO=null;
         EmpleadoDTO empleadoDTO=new EmpleadoDTO();
         usuario.setUsername(request.getUsername());
         usuario.setEstado(request.getEstado());
@@ -69,7 +76,7 @@ public class AuthService {
         usuario.setEmpleado(mapearEntidad(empleadoDTO));
         usuarioRepository.save(usuario);
         return AuthResponse.builder()
-                .token(jwtService.getToken(usuario,1))
+                .token(jwtService.getToken(usuario,1,listadoDTO))
                 .build();
     }
 

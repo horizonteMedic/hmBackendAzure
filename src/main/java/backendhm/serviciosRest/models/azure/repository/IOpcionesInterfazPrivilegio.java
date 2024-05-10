@@ -13,4 +13,9 @@ public interface IOpcionesInterfazPrivilegio extends JpaRepository<OpcionesInter
     @Query(value = "select oip.* from opciones_interfaz_privilegios as oip inner join privilegio_rol as pr on oip.id_opcion_interfaz=pr.id_opcion_interfaz\n" +
             "\t where pr.id_rol=?;", nativeQuery=true)
     Optional<List<OpcionesInterfazPrivilegios>> listadoVistasPorIdRol(long idRol);
+
+    @Query(value = "select oip.* from opciones_interfaz_privilegios as oip inner join privilegio_rol as pr on oip.id_opcion_interfaz=pr.id_opcion_interfaz\n" +
+            "    inner join usuario_rol as ur on pr.id_rol=ur.id_rol          \n" +
+            "\t where ur.id_user=?;", nativeQuery=true)
+    Optional<List<OpcionesInterfazPrivilegios>> listadoVistasPorIdUser(long idUser);
 }

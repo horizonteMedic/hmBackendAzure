@@ -6,6 +6,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -19,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "azureEntityManagerFactory", transactionManagerRef = "azureTransactionManagerFactory", basePackages = {"backendhm.serviciosRest.models.azure.repository"})
 public class ConfigBDAzure {
     @Autowired
@@ -45,6 +45,7 @@ public class ConfigBDAzure {
         return new HikariDataSource(config);
     }
 
+    @Primary
     @Bean("azureEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean em=new LocalContainerEntityManagerFactoryBean();
@@ -64,7 +65,7 @@ public class ConfigBDAzure {
 
         return em;
     }
-
+    @Primary
     @Bean(name = "azureTransactionManagerFactory")
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager    transactionManager = new JpaTransactionManager();

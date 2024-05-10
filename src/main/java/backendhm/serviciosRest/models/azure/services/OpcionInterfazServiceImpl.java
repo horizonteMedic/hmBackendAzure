@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.azure.services;
 
+import backendhm.serviciosRest.models.azure.dtos.ListadoDTO;
 import backendhm.serviciosRest.models.azure.dtos.OpcionesInterfazDTO;
 import backendhm.serviciosRest.models.azure.entity.OpcionesInterfazPrivilegios;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
@@ -39,6 +40,13 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
     }
 
     @Override
+    public List<ListadoDTO> listadoVistasPorIdUser(long idUser) {
+        List<OpcionesInterfazPrivilegios> listadoVistas=opcionesInterfazPrivilegio.listadoVistasPorIdUser(idUser).orElseThrow();
+
+        return listadoVistas.stream().map(this::mapearDTOVistas).collect(Collectors.toList());
+    }
+
+    @Override
     public OpcionesInterfazDTO obtenerOpcionInterdazPorID(long id) {
         OpcionesInterfazPrivilegios opcionesInterfazPrivilegios=opcionesInterfazPrivilegio.
                 findById(id).orElseThrow(()-> new ResourceNotFoundException("Opciones Interfaz","id-opciones-interfaz",id));
@@ -61,7 +69,13 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
                 findById(id).orElseThrow(()-> new ResourceNotFoundException("Opciones Interfaz","id-opciones-interfaz",id));
         opcionesInterfazPrivilegio.delete(opcionesInterfazPrivilegios);
     }
+    private ListadoDTO mapearDTOVistas(OpcionesInterfazPrivilegios opcionesInterfazPrivilegios){
+        ListadoDTO listadoDTO=new ListadoDTO();
 
+        listadoDTO.setId(opcionesInterfazPrivilegios.getId());
+        listadoDTO.setDescripcion(opcionesInterfazPrivilegios.getDescripcion());
+        return listadoDTO;
+    }
     private OpcionesInterfazDTO mapearDTO(OpcionesInterfazPrivilegios opcionesInterfazPrivilegios){
         OpcionesInterfazDTO opcionesInterfazDTO=new OpcionesInterfazDTO();
 

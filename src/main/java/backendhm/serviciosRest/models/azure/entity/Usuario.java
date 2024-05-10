@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.azure.entity;
 
 import backendhm.serviciosRest.auth.user.Role;
+import backendhm.serviciosRest.models.azure.dtos.ListadoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
