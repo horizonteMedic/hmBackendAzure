@@ -43,6 +43,12 @@ public class UsuarioRolServiceImpl implements IUsuarioRolService {
     }
 
     @Override
+    public List<UsuarioRolDTO> listadoUsuarioRolPorIdUser(long idUser) {
+        List<UsuarioRol> listaUsuarioRoles=usuarioRolRepository.listadoUsuariosRolPorIdUser(idUser).orElseThrow();
+        return listaUsuarioRoles.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public UsuarioRolDTO obtenerUsuarioRolPorID(long id) {
         UsuarioRol usuarioRol=usuarioRolRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("UsuarioRol","id_user_rol",id));
         return mapearDTO(usuarioRol);

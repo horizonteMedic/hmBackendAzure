@@ -7,6 +7,8 @@ import java.util.List;
 public interface IUsuarioRolService {
     UsuarioRolDTO crearUsuarioRol(UsuarioRolDTO usuarioRolDTO);
     List<UsuarioRolDTO> listadoUsuarioRol();
+    List<UsuarioRolDTO> listadoUsuarioRolPorIdUser(long idUser);
+
     UsuarioRolDTO obtenerUsuarioRolPorID(long id);
     UsuarioRolDTO actualizarUsuarioRolDTO(UsuarioRolDTO usuarioRolDTO, long id);
     void eliminarUsuarioRolDTO(long id);

@@ -33,6 +33,11 @@ public class UsuarioRolController {
         return ResponseEntity.ok(usuarioRolService.obtenerUsuarioRolPorID(id));
     }
 
+    @GetMapping("/BusquedaUsuarioRolPorIdUser/{id}")
+    public ResponseEntity<List<UsuarioRolDTO>> obtenerUsuarioRolesPorIDUser(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(usuarioRolService.listadoUsuarioRolPorIdUser(id));
+    }
 
     @PostMapping
     public ResponseEntity<UsuarioRolDTO> guardarUsuarioRol(@Valid @RequestBody UsuarioRolDTO usuarioRolDTO) {
