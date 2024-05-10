@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.auth;
 
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class AuthController {
     private  AuthService authService;
 
     @PostMapping(value = "login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request)
+    public ResponseEntity<RespuestaBackendDTO> login(@RequestBody LoginRequest request)
     {
         return ResponseEntity.ok(authService.login(request));
     }

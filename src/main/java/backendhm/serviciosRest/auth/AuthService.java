@@ -1,11 +1,14 @@
 package backendhm.serviciosRest.auth;
 
 import backendhm.serviciosRest.auth.user.Role;
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.repository.UserRepository;
 import backendhm.serviciosRest.models.azure.dtos.EmpleadoDTO;
 import backendhm.serviciosRest.models.azure.entity.Empleado;
 import backendhm.serviciosRest.models.azure.entity.Usuario;
 import backendhm.serviciosRest.models.azure.jwt.JwtService;
+import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import backendhm.serviciosRest.models.azure.services.EmpleadoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class AuthService {
     private EmpleadoServiceImpl empleadoService;
 
     @Autowired
+    private IRespuestaBackendRepository respuestaBackendRepository;
+
+    @Autowired
     private UserRepository usuarioRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -32,17 +38,23 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponse login(LoginRequest request) {
-        Usuario userd=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
+    public RespuestaBackendDTO login(LoginRequest request) {
+        RespuestaBackend respuestaBackend=respuestaBackendRepository.validarLogin(request.getNombre()).orElseThrow();
+        RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
+        respuestaBackendDTO.setId(respuestaBackend.getId());
+        respuestaBackendDTO.setMensaje(respuestaBackend.getMensaje());
 
-        UserDetails user=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
+     if (respuestaBackendDTO.getId()==1)
+        {   Usuario userd=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
+            UserDetails user=usuarioRepository.findByUsername(request.getNombre()).orElseThrow();
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNombre(), request.getPassword()));
 
-        String token=jwtService.getToken(user,userd.getIdUser());
-        return AuthResponse.builder()
-                .token(token)
-                .build();
+            String token=jwtService.getToken(user,userd.getIdUser());
+            respuestaBackendDTO.setMensaje(token);
+        }
+        return respuestaBackendDTO;
+
 
     }
 

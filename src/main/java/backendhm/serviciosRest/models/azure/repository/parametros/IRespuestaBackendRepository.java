@@ -34,4 +34,7 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
     @Query(value = "select *from actualizar_user_parcial(?,?,?,?)", nativeQuery=true)
     Optional<RespuestaBackend> actualizarUserParcial(Boolean estado,String user_name, long id_emp, long id_user);
 
+    @Query(value = "select *from validar_login(?)", nativeQuery=true)
+    Optional<RespuestaBackend> validarLogin(String user);
+
 }
