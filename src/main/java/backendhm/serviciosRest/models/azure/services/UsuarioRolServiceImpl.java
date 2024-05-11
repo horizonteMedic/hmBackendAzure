@@ -1,7 +1,7 @@
 package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.dtos.UsuarioRolDTO;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import backendhm.serviciosRest.models.azure.entity.Rol;
 import backendhm.serviciosRest.models.azure.entity.Usuario;
 import backendhm.serviciosRest.models.azure.entity.UsuarioRol;
@@ -24,7 +24,7 @@ public class UsuarioRolServiceImpl implements IUsuarioRolService {
     private IRolRepository rolRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public UsuarioRolDTO crearUsuarioRol(UsuarioRolDTO usuarioRolDTO) {
@@ -88,7 +88,7 @@ public class UsuarioRolServiceImpl implements IUsuarioRolService {
         UsuarioRol usuarioRol=new UsuarioRol();
 
         Usuario usuario= new Usuario();
-        usuario= userRepository.findById(usuarioRolDTO.getId_user()).
+        usuario= usuarioRepository.findById(usuarioRolDTO.getId_user()).
                 orElseThrow(()->new ResourceNotFoundException("UsuarioRol","id_user",usuarioRolDTO.getId_user()));
 
         Rol rol= new Rol();
@@ -107,7 +107,7 @@ public class UsuarioRolServiceImpl implements IUsuarioRolService {
     }
 
     private UsuarioRol actualizarUsuarioRol(UsuarioRolDTO usuarioRolDTO, UsuarioRol usuarioRol){
-        Usuario usuario=userRepository.findById(usuarioRolDTO.getId_user()).
+        Usuario usuario= usuarioRepository.findById(usuarioRolDTO.getId_user()).
                 orElseThrow(()-> new ResourceNotFoundException("UsuarioRol","id_usuario", usuarioRolDTO.getId_user()));
 
         Rol rol=rolRepository.findById(usuarioRolDTO.getId_rol()).

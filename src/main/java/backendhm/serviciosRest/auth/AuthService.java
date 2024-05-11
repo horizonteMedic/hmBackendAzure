@@ -4,7 +4,7 @@ import backendhm.serviciosRest.auth.user.Role;
 import backendhm.serviciosRest.models.azure.dtos.ListadoDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import backendhm.serviciosRest.models.azure.dtos.EmpleadoDTO;
 import backendhm.serviciosRest.models.azure.entity.Empleado;
 import backendhm.serviciosRest.models.azure.entity.Usuario;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class AuthService {
     private IRespuestaBackendRepository respuestaBackendRepository;
 
     @Autowired
-    private UserRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     private final PasswordEncoder passwordEncoder;
 

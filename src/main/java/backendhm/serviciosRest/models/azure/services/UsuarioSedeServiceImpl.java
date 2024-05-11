@@ -6,7 +6,7 @@ import backendhm.serviciosRest.models.azure.entity.UsuarioSede;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.ISedeHmRepository;
 import backendhm.serviciosRest.models.azure.repository.IUsuarioSedeRepository;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import backendhm.serviciosRest.models.azure.dtos.UsuarioSedeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class UsuarioSedeServiceImpl implements IUsuarioSedeService {
     private IUsuarioSedeRepository usuarioSedeRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private ISedeHmRepository sedeHmRepository;
@@ -69,7 +69,7 @@ public class UsuarioSedeServiceImpl implements IUsuarioSedeService {
 
     private UsuarioSedeDTO mapearDTO(UsuarioSede usuarioSede){
         UsuarioSedeDTO usuarioSedeDTO=new UsuarioSedeDTO();
-        Usuario usuario=userRepository.findById(usuarioSede.getUsuario().getIdUser()).orElseThrow();
+        Usuario usuario= usuarioRepository.findById(usuarioSede.getUsuario().getIdUser()).orElseThrow();
         SedeHmWeb sedeHmWeb=sedeHmRepository.findById(usuarioSede.getSede().getId()).orElseThrow();
 
         usuarioSedeDTO.setIdUsuarioSede(usuarioSede.getIdUsuarioSede());
@@ -85,7 +85,7 @@ public class UsuarioSedeServiceImpl implements IUsuarioSedeService {
 
     private UsuarioSede mapearEntidad(UsuarioSedeDTO usuarioSedeDTO){
         UsuarioSede usuarioSede=new UsuarioSede();
-        Usuario usuario=userRepository.findById(usuarioSedeDTO.getId_user()).orElseThrow();
+        Usuario usuario= usuarioRepository.findById(usuarioSedeDTO.getId_user()).orElseThrow();
         SedeHmWeb sedeHmWeb=sedeHmRepository.findById(usuarioSedeDTO.getId_sede()).orElseThrow();
 
         usuarioSede.setUserRegistro(usuarioSedeDTO.getUserRegistro());
@@ -98,7 +98,7 @@ public class UsuarioSedeServiceImpl implements IUsuarioSedeService {
     }
 
     private UsuarioSede actualizarUsuarioSedeEntidad(UsuarioSedeDTO usuarioSedeDTO,UsuarioSede usuarioSede){
-        Usuario usuario=userRepository.findById(usuarioSedeDTO.getId_user()).orElseThrow();
+        Usuario usuario= usuarioRepository.findById(usuarioSedeDTO.getId_user()).orElseThrow();
         SedeHmWeb sedeHmWeb=sedeHmRepository.findById(usuarioSedeDTO.getId_sede()).orElseThrow();
 
         usuarioSede.setUserRegistro(usuarioSedeDTO.getUserRegistro());

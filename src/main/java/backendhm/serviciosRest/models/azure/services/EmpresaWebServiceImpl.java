@@ -4,7 +4,7 @@ import backendhm.serviciosRest.models.azure.dtos.*;
 import backendhm.serviciosRest.models.azure.entity.*;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.*;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class EmpresaWebServiceImpl implements IEmpresaWebService{
     private IEntidadDTORepository entidadDTORepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public List<HistorialUsuarioDTO> listadoHistoriaUsuario() {
@@ -121,7 +121,7 @@ public class EmpresaWebServiceImpl implements IEmpresaWebService{
 
     private EmpresaWeb mapearEntidad(EmpresaWebDTO empresaWebDTO){
         EmpresaWeb empresaWeb=new EmpresaWeb();
-        Usuario usuario= userRepository.findById(empresaWebDTO.getIdUser()).orElseThrow();
+        Usuario usuario= usuarioRepository.findById(empresaWebDTO.getIdUser()).orElseThrow();
 
         empresaWeb.setRuc(empresaWebDTO.getRuc());
         empresaWeb.setEstado(empresaWebDTO.getEstado());
@@ -134,7 +134,7 @@ public class EmpresaWebServiceImpl implements IEmpresaWebService{
     }
 
     private EmpresaWeb actualizarEmpresaWebEntidad(EmpresaWebDTO empresaWebDTO,EmpresaWeb empresaWeb){
-        Usuario usuario= userRepository.findById(empresaWebDTO.getIdUser()).orElseThrow();
+        Usuario usuario= usuarioRepository.findById(empresaWebDTO.getIdUser()).orElseThrow();
 
         empresaWeb.setRuc(empresaWebDTO.getRuc());
         empresaWeb.setEstado(empresaWebDTO.getEstado());

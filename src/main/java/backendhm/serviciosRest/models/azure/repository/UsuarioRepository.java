@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Usuario,Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
    // @Query(value = "SELECT * FROM users WHERE username=:nombre;", nativeQuery=true)
     Optional<Usuario> findByUsername(String username);
 

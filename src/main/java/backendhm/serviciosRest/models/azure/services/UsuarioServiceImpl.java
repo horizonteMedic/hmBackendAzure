@@ -7,7 +7,7 @@ import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.Usuario;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.IEmpleadoRepository;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import backendhm.serviciosRest.models.azure.dtos.UsuarioDTO;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements IUsuarioService{
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private IRespuestaBackendRepository respuestaBackendRepository;
@@ -37,19 +37,19 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Override
     public List<UsuarioDTO> listadoUsuario() {
-        List<Usuario> listaUsuarios=userRepository.findAll();
+        List<Usuario> listaUsuarios= usuarioRepository.findAll();
         return listaUsuarios.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<UsuarioDTO> listadoUsuarioPorIDEmpleado(long idEmpleado) {
-        List<Usuario> listaUsuarios = userRepository.listadoUsuarioPorIDEmpleado(idEmpleado).orElseThrow();
+        List<Usuario> listaUsuarios = usuarioRepository.listadoUsuarioPorIDEmpleado(idEmpleado).orElseThrow();
         return listaUsuarios.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
 
     @Override
     public UsuarioDTO obtenerUsuarioPorID(long id) {
-        Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
+        Usuario usuario= usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
         return mapearDTO(usuario);
     }
 
@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
     public RespuestaBackendDTO actualizarParteUsuario(UsuarioDTO usuarioDTO, long id) {
 
         System.out.println("El objeto usuarioDTO ES: "+usuarioDTO+", el id_user es:"+id);
-        Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
+        Usuario usuario= usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
         RespuestaBackend respuestaBackend=respuestaBackendRepository.actualizarUserParcial(usuarioDTO.getEstado(), usuario.getUsername(), usuarioDTO.getId_empleado(), id).orElseThrow();
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         respuestaBackendDTO.setId(respuestaBackend.getId());
@@ -67,16 +67,16 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Override
     public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, long id) {
-        Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
-        Usuario usuarioActual=userRepository.save(actualizarUsuarioEntidad(usuarioDTO,usuario));
+        Usuario usuario= usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
+        Usuario usuarioActual= usuarioRepository.save(actualizarUsuarioEntidad(usuarioDTO,usuario));
 
         return mapearDTO(usuarioActual);
     }
 
     @Override
     public void eliminarUsuario(long id) {
-        Usuario usuario=userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
-        userRepository.delete(usuario);
+        Usuario usuario= usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
+        usuarioRepository.delete(usuario);
     }
 
     private UsuarioDTO mapearDTO(Usuario usuario){

@@ -1,7 +1,7 @@
 package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.entity.Usuario;
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import backendhm.serviciosRest.models.azure.dtos.EmailDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
@@ -29,7 +29,7 @@ public class EmailServiceImpl implements IEmailService{
     private IUsuarioService usuarioService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsuarioRepository usuarioRepository;
 
     public EmailServiceImpl(JavaMailSender javaMailSender, TemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
@@ -80,7 +80,7 @@ public class EmailServiceImpl implements IEmailService{
 
     @Override
     public RespuestaBackendDTO actualizarUsuario(String emailUser, String password) {
-        Usuario usuario=userRepository.detalleUsuario(emailUser).orElseThrow();
+        Usuario usuario= usuarioRepository.detalleUsuario(emailUser).orElseThrow();
         UsuarioDTO usuarioDTO=mapearDTO(usuario);
         long id=usuarioDTO.getIdUser();
         usuarioDTO.setPassword(password);

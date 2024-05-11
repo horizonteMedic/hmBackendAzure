@@ -1,6 +1,6 @@
 package backendhm.serviciosRest.models.azure.config;
 
-import backendhm.serviciosRest.models.azure.repository.UserRepository;
+import backendhm.serviciosRest.models.azure.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     @Autowired
-    private  UserRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
     {
