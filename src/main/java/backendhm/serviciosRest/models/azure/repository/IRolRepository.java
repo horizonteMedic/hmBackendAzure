@@ -16,4 +16,6 @@ public interface IRolRepository extends JpaRepository<Rol,Long> {
 
     @Query(value = "select * from rol where estado = true;", nativeQuery=true)
     Optional<List<Rol>> listadoRolesHabilitados();
+    @Query(value = "select *from listado_roles_asignados_por_username(?);", nativeQuery=true)
+    Optional<List<Rol>> listadoRolesPorUsername(String Username);
 }

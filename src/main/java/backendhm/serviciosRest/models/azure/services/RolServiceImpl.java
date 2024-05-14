@@ -45,6 +45,12 @@ public class RolServiceImpl implements IRolService{
     }
 
     @Override
+    public List<RolDTO> listadoRolesUsername(String userName) {
+        List<Rol> listadoRoles=rolRepository.listadoRolesPorUsername(userName).orElseThrow();
+        return listadoRoles.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public RolDTO obtenerRolPorID(long id) {
         Rol rol=rolRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Rol","id",id));
         return mapearDTO(rol);

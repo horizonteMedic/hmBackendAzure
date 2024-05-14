@@ -9,6 +9,9 @@ public interface IRolService {
     List<RolDTO> listadoRol();
     List<RolDTO> listadoRolesHabilitados();
     List<RolDTO> listadoRolesIdUser(long idUser);
+
+    List<RolDTO> listadoRolesUsername(String userName);
+
     RolDTO obtenerRolPorID(long id);
     RolDTO actualizarRol(RolDTO rolDTO, long id);
     void eliminarRol(long id);

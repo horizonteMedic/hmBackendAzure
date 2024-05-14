@@ -210,6 +210,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     public void eliminarArchivoServidor(long id) {
         ArchivosServidor archivosServidor= archivoServidorRepository.
                 findById(id).orElseThrow(()->new ResourceNotFoundException("ArchivoServidor","id_archivo_servidor",id));
+        eliminarArchivo(archivosServidor.getHistoriaClinica(), archivosServidor.getId_tipo_archivo());
         archivoServidorRepository.delete(archivosServidor);
     }
 
@@ -272,5 +273,30 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
         return archivosServidor;
     }
+    public ArchivoServidorDTO eliminarArchivo(String hc, long ta) {
+        ArchivosServidor archivosServidor=archivoServidorRepository.detalleArchivoServidor(hc,ta).
+                orElseThrow();
+        System.out.println("El archivo de base 64 : ");
+        String resultService ="";
+        String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
+        String nameContainer="files1";
+        String  base64File="";
+        try {
+            CloudStorageAccount account = CloudStorageAccount.parse(storageConnectionAzure);
+            CloudBlobClient serviceClient = account.createCloudBlobClient();
+            CloudBlobContainer container = serviceClient.getContainerReference(nameContainer);
+            final String NOMBRE_ARCHIVO_TEMP = "temp.pdf";
 
+            CloudBlockBlob blockBlob = container.getBlockBlobReference(archivosServidor.getRutaArchivo());
+            blockBlob.delete();
+
+
+        }catch (Exception e){
+            resultService = e.getMessage();
+        }
+        ArchivoServidorDTO archivoServidorDTO=mapearDTO(archivosServidor);
+        archivoServidorDTO.setFileBase64(base64File);
+
+        return archivoServidorDTO;
+    }
 }
