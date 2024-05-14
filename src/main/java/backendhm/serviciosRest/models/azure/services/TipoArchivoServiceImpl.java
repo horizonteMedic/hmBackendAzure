@@ -74,6 +74,7 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
         tipoArchivoDTO.setUserRegistro(tipoArchivo.getUserRegistro());
         tipoArchivoDTO.setFechaActualizacion(tipoArchivo.getFechaActualizacion());
         tipoArchivoDTO.setUserActualizacion(tipoArchivo.getUserActualizacion());
+        tipoArchivoDTO.setNomenclatura(tipoArchivo.getNomenclatura());
         return tipoArchivoDTO;
     }
 
@@ -89,6 +90,7 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
         tipoArchivo.setUserRegistro(tipoArchivoDTO.getUserRegistro());
         tipoArchivo.setFechaActualizacion(tipoArchivoDTO.getFechaActualizacion());
         tipoArchivo.setUserActualizacion(tipoArchivoDTO.getUserActualizacion());
+        tipoArchivo.setNomenclatura(tipoArchivoDTO.getNomenclatura());
 
         return tipoArchivo;
     }
@@ -103,6 +105,7 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
         tipoArchivo.setUserRegistro(tipoArchivoDTO.getUserRegistro());
         tipoArchivo.setFechaActualizacion(tipoArchivoDTO.getFechaActualizacion());
         tipoArchivo.setUserActualizacion(tipoArchivoDTO.getUserActualizacion());
+        tipoArchivo.setNomenclatura(tipoArchivoDTO.getNomenclatura());
 
         return tipoArchivo;
     }

@@ -9,6 +9,8 @@ public interface IEmpleadoService {
     EmpleadoDTO crearEmpleado(EmpleadoDTO empleadoDTO);
 
     List<EmpleadoDTO> listadoEmpleados();
+
+    List<EmpleadoDTO> listadoEmpleadosPorUserName(String userName);
     EmpleadoDTO obtenerEmpleadoPorID(long id);
 
     DatosEmpleadoDTO obtenerDatosEmpleadoPorNroDoc(long nroDoc);

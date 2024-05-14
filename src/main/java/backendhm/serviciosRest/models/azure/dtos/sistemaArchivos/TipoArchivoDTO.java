@@ -24,6 +24,8 @@ public class TipoArchivoDTO {
 
     private String codigo;
 
+    private String nomenclatura;
+
     private Boolean estado;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

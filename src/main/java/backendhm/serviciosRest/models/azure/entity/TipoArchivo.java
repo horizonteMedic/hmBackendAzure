@@ -1,6 +1,5 @@
 package backendhm.serviciosRest.models.azure.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +33,9 @@ public class TipoArchivo implements Serializable {
 
     @Column(length = 20)
     private String codigo;
+
+    @Column(length = 10)
+    private String nomenclatura;
 
     private Boolean estado;
 

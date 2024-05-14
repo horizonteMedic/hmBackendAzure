@@ -35,6 +35,12 @@ public class EmpleadoController {
         return ResponseEntity.ok(empleadoService.obtenerDatosEmpleadoPorNroDoc(nroDoc));
     }
 
+    @GetMapping("/listadoBusquedaUsername/{userName}")
+    public ResponseEntity<List<EmpleadoDTO>> listadoEmpleadoUserName(@PathVariable(name = "userName") String userName) {
+
+        return ResponseEntity.ok(empleadoService.listadoEmpleadosPorUserName(userName));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EmpleadoDTO> obtenerEmpleadoPorID(@PathVariable(name = "id") long id) {
 

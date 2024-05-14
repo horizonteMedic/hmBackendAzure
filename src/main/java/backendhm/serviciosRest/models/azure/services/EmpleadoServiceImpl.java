@@ -39,6 +39,12 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
     }
 
     @Override
+    public List<EmpleadoDTO> listadoEmpleadosPorUserName(String userName) {
+        List<Empleado> listadoEmpleado= empleadoRepository.listadoEmpleadosPorUsername(userName).orElseThrow();
+        return listadoEmpleado.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public EmpleadoDTO obtenerEmpleadoPorID(long id) {
 
         Empleado empleado=empleadoRepository.
