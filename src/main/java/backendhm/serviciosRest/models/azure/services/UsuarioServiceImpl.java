@@ -58,7 +58,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
         System.out.println("El objeto usuarioDTO ES: "+usuarioDTO+", el id_user es:"+id);
         Usuario usuario= usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Usuario","id user",id));
-        RespuestaBackend respuestaBackend=respuestaBackendRepository.actualizarUserParcial(usuarioDTO.getEstado(), usuario.getUsername(), usuarioDTO.getId_empleado(), id).orElseThrow();
+        RespuestaBackend respuestaBackend=respuestaBackendRepository.actualizarUserParcial(usuarioDTO.getEstado(), usuarioDTO.getUsername(), usuarioDTO.getId_empleado(), id).orElseThrow();
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         respuestaBackendDTO.setId(respuestaBackend.getId());
         respuestaBackendDTO.setMensaje(respuestaBackend.getMensaje());
