@@ -14,6 +14,8 @@ public interface IArchivoServidorRepository extends JpaRepository<ArchivosServid
     @Query(value = "select *from archivos_servidores where historia_clinica=? and id_tipo_archivo=?;", nativeQuery=true)
     Optional<ArchivosServidor> detalleArchivoServidor(String hc, long ta);
 
-    @Query(value = "select *from archivos_servidores where historia_clinica=?;", nativeQuery=true)
-    Optional<List<ArchivosServidor>> listadoArchivosPorHC(String hc);
+    @Query(value = "select ars.* from archivos_servidores as ars where ars.historia_clinica=? and \n" +
+            "\t ars.id_tipo_archivo in (select taa.id_tipo_archivo_asignar from tipo_archivo_asignado as taa inner join usuario_rol as ur\n" +
+            "\t on taa.id_rol=ur.id_rol where ur.id_user=? );", nativeQuery=true)
+    Optional<List<ArchivosServidor>> listadoArchivosPorHCYIdUser(String hc, long idUser);
 }

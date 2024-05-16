@@ -12,7 +12,9 @@ import java.util.Optional;
 public interface ITipoArchivoRepository extends JpaRepository<TipoArchivo,Long> {
 
 
-    @Query(value = "select *from tipo_archivo where estado=true;", nativeQuery=true)
-    Optional<List<TipoArchivo>> listadoTipoArchivosHabilitados();
+    @Query(value = "select ta.* from tipo_archivo as ta where ta.estado=true and ta.id_tipo_archivo in(\n" +
+            "\t select taa.id_tipo_archivo_asignar from tipo_archivo_asignado as taa inner join usuario_rol as ur\n" +
+            "\t on taa.id_rol=ur.id_rol where ur.id_user=? );", nativeQuery=true)
+    Optional<List<TipoArchivo>> listadoTipoArchivosConFiltroIdUser(long idUser);
 
 }

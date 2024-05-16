@@ -159,8 +159,8 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     }
 
     @Override
-    public List<ArchivoServidorDTO> listadoArchivoPorHC(String hc) {
-        List<ArchivosServidor> listaArchivos=archivoServidorRepository.listadoArchivosPorHC(hc).orElseThrow();
+    public List<ArchivoServidorDTO> listadoArchivoPorHC(String hc, long idUser) {
+        List<ArchivosServidor> listaArchivos=archivoServidorRepository.listadoArchivosPorHCYIdUser(hc,idUser).orElseThrow();
 
         return listaArchivos.stream().map(this::mapearDTO).collect(Collectors.toList());
     }

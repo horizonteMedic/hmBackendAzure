@@ -14,7 +14,7 @@ public interface IArchivoServidorService {
     ArchivoServidorDTO creararchivoServidor(ArchivoServidorDTO archivoServidorDTO);
     List<ArchivoServidorDTO> listadoArchivoServidor();
 
-    List<ArchivoServidorDTO> listadoArchivoPorHC(String hc);
+    List<ArchivoServidorDTO> listadoArchivoPorHC(String hc, long idUser);
     ArchivoServidorDTO obtenerArchivoServidorPorID(long id);
     ArchivoServidorDTO actualizarArchivoServidor(ArchivoServidorDTO archivoServidorDTO, long id);
     void eliminarArchivoServidor(long id);

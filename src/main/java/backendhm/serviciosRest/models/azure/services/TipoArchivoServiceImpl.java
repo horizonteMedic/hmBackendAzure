@@ -34,10 +34,10 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
     }
 
     @Override
-    public List<TipoArchivoDTO> listadoTipoArchivoHabilitados() {
-        List<TipoArchivo> listadoTipoArchivoHabilitado=archivoRepository.listadoTipoArchivosHabilitados().orElseThrow();
-        return listadoTipoArchivoHabilitado.stream().map(this::mapearDTO).collect(Collectors.toList());
-    }
+    public List<TipoArchivoDTO> listadoTiposArchivosIdUser(long idUser) {
+        List<TipoArchivo> listaTipoArchivo=archivoRepository.listadoTipoArchivosConFiltroIdUser(idUser).orElseThrow();
+        return listaTipoArchivo.stream().map(this::mapearDTO).collect(Collectors.toList());    }
+
 
     @Override
     public TipoArchivoDTO obtenerTipoArchivoPorID(long id) {

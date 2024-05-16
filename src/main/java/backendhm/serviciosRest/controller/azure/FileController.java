@@ -36,10 +36,10 @@ public class FileController {
         return ResponseEntity.ok(archivoServidorService.listadoArchivoServidor());
     }
 
-    @GetMapping("/busquedaPorHC/{hc}")
-    public ResponseEntity<List<ArchivoServidorDTO>> obtenerListadoArchivosPorHc(@PathVariable(name = "hc") String hc){
+    @GetMapping("/busquedaPorHC/{hc}/{idUser}")
+    public ResponseEntity<List<ArchivoServidorDTO>> obtenerListadoArchivosPorHc(@PathVariable String hc, @PathVariable Long idUser){
 
-        return ResponseEntity.ok(archivoServidorService.listadoArchivoPorHC(hc));
+        return ResponseEntity.ok(archivoServidorService.listadoArchivoPorHC(hc,idUser));
     }
 
     @GetMapping("/{id}")
