@@ -88,23 +88,23 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
 
         empleadoDTO.setId_empleado(empleado.getId());
         empleadoDTO.setNumDocumento(empleado.getNumDocumento());
-        empleadoDTO.setTipoDoc(empleado.getTipoDoc());
-        empleadoDTO.setNombres(empleado.getNombres());
-        empleadoDTO.setApellidos(empleado.getApellidos());
-        empleadoDTO.setCargo(empleado.getCargo());
-        empleadoDTO.setUbigeo(empleado.getUbigeo());
-        empleadoDTO.setSexo(empleado.getSexo());
-        empleadoDTO.setCip(empleado.getCip());
-        empleadoDTO.setCorreoElect(empleado.getCorreoElect());
+        empleadoDTO.setTipoDoc(empleado.getTipoDoc().toUpperCase());
+        empleadoDTO.setNombres(empleado.getNombres().toUpperCase());
+        empleadoDTO.setApellidos(empleado.getApellidos().toUpperCase());
+        empleadoDTO.setCargo(empleado.getCargo().toUpperCase());
+        empleadoDTO.setUbigeo(empleado.getUbigeo().toUpperCase());
+        empleadoDTO.setSexo(empleado.getSexo().toUpperCase());
+        empleadoDTO.setCip(empleado.getCip().toUpperCase());
+        empleadoDTO.setCorreoElect(empleado.getCorreoElect().toUpperCase());
         empleadoDTO.setCelular(empleado.getCelular());
         empleadoDTO.setTelFijo(empleado.getTelFijo());
-        empleadoDTO.setDireccion(empleado.getDireccion());
+        empleadoDTO.setDireccion(empleado.getDireccion().toUpperCase());
         empleadoDTO.setEstado(empleado.getEstado());
         empleadoDTO.setFechaNacimiento(empleado.getFechaNacimiento());
         empleadoDTO.setFechaRegistro(empleado.getFechaRegistro());
-        empleadoDTO.setUserRegistro(empleado.getUserRegistro());
+        empleadoDTO.setUserRegistro(empleado.getUserRegistro().toUpperCase());
         empleadoDTO.setFechaActualizacion(empleado.getFechaActualizacion());
-        empleadoDTO.setUserActualizacion(empleado.getUserActualizacion());
+        empleadoDTO.setUserActualizacion(empleado.getUserActualizacion().toUpperCase());
 
         return empleadoDTO;
     }
