@@ -107,7 +107,7 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
         if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") )
         {
             if(sede.contains("T-NP") || sede.contains("HNCY")) {
-
+                System.out.println("el request de detalle hc es:"+request);
                 detalleHistorialPaciente = detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser(), request.getDniUser()).orElseThrow();
                 return detalleHistorialPaciente.stream().map(this::mapearDTOdetalleHistorialPaciente).collect(Collectors.toList());
 
