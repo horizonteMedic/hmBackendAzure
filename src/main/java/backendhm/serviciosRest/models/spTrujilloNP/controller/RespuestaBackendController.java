@@ -20,14 +20,14 @@ public class RespuestaBackendController {
     @PostMapping("/datosPacienteNP")
     public ResponseEntity<RespuestaBackendDTO> datosP(@RequestBody RequestDatosPacienteDTO rdp) {
 
-            return new ResponseEntity<>(respuestaBackendService.registrarDatosPaciente(rdp),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(respuestaBackendService.registrarDatosPaciente(rdp),HttpStatus.OK);
 
     }
 
     @PostMapping("/historiaClinica")
     public ResponseEntity<RespuestaBackendDTO> registrarHistoriaC(@RequestBody RequestNOrdenOcupacionalDTO rdp) {
         System.out.println("en el controller:"+rdp);
-        return new ResponseEntity<>(respuestaBackendService.registroHistoriaClinica(rdp),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(respuestaBackendService.registroHistoriaClinica(rdp),HttpStatus.OK);
 
     }
 }

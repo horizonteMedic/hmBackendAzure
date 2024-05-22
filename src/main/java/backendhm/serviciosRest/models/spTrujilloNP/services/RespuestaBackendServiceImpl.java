@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional("trujilloNPTransactionManagerFactory")
 @Service
+@Transactional("trujilloNPTransactionManagerFactory")
 public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     @Autowired
