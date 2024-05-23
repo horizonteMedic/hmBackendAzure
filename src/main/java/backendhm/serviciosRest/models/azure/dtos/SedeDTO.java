@@ -21,6 +21,8 @@ public class SedeDTO {
 
     private String codigoSede;
 
+    private long capacidadPaciente;
+
     private Boolean estado;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

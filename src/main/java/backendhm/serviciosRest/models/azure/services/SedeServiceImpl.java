@@ -64,6 +64,7 @@ public class SedeServiceImpl implements ISedeService{
         sedeDTO.setId(sedeHmWeb.getId());
         sedeDTO.setNombreSede(sedeHmWeb.getNombreSede());
         sedeDTO.setEstado(sedeHmWeb.getEstado());
+        sedeDTO.setCapacidadPaciente(sedeHmWeb.getCapacidadPaciente());
         sedeDTO.setFechaRegistro(sedeHmWeb.getFechaRegistro());
         sedeDTO.setUserRegistro(sedeHmWeb.getUserRegistro());
         sedeDTO.setFechaActualizacion(sedeHmWeb.getFechaActualizacion());
@@ -79,6 +80,7 @@ public class SedeServiceImpl implements ISedeService{
         sedeHmWeb.setNombreSede(sedeDTO.getNombreSede());
         sedeHmWeb.setEstado(sedeDTO.getEstado());
         sedeHmWeb.setFechaRegistro(sedeDTO.getFechaRegistro());
+        sedeHmWeb.setCapacidadPaciente(sedeDTO.getCapacidadPaciente());
         sedeHmWeb.setUserRegistro(sedeDTO.getUserRegistro());
         sedeHmWeb.setFechaActualizacion(sedeDTO.getFechaActualizacion());
         sedeHmWeb.setUserActualizacion(sedeDTO.getUserActualizacion());
@@ -92,6 +94,7 @@ public class SedeServiceImpl implements ISedeService{
         sedeHmWeb.setNombreSede(sedeDTO.getNombreSede());
         sedeHmWeb.setEstado(sedeDTO.getEstado());
         sedeHmWeb.setFechaRegistro(sedeDTO.getFechaRegistro());
+        sedeHmWeb.setCapacidadPaciente(sedeDTO.getCapacidadPaciente());
         sedeHmWeb.setUserRegistro(sedeDTO.getUserRegistro());
         sedeHmWeb.setFechaActualizacion(sedeDTO.getFechaActualizacion());
         sedeHmWeb.setUserActualizacion(sedeDTO.getUserActualizacion());

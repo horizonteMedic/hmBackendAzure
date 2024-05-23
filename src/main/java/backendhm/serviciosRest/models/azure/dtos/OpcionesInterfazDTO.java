@@ -18,6 +18,8 @@ public class OpcionesInterfazDTO {
 
     private String nombre;
 
+    private String rutaVista;
+
     private String descripcion;
 
     private Boolean estado;

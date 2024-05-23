@@ -81,6 +81,7 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
 
         opcionesInterfazDTO.setId(opcionesInterfazPrivilegios.getId());
         opcionesInterfazDTO.setNombre(opcionesInterfazPrivilegios.getNombre());
+        opcionesInterfazDTO.setRutaVista(opcionesInterfazPrivilegios.getRutaVista());
         opcionesInterfazDTO.setDescripcion(opcionesInterfazPrivilegios.getDescripcion());
         opcionesInterfazDTO.setEstado(opcionesInterfazPrivilegios.getEstado());
         opcionesInterfazDTO.setNivel(opcionesInterfazPrivilegios.getNivel());
@@ -99,6 +100,7 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
         opcionesInterfazPrivilegios.setNombre(opcionesInterfazDTO.getNombre());
         opcionesInterfazPrivilegios.setDescripcion(opcionesInterfazDTO.getDescripcion());
         opcionesInterfazPrivilegios.setEstado(opcionesInterfazDTO.getEstado());
+        opcionesInterfazPrivilegios.setRutaVista(opcionesInterfazDTO.getRutaVista());
         opcionesInterfazPrivilegios.setNivel(opcionesInterfazDTO.getNivel());
         opcionesInterfazPrivilegios.setIdPadre(opcionesInterfazDTO.getIdPadre());
         opcionesInterfazPrivilegios.setFechaRegistro(opcionesInterfazDTO.getFechaRegistro());
@@ -114,6 +116,7 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
         opcionesInterfazPrivilegios.setNombre(opcionesInterfazDTO.getNombre());
         opcionesInterfazPrivilegios.setDescripcion(opcionesInterfazDTO.getDescripcion());
         opcionesInterfazPrivilegios.setEstado(opcionesInterfazDTO.getEstado());
+        opcionesInterfazPrivilegios.setRutaVista(opcionesInterfazDTO.getRutaVista());
         opcionesInterfazPrivilegios.setNivel(opcionesInterfazDTO.getNivel());
         opcionesInterfazPrivilegios.setIdPadre(opcionesInterfazDTO.getIdPadre());
         opcionesInterfazPrivilegios.setFechaRegistro(opcionesInterfazDTO.getFechaRegistro());

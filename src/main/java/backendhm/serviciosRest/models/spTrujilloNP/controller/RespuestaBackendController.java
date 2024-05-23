@@ -26,7 +26,6 @@ public class RespuestaBackendController {
 
     @PostMapping("/historiaClinica")
     public ResponseEntity<RespuestaBackendDTO> registrarHistoriaC(@RequestBody RequestNOrdenOcupacionalDTO rdp) {
-        System.out.println("en el controller:"+rdp);
         return new ResponseEntity<>(respuestaBackendService.registroHistoriaClinica(rdp),HttpStatus.OK);
 
     }

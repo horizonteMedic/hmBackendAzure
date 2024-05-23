@@ -1,7 +1,6 @@
 package backendhm.serviciosRest.models.azure.services.sistemaArchivos;
 
 import backendhm.serviciosRest.models.azure.dtos.SedePorUserDTO;
-import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.SedeHmWeb;
 import backendhm.serviciosRest.models.azure.repository.ISedeHmRepository;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
@@ -60,9 +59,9 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
         }
 
         List<HistorialPACIENTE> listadoHP=null;
-        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") )
+        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD")|| sede.contains("HMAC") )
         {
-            if(sede.contains("T-NP") || sede.contains("HNCY")) {
+            if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("HMAC")) {
                 listadoHP = pruebRepository.obtenerHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser()).orElseThrow();
                 return listadoHP.stream().map(this::mapearDTO).collect(Collectors.toList());
             }
@@ -104,10 +103,9 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
             request.setTipo(tipo);
 
         }
-        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") )
+        if(sede.contains("T-NP") || sede.contains("HNCY") || sede.contains("T-SD") || sede.contains("HMAC"))
         {
-            if(sede.contains("T-NP") || sede.contains("HNCY")) {
-                System.out.println("el request de detalle hc es:"+request);
+            if(sede.contains("T-NP") || sede.contains("HNCY")|| sede.contains("HMAC")) {
                 detalleHistorialPaciente = detalleHistorialUsuarioRepository.obtenerdetalleHistorialPacienteUsuariosNP(request.getUserName(), request.getFechaInicio(), request.getFechaFin(), request.getTipo(), request.getRucContrata(), request.getRucEmpresa(), request.getSedeUser(), request.getDniUser()).orElseThrow();
                 return detalleHistorialPaciente.stream().map(this::mapearDTOdetalleHistorialPaciente).collect(Collectors.toList());
 

@@ -19,6 +19,8 @@ public class AuthController {
     @PostMapping(value = "login")
     public ResponseEntity<RespuestaBackendDTO> login(@RequestBody LoginRequest request)
     {
+        request.setNombre(request.getNombre().trim());
+        request.setPassword(request.getPassword().trim());
         return ResponseEntity.ok(authService.login(request));
     }
 

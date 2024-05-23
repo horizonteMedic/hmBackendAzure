@@ -29,6 +29,8 @@ public class SedeHmWeb implements Serializable {
     @Column(name = "codigo_sede",length = 4,nullable = false)
     private String codigoSede;
 
+    private long capacidadPaciente;
+
     private Boolean estado;
 
     @Temporal(TemporalType.DATE)

@@ -26,6 +26,9 @@ public class OpcionesInterfazPrivilegios implements Serializable {
     @Column(length = 50)
     private String nombre;
 
+    @Column(length = 100)
+    private String rutaVista;
+
     @Column(length = 200)
     private String descripcion;
 
