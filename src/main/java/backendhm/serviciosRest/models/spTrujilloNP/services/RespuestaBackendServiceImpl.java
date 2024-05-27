@@ -17,6 +17,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     @Autowired
     private IRespuestaBackendNPRepository respuestaBackendNPRepository;
 
+
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
         RespuestaBackendNP respuestaBackend=
@@ -37,6 +38,13 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
                         rdp.getRxcDorsoLumbar(), rdp.getRxcKLumbar(), rdp.getRxcLumbosacra(), rdp.getRxcPlomos(), rdp.getMercurioo(), rdp.getReferencia()).orElseThrow();
 
             return mapearDTO(respuestaBackendNP);
+    }
+
+    @Override
+    public RespuestaBackendDTO busquedaDniPorNOrden(long nOrden) {
+        RespuestaBackendNP respuestaBackendNP=respuestaBackendNPRepository.busquedaDniPorNorden(nOrden).orElseThrow();
+
+        return mapearDTO(respuestaBackendNP);
     }
 
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){

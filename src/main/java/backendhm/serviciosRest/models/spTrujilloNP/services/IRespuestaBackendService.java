@@ -8,5 +8,6 @@ public interface IRespuestaBackendService {
     RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO requestDatosPacienteDTO);
 
     RespuestaBackendDTO registroHistoriaClinica(RequestNOrdenOcupacionalDTO requestNOrdenOcupacionalDTO);
+    RespuestaBackendDTO busquedaDniPorNOrden(long nOrden);
 
 }

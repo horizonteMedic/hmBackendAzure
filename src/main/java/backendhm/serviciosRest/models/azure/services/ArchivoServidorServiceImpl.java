@@ -1,8 +1,10 @@
 package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
+import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.blob.CloudBlob;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
@@ -17,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.file.Files;
+import java.io.IOException;
+import java.nio.file.*;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,13 +36,16 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     private IRespuestaBackendRepository respuestaBackendRepository;
 
     @Autowired
-    private ITipoArchivoRepository tipoArchivoRepository;
+    private IRespuestaBackendService respuestaBackendServiceNPService;
+
+    @Autowired
+    private ITipoArchivoService tipoArchivoService;
 
     @Override
     public ArchivoServidorDTO detalleArchivoServidor(String hc, long ta) {
         ArchivosServidor archivosServidor=archivoServidorRepository.detalleArchivoServidor(hc,ta).
                 orElseThrow();
-        System.out.println("El archivo de base 64 : ");
+      //  System.out.println("El archivo de base 64 : ");
         String resultService ="";
         String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
         String nameContainer="files1";
@@ -54,7 +61,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             blockBlob.downloadToFile(file.getAbsolutePath());
             byte[] fileContent = Files.readAllBytes(file.toPath());
             base64File = Base64.getEncoder().encodeToString(fileContent);
-            System.out.println("El archivo de base 64 : "+base64File);
+        //    System.out.println("El archivo de base 64 : "+base64File);
             resultService = "Download success!!!";
 
         }catch (Exception e){
@@ -68,6 +75,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     @Override
     public RespuestaBackendDTO registrarArchivoOActualizar(ArchivoServidorDTO archivoServidorDTO) {
+
         RespuestaBackend respuestaBackend=respuestaBackendRepository.existenciaDelArchivo(archivoServidorDTO.getHistoriaClinica(),archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         ArchivoServidorDTO archivosServidor=new ArchivoServidorDTO();
@@ -83,10 +91,58 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             ArchivosServidor archivosServidor1=archivoServidorRepository.detalleArchivoServidor(archivoServidorDTO.getHistoriaClinica(), archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
             ArchivoServidorDTO archivoServidorDTO1=actualizarArchivoServidor(archivoServidorDTO,archivosServidor1.getId());
             respuestaBackendDTO.setId(Long.valueOf(2));
-            respuestaBackendDTO.setMensaje("Se actualizo con exito!");
+            respuestaBackendDTO.setMensaje("Se actualizo con exito!!");
         }
 
         return respuestaBackendDTO;
+    }
+
+    @Override
+    public RespuestaBackendDTO cargaMasivaArchivos(String sede) {
+        String ruta="";
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("C:\\Users\\josue\\Documents\\CARGA MASIVA\\valido\\INFORME MEDICO"))) {
+                int i=1;
+            for (Path file : stream) {
+                ruta=file.getFileName().toString();
+                System.out.println("la ruta del archivo es: "+file.getFileName());
+                String base64=archivoAbase64(ruta);
+                //System.out.println("base 64:"+archivoAbase64(ruta));
+                String[] parts = ruta.split("-");
+                String parte1=parts[0].trim();
+                String parte2=parts[1].trim();
+
+                //System.out.println(file.getFileName());
+                //System.out.println(parte1);
+                //System.out.println(parte2);
+                TipoArchivoDTO tipoArchivoDTO=tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
+                backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO
+                        respuestaBackendDTO =respuestaBackendServiceNPService.busquedaDniPorNOrden(Long.parseLong(parte1));
+                //System.out.println(respuestaBackendDTO);
+                //System.out.println(tipoArchivoDTO);
+                ArchivoServidorDTO archivoServidorDTO= new ArchivoServidorDTO();
+                archivoServidorDTO.setRutaArchivo("");
+                archivoServidorDTO.setNombreArchivo(ruta);
+                archivoServidorDTO.setDni(respuestaBackendDTO.getId());
+                archivoServidorDTO.setHistoriaClinica(sede+"-"+parte1);
+                archivoServidorDTO.setOrden(Long.valueOf(parte1));
+                archivoServidorDTO.setServidor("azure");
+                archivoServidorDTO.setEstado(true);
+                archivoServidorDTO.setFechaRegistro(LocalDate.parse("2024-05-23"));
+                archivoServidorDTO.setUserRegistro("developer");
+                archivoServidorDTO.setId_tipo_archivo(tipoArchivoDTO.getId());
+                archivoServidorDTO.setRutaArchivo(ruta);
+                archivoServidorDTO.setFileBase64(base64);
+                //System.out.println("El archivo dto a cargar es :"+archivoServidorDTO);
+                RespuestaBackendDTO respuestaBackendDTO1=registrarArchivoOActualizar(archivoServidorDTO);
+                //System.out.println("la respuesta de registrar o actualizar es:"+respuestaBackendDTO1);
+                System.out.println("Archivos cargados correctamente:"+i+" , nombre archivo: "+archivoServidorDTO.getNombreArchivo());
+                i++;
+            }
+        } catch (IOException | DirectoryIteratorException ex) {
+            System.err.println(ruta);
+        }
+        return null;
     }
 
     @Override
@@ -119,6 +175,13 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         ArchivoServidorDTO archivoServidorDTORespuesta=mapearDTO(archivosServidorNuevo);
 
         return archivoServidorDTORespuesta;
+    }
+
+    public String archivoAbase64(String path) throws IOException {
+
+        byte[] bytes=Files.readAllBytes(Paths.get("C:\\Users\\josue\\Documents\\CARGA MASIVA\\valido\\INFORME MEDICO\\"+path));
+        String base64Dtring=Base64.getEncoder().encodeToString(bytes);
+        return base64Dtring;
     }
 
     public ArchivoServidorDTO usarActualizarArchivo(ArchivoServidorDTO archivoServidorDTO) {
@@ -169,7 +232,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     public ArchivoServidorDTO obtenerArchivoServidorPorID(long id) {
         ArchivosServidor archivosServidor=archivoServidorRepository.
                 findById(id).orElseThrow(()->new ResourceNotFoundException("ArchivoServidor","id_archivo_servidor",id));
-        System.out.println("El archivo de base 64 : ");
+      //  System.out.println("El archivo de base 64 : ");
         String resultService ="";
         String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
         String nameContainer="files1";
@@ -185,7 +248,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             blockBlob.downloadToFile(file.getAbsolutePath());
             byte[] fileContent = Files.readAllBytes(file.toPath());
             base64File = Base64.getEncoder().encodeToString(fileContent);
-            System.out.println("El archivo de base 64 : "+base64File);
+          //  System.out.println("El archivo de base 64 : "+base64File);
             resultService = "Download success!!!";
 
         }catch (Exception e){
@@ -200,7 +263,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     public ArchivoServidorDTO actualizarArchivoServidor(ArchivoServidorDTO archivoServidorDTO, long id) {
         ArchivosServidor archivosServidor=archivoServidorRepository.
                 findById(id).orElseThrow(()->new ResourceNotFoundException("ArchivoServidor","id_archivo_servidor",id));
-        System.out.println("el valor del archivo servidor dentro de la funcion actualizarArchivoServidor"+archivosServidor);
+     //   System.out.println("el valor del archivo servidor dentro de la funcion actualizarArchivoServidor"+archivosServidor);
         ArchivosServidor archivosServidorActualizacion=archivoServidorRepository.save(actualizarArchivoServidorEntidad(archivoServidorDTO,archivosServidor));
 
         return mapearDTO(archivosServidorActualizacion);
@@ -276,7 +339,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     public ArchivoServidorDTO eliminarArchivo(String hc, long ta) {
         ArchivosServidor archivosServidor=archivoServidorRepository.detalleArchivoServidor(hc,ta).
                 orElseThrow();
-        System.out.println("El archivo de base 64 : ");
+      //  System.out.println("El archivo de base 64 : ");
         String resultService ="";
         String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
         String nameContainer="files1";

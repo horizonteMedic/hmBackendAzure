@@ -11,6 +11,8 @@ public interface IArchivoServidorService {
 
     RespuestaBackendDTO registrarArchivoOActualizar(ArchivoServidorDTO archivoServidorDTO);
 
+    RespuestaBackendDTO cargaMasivaArchivos(String sede);
+
     ArchivoServidorDTO creararchivoServidor(ArchivoServidorDTO archivoServidorDTO);
     List<ArchivoServidorDTO> listadoArchivoServidor();
 

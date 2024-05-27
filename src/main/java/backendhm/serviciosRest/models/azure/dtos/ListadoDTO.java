@@ -13,4 +13,6 @@ public class ListadoDTO {
     private long id;
 
     private String descripcion;
+
+    private String ruta;
 }

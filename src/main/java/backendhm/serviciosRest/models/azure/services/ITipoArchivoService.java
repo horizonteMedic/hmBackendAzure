@@ -9,6 +9,9 @@ public interface ITipoArchivoService {
     List<TipoArchivoDTO> listadoTipoArchivo();
     List<TipoArchivoDTO> listadoTiposArchivosIdUser(long idUser);
     TipoArchivoDTO obtenerTipoArchivoPorID(long id);
+
+    TipoArchivoDTO tipoArchivoPorNomencaltura(String nomenclatura);
+
     TipoArchivoDTO actualizarTipoArchivo(TipoArchivoDTO tipoArchivoDTO, long id);
     void eliminarTipoArchivo(long id);
 }

@@ -16,5 +16,6 @@ public interface ITipoArchivoRepository extends JpaRepository<TipoArchivo,Long> 
             "\t select taa.id_tipo_archivo_asignar from tipo_archivo_asignado as taa inner join usuario_rol as ur\n" +
             "\t on taa.id_rol=ur.id_rol where ur.id_user=? );", nativeQuery=true)
     Optional<List<TipoArchivo>> listadoTipoArchivosConFiltroIdUser(long idUser);
-
+    @Query(value = "select * from tipo_archivo where nomenclatura=?;", nativeQuery=true)
+    Optional<TipoArchivo> tipoArchivoPorNomencaltura(String nomencaltura);
 }

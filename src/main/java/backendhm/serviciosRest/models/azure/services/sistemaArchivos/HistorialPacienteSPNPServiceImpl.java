@@ -45,6 +45,7 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
 
     @Override
     public List<HistorialPacienteMultiservidorDto> listadoHistorialPaciente(RequestHistorialPacienteMultiservidor request) {
+        System.out.println("al entrar a la implementacion el request es:"+request);
         String sede=request.getSedeUser();
         String tipo=null;
         if(request.getRucEmpresa().length() >1){
@@ -66,7 +67,6 @@ public class HistorialPacienteSPNPServiceImpl implements  IHistorialPacienteSPNP
                 return listadoHP.stream().map(this::mapearDTO).collect(Collectors.toList());
             }
 
-            else
             if(sede.contains("T-SD"))
             {
 

@@ -74,6 +74,7 @@ public class OpcionInterfazServiceImpl implements IOpcionInterfazService{
 
         listadoDTO.setId(opcionesInterfazPrivilegios.getId());
         listadoDTO.setDescripcion(opcionesInterfazPrivilegios.getDescripcion());
+        listadoDTO.setRuta(opcionesInterfazPrivilegios.getRutaVista());
         return listadoDTO;
     }
     private OpcionesInterfazDTO mapearDTO(OpcionesInterfazPrivilegios opcionesInterfazPrivilegios){

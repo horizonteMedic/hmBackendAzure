@@ -47,6 +47,12 @@ public class TipoArchivoServiceImpl implements ITipoArchivoService{
     }
 
     @Override
+    public TipoArchivoDTO tipoArchivoPorNomencaltura(String nomenclatura) {
+        TipoArchivo tipoArchivo=archivoRepository.tipoArchivoPorNomencaltura(nomenclatura).orElseThrow();
+        return mapearDTO(tipoArchivo);
+    }
+
+    @Override
     public TipoArchivoDTO actualizarTipoArchivo(TipoArchivoDTO tipoArchivoDTO, long id) {
         TipoArchivo tipoArchivo=archivoRepository.findById(id).
                 orElseThrow(()-> new ResourceNotFoundException("Tipo Archivo","id Tipo archivo",id));

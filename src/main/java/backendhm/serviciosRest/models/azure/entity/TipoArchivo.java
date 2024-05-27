@@ -34,7 +34,7 @@ public class TipoArchivo implements Serializable {
     @Column(length = 20)
     private String codigo;
 
-    @Column(length = 10)
+    @Column(length = 30)
     private String nomenclatura;
 
     private Boolean estado;

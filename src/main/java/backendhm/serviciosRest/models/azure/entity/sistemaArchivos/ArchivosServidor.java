@@ -27,10 +27,10 @@ public class ArchivosServidor implements Serializable {
 
     private Long orden;
 
-    @Column(length = 150, name = "ruta_archivo")
+    @Column(length = 200, name = "ruta_archivo")
     private String rutaArchivo;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String nombre;
 
     @Column(length = 30, nullable = false)

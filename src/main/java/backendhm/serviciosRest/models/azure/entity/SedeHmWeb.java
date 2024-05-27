@@ -29,6 +29,7 @@ public class SedeHmWeb implements Serializable {
     @Column(name = "codigo_sede",length = 4,nullable = false)
     private String codigoSede;
 
+    @Column(nullable = true)
     private long capacidadPaciente;
 
     private Boolean estado;

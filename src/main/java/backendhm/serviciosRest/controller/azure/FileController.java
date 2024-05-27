@@ -48,6 +48,11 @@ public class FileController {
         return ResponseEntity.ok(archivoServidorService.obtenerArchivoServidorPorID(id));
     }
 
+    @GetMapping("/cargamasiva/{sede}")
+    public ResponseEntity<RespuestaBackendDTO> cargaMasicaArchivos(@PathVariable(name = "sede") String sede) {
+
+        return ResponseEntity.ok(archivoServidorService.cargaMasivaArchivos(sede));
+    }
     @PostMapping
     public ResponseEntity<ArchivoServidorDTO> guardarArchivoServidor(@Valid @RequestBody ArchivoServidorDTO archivoServidorDTO) {
 

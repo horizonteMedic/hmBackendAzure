@@ -4,7 +4,6 @@ import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,5 +24,7 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
                                                          String tipo_prueba_covid_exp,String tipo_prueba_exp,String nombre_hotel_exp,String protocolo_exp,String precio_adic_exp,String autoriza_exp,
                                                          String n_operacion_exp,boolean herra_manuales_exp,boolean rxc_dorso_lumbar_exp,boolean rxc_lumbar_exp,boolean rxc_lumbosacra_exp,boolean rxc_plomos_exp,
                                                          boolean mercurioo_exp,String referencia_exp );
+    @Query(value = "SELECT COD_PA as id_resp, Cast('valor encontrado' as text) as mensaje FROM N_ORDEN_OCUPACIONAL WHERE N_ORDEN=?", nativeQuery=true)
+    Optional<RespuestaBackendNP> busquedaDniPorNorden(long nOrden);
 
 }
