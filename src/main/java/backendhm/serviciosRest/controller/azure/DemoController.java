@@ -11,7 +11,7 @@ public class DemoController {
     @PostMapping(value = "lademo")
     public String DemoController()
     {
-        return "Bienvenido a la api con restricciones bearer";
+        return "Bienvenido a la api con restricciones bearer, actualizado";
 
     }
 
