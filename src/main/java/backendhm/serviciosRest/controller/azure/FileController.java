@@ -2,6 +2,7 @@ package backendhm.serviciosRest.controller.azure;
 
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
 import backendhm.serviciosRest.models.azure.services.IArchivoServidorService;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
@@ -57,6 +58,13 @@ public class FileController {
     public ResponseEntity<ArchivoServidorDTO> guardarArchivoServidor(@Valid @RequestBody ArchivoServidorDTO archivoServidorDTO) {
 
         return new ResponseEntity<>(archivoServidorService.creararchivoServidor(archivoServidorDTO), HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/cargaMasivaHM")
+    public ResponseEntity<RespuestaBackendDTO> guardarCargaMasiva(@Valid @RequestBody CargaMasivaDTO cargaMasivaDTO) {
+
+        return new ResponseEntity<>(archivoServidorService.registroCargaMasiva(cargaMasivaDTO), HttpStatus.CREATED);
 
     }
 

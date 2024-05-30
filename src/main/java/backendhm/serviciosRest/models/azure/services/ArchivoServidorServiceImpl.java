@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
@@ -95,6 +96,55 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         }
 
         return respuestaBackendDTO;
+    }
+
+    @Override
+    public RespuestaBackendDTO registroCargaMasiva(CargaMasivaDTO cargaMasivaDTO) {
+        RespuestaBackendDTO respuestaBackendDTORespuesta=new RespuestaBackendDTO();
+        try {
+            String ruta = "";
+
+            System.out.println("la ruta del archivo es: " + cargaMasivaDTO.getNombreArchivo());
+            //System.out.println("base 64:"+archivoAbase64(ruta));
+            String[] parts = cargaMasivaDTO.getNombreArchivo().split("-");
+            String parte1 = parts[0].trim();
+            String parte2 = parts[1].trim();
+
+            //System.out.println(file.getFileName());
+            //System.out.println(parte1);
+            //System.out.println(parte2);
+            TipoArchivoDTO tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
+            backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO
+                    respuestaBackendDTO = respuestaBackendServiceNPService.busquedaDniPorNOrden(Long.parseLong(parte1));
+            //System.out.println(respuestaBackendDTO);
+            //System.out.println(tipoArchivoDTO);
+            ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
+            archivoServidorDTO.setRutaArchivo("");
+            archivoServidorDTO.setNombreArchivo(cargaMasivaDTO.getNombreArchivo());
+            archivoServidorDTO.setDni(respuestaBackendDTO.getId());
+            archivoServidorDTO.setHistoriaClinica(cargaMasivaDTO.getCodigoSede() + "-" + parte1);
+            archivoServidorDTO.setOrden(Long.valueOf(parte1));
+            archivoServidorDTO.setServidor(cargaMasivaDTO.getServidor());
+            archivoServidorDTO.setEstado(cargaMasivaDTO.getEstado());
+            archivoServidorDTO.setFechaRegistro(cargaMasivaDTO.getFechaRegistro());
+            archivoServidorDTO.setUserRegistro(cargaMasivaDTO.getUserRegistro());
+            archivoServidorDTO.setId_tipo_archivo(tipoArchivoDTO.getId());
+            archivoServidorDTO.setRutaArchivo(ruta);
+            archivoServidorDTO.setFileBase64(cargaMasivaDTO.getFileBase64());
+            //System.out.println("El archivo dto a cargar es :"+archivoServidorDTO);
+            RespuestaBackendDTO respuestaBackendDTO1 = registrarArchivoOActualizar(archivoServidorDTO);
+            //System.out.println("la respuesta de registrar o actualizar es:"+respuestaBackendDTO1);
+            respuestaBackendDTORespuesta.setId(Long.valueOf(1));
+            respuestaBackendDTORespuesta.setMensaje(cargaMasivaDTO.getNombreArchivo());
+        }
+        catch (Exception e){
+            System.out.println("El error en la carga masiva es:"+e);
+            respuestaBackendDTORespuesta.setId(Long.valueOf(0));
+            respuestaBackendDTORespuesta.setMensaje(cargaMasivaDTO.getNombreArchivo());
+
+        }
+        return respuestaBackendDTORespuesta;
+
     }
 
     @Override

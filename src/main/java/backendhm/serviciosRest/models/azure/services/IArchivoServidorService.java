@@ -2,6 +2,7 @@ package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
 
 import java.util.List;
 
@@ -10,6 +11,9 @@ public interface IArchivoServidorService {
     ArchivoServidorDTO detalleArchivoServidor(String hc,long ta);
 
     RespuestaBackendDTO registrarArchivoOActualizar(ArchivoServidorDTO archivoServidorDTO);
+
+
+    RespuestaBackendDTO registroCargaMasiva(CargaMasivaDTO cargaMasivaDTO);
 
     RespuestaBackendDTO cargaMasivaArchivos(String sede);
 
