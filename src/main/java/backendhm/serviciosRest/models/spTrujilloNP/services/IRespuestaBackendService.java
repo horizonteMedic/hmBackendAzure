@@ -9,5 +9,7 @@ public interface IRespuestaBackendService {
 
     RespuestaBackendDTO registroHistoriaClinica(RequestNOrdenOcupacionalDTO requestNOrdenOcupacionalDTO);
     RespuestaBackendDTO busquedaDniPorNOrden(long nOrden);
+    RespuestaBackendDTO busquedaDniPorReferencia(String referencia);
+
 
 }

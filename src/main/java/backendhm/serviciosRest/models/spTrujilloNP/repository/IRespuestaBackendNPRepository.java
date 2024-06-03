@@ -27,4 +27,7 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
     @Query(value = "SELECT COD_PA as id_resp, Cast('valor encontrado' as text) as mensaje FROM N_ORDEN_OCUPACIONAL WHERE N_ORDEN=?", nativeQuery=true)
     Optional<RespuestaBackendNP> busquedaDniPorNorden(long nOrden);
 
+    @Query(value = "SELECT COD_PA as id_resp, Cast('valor encontrado' as text) as mensaje FROM N_ORDEN_OCUPACIONAL WHERE referencia=?", nativeQuery=true)
+    Optional<RespuestaBackendNP> busquedaDniPorReferencia(String referencia);
+
 }

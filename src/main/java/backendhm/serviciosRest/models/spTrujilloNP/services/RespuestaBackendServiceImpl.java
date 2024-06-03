@@ -47,6 +47,13 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return mapearDTO(respuestaBackendNP);
     }
 
+    @Override
+    public RespuestaBackendDTO busquedaDniPorReferencia(String referencia) {
+        RespuestaBackendNP respuestaBackendNP=respuestaBackendNPRepository.busquedaDniPorReferencia(referencia).orElseThrow();
+
+        return mapearDTO(respuestaBackendNP);
+    }
+
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
