@@ -24,6 +24,9 @@ public class Servicio implements Serializable {
     @Column(name = "nombre_servicio")
     private String nombreServicio;
 
+    @Column(name = "tabla_servicio")
+    private String tablaServicio;
+
     private String money;
 
     private Boolean estado;

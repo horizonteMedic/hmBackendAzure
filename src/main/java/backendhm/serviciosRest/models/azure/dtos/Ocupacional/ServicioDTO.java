@@ -14,6 +14,8 @@ public class ServicioDTO {
     private long idServicio;
 
     private String nombreServicio;
+    private String tablaServicio;
+
 
     private String money;
 

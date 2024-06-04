@@ -57,6 +57,7 @@ public class ServicioServiceImpl implements IServicioService{
 
         servicioDTO.setIdServicio(servicio.getIdServicio());
         servicioDTO.setNombreServicio(servicio.getNombreServicio());
+        servicioDTO.setTablaServicio(servicio.getTablaServicio());
         servicioDTO.setMoney(servicio.getMoney());
         servicioDTO.setEstado(servicio.getEstado());
 
@@ -68,6 +69,7 @@ public class ServicioServiceImpl implements IServicioService{
 
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
+        servicio.setTablaServicio(servicioDTO.getTablaServicio());
         servicio.setMoney(servicioDTO.getMoney());
 
         return servicio;
@@ -75,6 +77,7 @@ public class ServicioServiceImpl implements IServicioService{
     private Servicio actualizarServicioEntidad(ServicioDTO servicioDTO,Servicio servicio){
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
+        servicio.setTablaServicio(servicioDTO.getTablaServicio());
         servicio.setMoney(servicioDTO.getMoney());
         return servicio;
     }
