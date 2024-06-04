@@ -121,9 +121,13 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             }catch (Exception e){
                 parte1 = parts[2].trim();
                 parte2 = parts[0].trim();
+                String[] partes = parte1.split(".");
+                parte1=partes[0].trim();
+
             }
 
-
+           // System.out.println("parte 1:"+parte1);
+           // System.out.println("parte 2:"+parte2);
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
 
             TipoArchivoDTO tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
