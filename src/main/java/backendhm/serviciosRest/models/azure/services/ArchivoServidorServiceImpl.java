@@ -119,7 +119,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 verificador= Long.parseLong(parte1);
 
             }catch (Exception e){
-                parte1 = parts[1].trim();
+                parte1 = parts[2].trim();
                 parte2 = parts[0].trim();
             }
 
