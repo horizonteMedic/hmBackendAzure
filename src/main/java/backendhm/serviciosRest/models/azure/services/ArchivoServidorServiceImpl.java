@@ -107,11 +107,22 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         RespuestaBackendDTO respuestaBackendDTORespuesta=new RespuestaBackendDTO();
         try {
             String ruta = "";
-
-
+            String parte1 = "";
+            String parte2 ="";
+            long verificador=1;
             String[] parts = cargaMasivaDTO.getNombreArchivo().split("-");
-            String parte1 = parts[0].trim();
-            String parte2 = parts[1].trim();
+
+            // si el primer valor no es numero, cambia el orden y toma el segundo haciendo referencia a la segunda nomenclatura
+            try {
+                parte1 = parts[0].trim();
+                parte2 = parts[1].trim();
+                verificador= Long.parseLong(parte1);
+
+            }catch (Exception e){
+                parte1 = parts[1].trim();
+                parte2 = parts[0].trim();
+            }
+
 
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
 
