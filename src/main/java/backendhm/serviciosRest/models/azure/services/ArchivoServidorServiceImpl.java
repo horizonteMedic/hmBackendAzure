@@ -111,7 +111,6 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             String parte2 ="";
             long verificador=1;
             String[] parts = cargaMasivaDTO.getNombreArchivo().split("-");
-
             // si el primer valor no es numero, cambia el orden y toma el segundo haciendo referencia a la segunda nomenclatura
             try {
                 parte1 = parts[0].trim();
@@ -119,15 +118,13 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 verificador= Long.parseLong(parte1);
 
             }catch (Exception e){
-                parte1 = parts[2].trim();
+                String temporal=parts[2].trim();
                 parte2 = parts[0].trim();
-                String[] partes = parte1.split(".");
+                String[] partes = temporal.split(".pdf");
                 parte1=partes[0].trim();
 
             }
 
-           // System.out.println("parte 1:"+parte1);
-           // System.out.println("parte 2:"+parte2);
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
 
             TipoArchivoDTO tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
