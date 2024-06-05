@@ -1,14 +1,17 @@
 package backendhm.serviciosRest.models.spTrujilloNP.services;
 
 
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestNOrdenOcupacionalDTO;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.MatrizAdministrativa;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizAdminRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional("trujilloNPTransactionManagerFactory")
@@ -17,6 +20,8 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     @Autowired
     private IRespuestaBackendNPRepository respuestaBackendNPRepository;
 
+    @Autowired
+    private IMatrizAdminRepository matrizAdminRepository;
 
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
@@ -54,6 +59,13 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return mapearDTO(respuestaBackendNP);
     }
 
+    @Override
+    public List<ResponseMatrizDTO> listadoMatrizAdministrativa(RequesMatrizDTO requesMatrizDTO) {
+            List<MatrizAdministrativa> listadoMatrizAdmin=matrizAdminRepository.listadoMatrizAdmin(requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
+
+        return listadoMatrizAdmin.stream().map(this::mapearDTOMADM).collect(Collectors.toList());
+    }
+
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
@@ -63,5 +75,23 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return respuestaBackendDTO;
     }
 
+    private ResponseMatrizDTO mapearDTOMADM(MatrizAdministrativa matrizAdministrativa){
+        ResponseMatrizDTO responseMatrizDTO=new ResponseMatrizDTO();
+
+        responseMatrizDTO.setEdad(matrizAdministrativa.getEdad());
+        responseMatrizDTO.setDni(matrizAdministrativa.getDni());
+        responseMatrizDTO.setCargo(matrizAdministrativa.getCargo());
+        responseMatrizDTO.setEdadTexto(matrizAdministrativa.getEdadTexto());
+        responseMatrizDTO.setAptitudEmo(matrizAdministrativa.getAptitudEmo());
+        responseMatrizDTO.setObservacion(matrizAdministrativa.getObservacion());
+        responseMatrizDTO.setFechaExamen(matrizAdministrativa.getFechaExamen());
+        responseMatrizDTO.setApellidosNombres(matrizAdministrativa.getApellidosNombres());
+        responseMatrizDTO.setFechaSolicitud(matrizAdministrativa.getFechaSolicitud());
+        responseMatrizDTO.setFechaNacimiento(matrizAdministrativa.getFechaNacimiento());
+        responseMatrizDTO.setRazonContrata(matrizAdministrativa.getRazonContrata());
+
+        return responseMatrizDTO;
+
+    }
 
 }

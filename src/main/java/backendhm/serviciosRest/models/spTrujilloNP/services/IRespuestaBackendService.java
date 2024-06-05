@@ -1,8 +1,8 @@
 package backendhm.serviciosRest.models.spTrujilloNP.services;
 
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestNOrdenOcupacionalDTO;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
+
+import java.util.List;
 
 public interface IRespuestaBackendService {
     RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO requestDatosPacienteDTO);
@@ -11,5 +11,6 @@ public interface IRespuestaBackendService {
     RespuestaBackendDTO busquedaDniPorNOrden(long nOrden);
     RespuestaBackendDTO busquedaDniPorReferencia(String referencia);
 
+    List<ResponseMatrizDTO> listadoMatrizAdministrativa(RequesMatrizDTO requesMatrizDTO);
 
 }

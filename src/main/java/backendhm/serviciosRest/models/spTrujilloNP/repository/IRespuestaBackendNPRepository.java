@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,5 +30,7 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
 
     @Query(value = "SELECT COD_PA as id_resp, Cast('valor encontrado' as text) as mensaje FROM N_ORDEN_OCUPACIONAL WHERE referencia=?", nativeQuery=true)
     Optional<RespuestaBackendNP> busquedaDniPorReferencia(String referencia);
+
+
 
 }
