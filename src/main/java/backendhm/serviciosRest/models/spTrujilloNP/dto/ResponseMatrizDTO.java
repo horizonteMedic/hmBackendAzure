@@ -14,8 +14,7 @@ public class ResponseMatrizDTO {
     String apellidosNombres;
     Integer dni;
     String fechaNacimiento;
-    Integer edad;
-    String edadTexto;
+    String edad;
     String razonContrata;
     String cargo;
     String aptitudEmo;

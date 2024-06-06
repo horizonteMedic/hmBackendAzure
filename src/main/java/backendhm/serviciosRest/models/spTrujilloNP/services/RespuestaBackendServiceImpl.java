@@ -89,10 +89,9 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     private ResponseMatrizDTO mapearDTOMADM(MatrizAdministrativa matrizAdministrativa){
         ResponseMatrizDTO responseMatrizDTO=new ResponseMatrizDTO();
-        responseMatrizDTO.setEdad(matrizAdministrativa.getEdad());
+        responseMatrizDTO.setEdad(matrizAdministrativa.getEdadTexto());
         responseMatrizDTO.setDni(matrizAdministrativa.getDni());
         responseMatrizDTO.setCargo(matrizAdministrativa.getCargo());
-        responseMatrizDTO.setEdadTexto(matrizAdministrativa.getEdadTexto());
         responseMatrizDTO.setAptitudEmo(matrizAdministrativa.getAptitudEmo());
         responseMatrizDTO.setObservacion(matrizAdministrativa.getObservacion());
         responseMatrizDTO.setFechaExamen(matrizAdministrativa.getFechaExamen());
