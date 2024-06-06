@@ -3,8 +3,10 @@ package backendhm.serviciosRest.models.spTrujilloNP.services;
 
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.MatrizAdministrativa;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.ResponseMatrizSalud;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizAdminRepository;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizSaludRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     @Autowired
     private IMatrizAdminRepository matrizAdminRepository;
+
+    @Autowired
+    private IMatrizSaludRepository matrizSaludRepository;
 
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
@@ -66,6 +71,12 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return listadoMatrizAdmin.stream().map(this::mapearDTOMADM).collect(Collectors.toList());
     }
 
+    @Override
+    public List<ResponseMatrizSaludDTO> listadoMatrizSalud(RequesMatrizDTO requesMatrizDTO) {
+        List<ResponseMatrizSalud> listadoMatrizSalud=matrizSaludRepository.listadoMatrizSalud(requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
+        return listadoMatrizSalud.stream().map(this::mapearDTOMSALUD).collect(Collectors.toList());
+    }
+
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
@@ -91,6 +102,38 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizDTO.setRazonContrata(matrizAdministrativa.getRazonContrata());
 
         return responseMatrizDTO;
+
+    }
+
+    private ResponseMatrizSaludDTO mapearDTOMSALUD(ResponseMatrizSalud responseMatrizSalud){
+        ResponseMatrizSaludDTO responseMatrizSaludDTO=new ResponseMatrizSaludDTO();
+
+        responseMatrizSaludDTO.setNOrden(responseMatrizSalud.getId());
+        responseMatrizSaludDTO.setFechaSolicitud(responseMatrizSalud.getFechaSolicitud());
+        responseMatrizSaludDTO.setApellidosNombres(responseMatrizSalud.getApellidosNombres());
+        responseMatrizSaludDTO.setDni(responseMatrizSalud.getDni());
+        responseMatrizSaludDTO.setFechaNacimiento(responseMatrizSalud.getFechaNacimiento());
+        responseMatrizSaludDTO.setEdad(responseMatrizSalud.getEdad());
+        responseMatrizSaludDTO.setRazonContrata(responseMatrizSalud.getRazonContrata());
+        responseMatrizSaludDTO.setCargo(responseMatrizSalud.getCargo());
+        responseMatrizSaludDTO.setTipoTrabajo(responseMatrizSalud.getTipotrabajo());
+        responseMatrizSaludDTO.setCarnetVacunacion(responseMatrizSalud.getCarnet());
+        responseMatrizSaludDTO.setAptitudEmo(responseMatrizSalud.getAptitud());
+        responseMatrizSaludDTO.setFechaEvalacuacion(responseMatrizSalud.getFechadeevaluacion());
+        responseMatrizSaludDTO.setPeso(responseMatrizSalud.getPeso());
+        responseMatrizSaludDTO.setTalla(responseMatrizSalud.getTalla());
+        responseMatrizSaludDTO.setImc(responseMatrizSalud.getImc());
+        responseMatrizSaludDTO.setDxPeso(responseMatrizSalud.getDxpeso());
+        responseMatrizSaludDTO.setGlucosa(responseMatrizSalud.getGlucosa());
+        responseMatrizSaludDTO.setColesterol(responseMatrizSalud.getColesterol());
+        responseMatrizSaludDTO.setTrigliceridos(responseMatrizSalud.getTrigliceridos());
+        responseMatrizSaludDTO.setDxOftalmo(responseMatrizSalud.getDxoftalmo());
+        responseMatrizSaludDTO.setDxAudiometria(responseMatrizSalud.getDxaudio());
+        responseMatrizSaludDTO.setRestricciones(responseMatrizSalud.getRestriccionesaptitud());
+        responseMatrizSaludDTO.setClinica("HORIZONTE MEDIC");
+        responseMatrizSaludDTO.setTelefono("969603777");
+
+        return responseMatrizSaludDTO;
 
     }
 

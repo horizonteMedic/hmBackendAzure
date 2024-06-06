@@ -13,4 +13,6 @@ public interface IRespuestaBackendService {
 
     List<ResponseMatrizDTO> listadoMatrizAdministrativa(RequesMatrizDTO requesMatrizDTO);
 
+    List<ResponseMatrizSaludDTO> listadoMatrizSalud(RequesMatrizDTO requesMatrizDTO);
+
 }

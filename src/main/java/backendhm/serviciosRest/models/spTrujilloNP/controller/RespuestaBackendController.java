@@ -33,4 +33,9 @@ public class RespuestaBackendController {
     public ResponseEntity<List<ResponseMatrizDTO>> obtenerListadoMatrizAdministrativo(@RequestBody RequesMatrizDTO requesMatrizDTO){
         return  ResponseEntity.ok(respuestaBackendService.listadoMatrizAdministrativa(requesMatrizDTO));
     }
+
+    @PostMapping("/matrizSalud")
+    public ResponseEntity<List<ResponseMatrizSaludDTO>> obtenerListadoMatrizSalud(@RequestBody RequesMatrizDTO requesMatrizDTO){
+        return  ResponseEntity.ok(respuestaBackendService.listadoMatrizSalud(requesMatrizDTO));
+    }
 }
