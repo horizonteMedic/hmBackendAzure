@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseMatrizSaludDTO {
-    long nOrden;
     String fechaSolicitud;
     String apellidosNombres;
     Integer dni;
@@ -34,6 +33,6 @@ public class ResponseMatrizSaludDTO {
     String restricciones;
     String clinica;
     String telefono;
-
+    String fechaValidacion;
 
 }

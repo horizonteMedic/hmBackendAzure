@@ -8,6 +8,7 @@ import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizAdminRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizSaludRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
+import ch.qos.logback.core.joran.spi.ElementSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,7 +89,6 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     private ResponseMatrizDTO mapearDTOMADM(MatrizAdministrativa matrizAdministrativa){
         ResponseMatrizDTO responseMatrizDTO=new ResponseMatrizDTO();
-
         responseMatrizDTO.setEdad(matrizAdministrativa.getEdad());
         responseMatrizDTO.setDni(matrizAdministrativa.getDni());
         responseMatrizDTO.setCargo(matrizAdministrativa.getCargo());
@@ -100,7 +100,14 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizDTO.setFechaSolicitud(matrizAdministrativa.getFechaSolicitud());
         responseMatrizDTO.setFechaNacimiento(matrizAdministrativa.getFechaNacimiento());
         responseMatrizDTO.setRazonContrata(matrizAdministrativa.getRazonContrata());
-
+        if(responseMatrizDTO.getAptitudEmo().toUpperCase().contains("INTERCONSULTA"))
+        {
+        responseMatrizDTO.setObservacion(responseMatrizDTO.getAptitudEmo());
+        }
+        else
+        {
+        responseMatrizDTO.setObservacion(" ");
+        }
         return responseMatrizDTO;
 
     }
@@ -108,7 +115,6 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     private ResponseMatrizSaludDTO mapearDTOMSALUD(ResponseMatrizSalud responseMatrizSalud){
         ResponseMatrizSaludDTO responseMatrizSaludDTO=new ResponseMatrizSaludDTO();
 
-        responseMatrizSaludDTO.setNOrden(responseMatrizSalud.getId());
         responseMatrizSaludDTO.setFechaSolicitud(responseMatrizSalud.getFechaSolicitud());
         responseMatrizSaludDTO.setApellidosNombres(responseMatrizSalud.getApellidosNombres());
         responseMatrizSaludDTO.setDni(responseMatrizSalud.getDni());
@@ -132,6 +138,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizSaludDTO.setRestricciones(responseMatrizSalud.getRestriccionesaptitud());
         responseMatrizSaludDTO.setClinica("HORIZONTE MEDIC");
         responseMatrizSaludDTO.setTelefono("969603777");
+        responseMatrizSaludDTO.setFechaValidacion(" ");
 
         return responseMatrizSaludDTO;
 
