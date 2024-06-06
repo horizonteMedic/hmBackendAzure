@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseMatrizDTO {
+    String id;
     String fechaSolicitud;
     String apellidosNombres;
     Integer dni;
