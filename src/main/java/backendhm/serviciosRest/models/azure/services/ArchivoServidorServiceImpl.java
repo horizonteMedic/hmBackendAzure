@@ -16,6 +16,7 @@ import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.entity.sistemaArchivos.ArchivosServidor;
 import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.IArchivoServidorRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,8 +120,10 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
             }catch (Exception e){
                 String temporal=parts[2].trim();
+                String contenedor= StringUtils.right(temporal,4);
+
                 parte2 = parts[0].trim();
-                String[] partes = temporal.split(".pdf");
+                String[] partes = temporal.split(contenedor);
                 parte1=partes[0].trim();
 
             }
