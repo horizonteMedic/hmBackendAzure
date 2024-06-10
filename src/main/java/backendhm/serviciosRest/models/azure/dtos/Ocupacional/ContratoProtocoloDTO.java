@@ -1,8 +1,7 @@
 package backendhm.serviciosRest.models.azure.dtos.Ocupacional;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import backendhm.serviciosRest.models.azure.entity.ocupacional.Protocolo;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,36 +9,31 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServicioDTO {
+public class ContratoProtocoloDTO {
 
-    private long idServicio;
+    private long idContratoProtocolo;
 
-    private String nombreServicio;
-    private String tablaServicio;
+    Long rucContrata;
+
+    private String precio;
 
 
-    private String money;
+    private long id_protocolo;
 
-    private Boolean estado;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_registro")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaRegistro;
 
-    @Column(name = "user_registro", length = 20)
     private String userRegistro;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_actualizacion")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaActualizacion;
 
-    @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 }

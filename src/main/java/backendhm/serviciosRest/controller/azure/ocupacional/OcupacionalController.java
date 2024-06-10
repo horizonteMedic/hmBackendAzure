@@ -1,8 +1,12 @@
 package backendhm.serviciosRest.controller.azure.ocupacional;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ContratoProtocoloDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ProtocoloDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ServicioDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ServicioProtocoloDTO;
+import backendhm.serviciosRest.models.azure.services.ocupacional.IContratoProtocoloService;
 import backendhm.serviciosRest.models.azure.services.ocupacional.IProtocoloService;
+import backendhm.serviciosRest.models.azure.services.ocupacional.IServicioProtocoloService;
 import backendhm.serviciosRest.models.azure.services.ocupacional.IServicioService;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
@@ -25,6 +29,11 @@ public class OcupacionalController {
     @Autowired
     private IProtocoloService protocoloService;
 
+    @Autowired
+    private IServicioProtocoloService servicioProtocoloService;
+
+    @Autowired
+    private IContratoProtocoloService contratoProtocoloService;
     private static JSONObject json=null;
 
 
@@ -97,6 +106,87 @@ public class OcupacionalController {
     @DeleteMapping("/protocolos/{id}")
     public ResponseEntity<String> eliminarProtocolo(@PathVariable(name = "id") long id) {
         protocoloService.eliminarProtocolo(id);
+        json=new JSONObject();
+        return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+    @GetMapping("/servicioProtocolos")
+    public ResponseEntity<List<ServicioProtocoloDTO>> obtenerListadoServiciosProtocolos(){
+
+        return  ResponseEntity.ok(servicioProtocoloService.listadoServiciosProtocolos());
+    }
+
+    @GetMapping("/servicioProtocolos/{id}")
+    public ResponseEntity<ServicioProtocoloDTO> obtenerServicioProtocoloPorID(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(servicioProtocoloService.obtenerServicioProtocoloPorID(id));
+    }
+
+
+    @PostMapping("/servicioProtocolos")
+    public ResponseEntity<ServicioProtocoloDTO> guardarServicioProtocolos(@Valid @RequestBody ServicioProtocoloDTO servicioProtocoloDTO) {
+
+        return new ResponseEntity<>(servicioProtocoloService.crearServiciosProtocolo(servicioProtocoloDTO), HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/servicioProtocolos/{id}")
+    public ResponseEntity<ServicioProtocoloDTO> actualizarServicioProtocolo(@Valid @RequestBody ServicioProtocoloDTO servicioProtocoloDTO,
+                                                            @PathVariable(name = "id") long id) {
+
+        ServicioProtocoloDTO servicioProtocoloDTOActualizado = servicioProtocoloService.actualizarServiciProtocolo(servicioProtocoloDTO, id);
+        return new ResponseEntity<>(servicioProtocoloDTOActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/servicioProtocolos/{id}")
+    public ResponseEntity<String> eliminarServicioProtocolo(@PathVariable(name = "id") long id) {
+        servicioProtocoloService.eliminarServicioProtocolo(id);
+        json=new JSONObject();
+        return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
+    }
+
+
+
+
+
+
+    @GetMapping("/contrataProtocolos")
+    public ResponseEntity<List<ContratoProtocoloDTO>> obtenerListadoContratosProtocolos(){
+
+        return  ResponseEntity.ok(contratoProtocoloService.listadoContratosProtocolos());
+    }
+
+    @GetMapping("/contrataProtocolos/{id}")
+    public ResponseEntity<ContratoProtocoloDTO> obtenerContratoProtocoloPorID(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(contratoProtocoloService.obtenerContratoProtocoloPorID(id));
+    }
+
+
+    @PostMapping("/contrataProtocolos")
+    public ResponseEntity<ContratoProtocoloDTO> guardarContratoProtocolos(@Valid @RequestBody ContratoProtocoloDTO contratoProtocoloDTO) {
+
+        return new ResponseEntity<>(contratoProtocoloService.crearContratoProtocolo(contratoProtocoloDTO), HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/contrataProtocolos/{id}")
+    public ResponseEntity<ContratoProtocoloDTO> actualizarContratoProtocolo(@Valid @RequestBody ContratoProtocoloDTO contratoProtocoloDTO,
+                                                                            @PathVariable(name = "id") long id) {
+
+        ContratoProtocoloDTO contratoProtocoloDTOActualizado = contratoProtocoloService.actualizarContratoProtocolo(contratoProtocoloDTO, id);
+        return new ResponseEntity<>(contratoProtocoloDTOActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/contrataProtocolos/{id}")
+    public ResponseEntity<String> eliminarContratoProtocolo(@PathVariable(name = "id") long id) {
+        contratoProtocoloService.eliminarContratoProtocolo(id);
         json=new JSONObject();
         return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
     }

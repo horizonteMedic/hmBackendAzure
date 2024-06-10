@@ -58,8 +58,12 @@ public class ServicioServiceImpl implements IServicioService{
         servicioDTO.setIdServicio(servicio.getIdServicio());
         servicioDTO.setNombreServicio(servicio.getNombreServicio());
         servicioDTO.setTablaServicio(servicio.getTablaServicio());
-        servicioDTO.setMoney(servicio.getMoney());
+        servicioDTO.setMoney(servicio.getPrecio());
         servicioDTO.setEstado(servicio.getEstado());
+        servicioDTO.setFechaRegistro(servicio.getFechaRegistro());
+        servicioDTO.setUserRegistro(servicio.getUserRegistro());
+        servicioDTO.setFechaActualizacion(servicio.getFechaActualizacion());
+        servicioDTO.setUserActualizacion(servicio.getUserActualizacion());
 
         return servicioDTO;
     }
@@ -70,7 +74,11 @@ public class ServicioServiceImpl implements IServicioService{
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
         servicio.setTablaServicio(servicioDTO.getTablaServicio());
-        servicio.setMoney(servicioDTO.getMoney());
+        servicio.setPrecio(servicioDTO.getMoney());
+        servicio.setFechaRegistro(servicioDTO.getFechaRegistro());
+        servicio.setUserRegistro(servicioDTO.getUserRegistro());
+        servicio.setFechaActualizacion(servicioDTO.getFechaActualizacion());
+        servicio.setUserActualizacion(servicioDTO.getUserActualizacion());
 
         return servicio;
     }
@@ -78,7 +86,12 @@ public class ServicioServiceImpl implements IServicioService{
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
         servicio.setTablaServicio(servicioDTO.getTablaServicio());
-        servicio.setMoney(servicioDTO.getMoney());
+        servicio.setPrecio(servicioDTO.getMoney());
+        servicio.setFechaRegistro(servicioDTO.getFechaRegistro());
+        servicio.setUserRegistro(servicioDTO.getUserRegistro());
+        servicio.setFechaActualizacion(servicioDTO.getFechaActualizacion());
+        servicio.setUserActualizacion(servicioDTO.getUserActualizacion());
+
         return servicio;
     }
 }

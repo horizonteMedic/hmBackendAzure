@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.azure.entity.ocupacional;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,9 +51,13 @@ public class Protocolo implements Serializable {
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 
-    @Column(length = 25)
+    @Column(length = 12)
     private String precio;
 
     private String observacion;
+
+    @JsonBackReference
+    @OneToMany(mappedBy="protocolo_hm", cascade= CascadeType.ALL,orphanRemoval = true)
+    private Set<ServicioProtocolo> detalleParametros=new HashSet<>();
 
 }

@@ -83,6 +83,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     public RespuestaBackendDTO registrarArchivoOActualizar(ArchivoServidorDTO archivoServidorDTO) {
 
         RespuestaBackend respuestaBackend=respuestaBackendRepository.existenciaDelArchivo(archivoServidorDTO.getHistoriaClinica(),archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
+        System.out.println("la existencia del archivo:"+respuestaBackend);
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         ArchivoServidorDTO archivosServidor=new ArchivoServidorDTO();
         if(respuestaBackend.getId()==0){
@@ -105,6 +106,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     @Override
     public RespuestaBackendDTO registroCargaMasiva(CargaMasivaDTO cargaMasivaDTO) {
+        System.out.println("ENTRO A LA CARGA MASIVA");
         RespuestaBackendDTO respuestaBackendDTORespuesta=new RespuestaBackendDTO();
         try {
             String ruta = "";
@@ -147,6 +149,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
                 } else {
                     respuestaBackendDTO = respuestaBackendServiceNPService.busquedaDniPorNOrden(Long.parseLong(parte1));
+                    System.out.println("el dni es:"+respuestaBackendDTO.getId());
                     archivoServidorDTO.setDni(respuestaBackendDTO.getId());
                 }
             }

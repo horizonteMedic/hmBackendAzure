@@ -1,31 +1,37 @@
-package backendhm.serviciosRest.models.azure.dtos.Ocupacional;
+package backendhm.serviciosRest.models.azure.entity.ocupacional;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServicioDTO {
+@Data
+@Entity
+@Table(name = "contrato_protocolo_hm")
+public class ContratoProtocolo implements Serializable {
 
-    private long idServicio;
+    private static final long serialVersionUID = 1L;
 
-    private String nombreServicio;
-    private String tablaServicio;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id_contrato_protocolo")
+    private long idContratoProtocolo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_protocolo", nullable = false)
+    private Protocolo protocolo_hm;
 
-    private String money;
+    @Column(name = "ruc_contrata", nullable = false)
+    Long rucContrata;
 
-    private Boolean estado;
+    @Column(length = 12)
+    private String precio;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_registro")

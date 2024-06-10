@@ -63,7 +63,7 @@ public class FileController {
 
     @PostMapping("/cargaMasivaHM")
     public ResponseEntity<RespuestaBackendDTO> guardarCargaMasiva(@Valid @RequestBody CargaMasivaDTO cargaMasivaDTO) {
-
+            System.out.println("LLEGO AL END POINT");
         return new ResponseEntity<>(archivoServidorService.registroCargaMasiva(cargaMasivaDTO), HttpStatus.CREATED);
 
     }

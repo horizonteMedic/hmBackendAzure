@@ -13,26 +13,27 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "servicios_hm")
-public class Servicio implements Serializable {
-
+@Table(name = "servicios_asignados_protocolos", uniqueConstraints ={@UniqueConstraint(columnNames = {"id_protocolo","id_servicio"})})
+public class ServicioProtocolo  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_servicio")
-    private long idServicio;
+    @Column(name = "id_servicio_protocolo")
+    private long idServicioProtocolo;
 
-    @Column(name = "nombre_servicio")
-    private String nombreServicio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_protocolo", nullable = false)
+    private Protocolo protocolo_hm;
 
-    @Column(name = "tabla_servicio")
-    private String tablaServicio;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_servicio", nullable = false)
+    private Servicio servicios_hm;
+
 
     @Column(length = 12)
     private String precio;
-
-    private Boolean estado;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_registro")
