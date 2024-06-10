@@ -36,7 +36,7 @@ public class ProtocoloDTO {
 
     private String userActualizacion;
 
-    private String precio;
+    private float precio;
 
     private String observacion;
 }

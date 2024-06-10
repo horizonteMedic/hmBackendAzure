@@ -23,7 +23,7 @@ public class ServicioDTO {
     private String tablaServicio;
 
 
-    private String money;
+    private float precio;
 
     private Boolean estado;
 

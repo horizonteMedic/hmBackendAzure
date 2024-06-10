@@ -69,7 +69,7 @@ public class ServicioProtocoloServiceImpl implements IServicioProtocoloService {
         servicioProtocoloDTO.setIdServicioProtocolo(servicioProtocolo.getIdServicioProtocolo());
         servicioProtocoloDTO.setId_protocolo(servicioProtocolo.getProtocolo_hm().getIdProtocolo());
         servicioProtocoloDTO.setId_servicio(servicioProtocolo.getServicios_hm().getIdServicio());
-        servicioProtocoloDTO.setPrecio(servicioProtocolo.getPrecio());
+        servicioProtocoloDTO.setPrecio(Float.parseFloat(servicioProtocolo.getPrecio()));
         servicioProtocoloDTO.setFechaRegistro(servicioProtocolo.getFechaRegistro());
         servicioProtocoloDTO.setUserRegistro(servicioProtocolo.getUserRegistro());
         servicioProtocoloDTO.setFechaActualizacion(servicioProtocolo.getFechaActualizacion());
@@ -86,7 +86,7 @@ public class ServicioProtocoloServiceImpl implements IServicioProtocoloService {
 
         servicioProtocolo.setProtocolo_hm(protocolo);
         servicioProtocolo.setServicios_hm(servicio);
-        servicioProtocolo.setPrecio(servicioProtocoloDTO.getPrecio());
+        servicioProtocolo.setPrecio(String.valueOf(servicioProtocoloDTO.getPrecio()));
         servicioProtocolo.setFechaRegistro(servicioProtocoloDTO.getFechaRegistro());
         servicioProtocolo.setUserRegistro(servicioProtocoloDTO.getUserRegistro());
         servicioProtocolo.setFechaActualizacion(servicioProtocoloDTO.getFechaActualizacion());
@@ -101,7 +101,7 @@ public class ServicioProtocoloServiceImpl implements IServicioProtocoloService {
 
         servicioProtocolo.setProtocolo_hm(protocolo);
         servicioProtocolo.setServicios_hm(servicio);
-        servicioProtocolo.setPrecio(servicioProtocoloDTO.getPrecio());
+        servicioProtocolo.setPrecio(String.valueOf(servicioProtocoloDTO.getPrecio()));
         servicioProtocolo.setFechaRegistro(servicioProtocoloDTO.getFechaRegistro());
         servicioProtocolo.setUserRegistro(servicioProtocoloDTO.getUserRegistro());
         servicioProtocolo.setFechaActualizacion(servicioProtocoloDTO.getFechaActualizacion());

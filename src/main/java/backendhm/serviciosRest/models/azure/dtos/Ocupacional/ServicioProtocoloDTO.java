@@ -21,7 +21,7 @@ public class ServicioProtocoloDTO {
 
     private long id_servicio;
 
-    private String precio;
+    private float precio;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

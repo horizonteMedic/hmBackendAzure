@@ -58,7 +58,7 @@ public class ProtocoloServiceImpl implements IProtocoloService{
         protocoloDTO.setIdProtocolo(protocolo.getIdProtocolo());
         protocoloDTO.setNombreProtocolo(protocolo.getNombreProtocolo());
         protocoloDTO.setEstado(protocolo.getEstado());
-        protocoloDTO.setPrecio(protocolo.getPrecio());
+        protocoloDTO.setPrecio(Float.parseFloat(protocolo.getPrecio()));
         protocoloDTO.setObservacion(protocolo.getObservacion());
         protocoloDTO.setRucEmpresa(protocolo.getRucEmpresa());
         protocoloDTO.setFechaRegistro(protocolo.getFechaRegistro());
@@ -74,7 +74,7 @@ public class ProtocoloServiceImpl implements IProtocoloService{
 
         protocolo.setNombreProtocolo(protocoloDTO.getNombreProtocolo());
         protocolo.setEstado(protocoloDTO.getEstado());
-        protocolo.setPrecio(protocoloDTO.getPrecio());
+        protocolo.setPrecio(String.valueOf(protocoloDTO.getPrecio()));
         protocolo.setObservacion(protocoloDTO.getObservacion());
         protocolo.setRucEmpresa(protocoloDTO.getRucEmpresa());
         protocolo.setFechaRegistro(protocoloDTO.getFechaRegistro());
@@ -89,7 +89,7 @@ public class ProtocoloServiceImpl implements IProtocoloService{
     private Protocolo actualizarProtocoloEntidad(ProtocoloDTO protocoloDTO, Protocolo protocolo){
         protocolo.setNombreProtocolo(protocoloDTO.getNombreProtocolo());
         protocolo.setEstado(protocoloDTO.getEstado());
-        protocolo.setPrecio(protocoloDTO.getPrecio());
+        protocolo.setPrecio(String.valueOf(protocoloDTO.getPrecio()));
         protocolo.setObservacion(protocoloDTO.getObservacion());
         protocolo.setRucEmpresa(protocoloDTO.getRucEmpresa());
         protocolo.setFechaRegistro(protocoloDTO.getFechaRegistro());

@@ -63,7 +63,7 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
 
         contratoProtocoloDTO.setIdContratoProtocolo(contratoProtocolo.getIdContratoProtocolo());
         contratoProtocoloDTO.setId_protocolo(contratoProtocolo.getProtocolo_hm().getIdProtocolo());
-        contratoProtocoloDTO.setPrecio(contratoProtocolo.getPrecio());
+        contratoProtocoloDTO.setPrecio(Float.parseFloat(contratoProtocolo.getPrecio()));
         contratoProtocoloDTO.setRucContrata(contratoProtocolo.getRucContrata());
         contratoProtocoloDTO.setFechaRegistro(contratoProtocolo.getFechaRegistro());
         contratoProtocoloDTO.setUserRegistro(contratoProtocolo.getUserRegistro());
@@ -78,7 +78,7 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
         Protocolo protocolo=protocoloRepository.findById(contratoProtocoloDTO.getId_protocolo()).orElseThrow();
 
         contratoProtocolo.setProtocolo_hm(protocolo);
-        contratoProtocolo.setPrecio(contratoProtocoloDTO.getPrecio());
+        contratoProtocolo.setPrecio(String.valueOf(contratoProtocoloDTO.getPrecio()));
         contratoProtocolo.setRucContrata(contratoProtocoloDTO.getRucContrata());
         contratoProtocolo.setFechaRegistro(contratoProtocoloDTO.getFechaRegistro());
         contratoProtocolo.setUserRegistro(contratoProtocoloDTO.getUserRegistro());
@@ -95,7 +95,7 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
         Protocolo protocolo=protocoloRepository.findById(contratoProtocoloDTO.getId_protocolo()).orElseThrow();
 
         contratoProtocolo.setProtocolo_hm(protocolo);
-        contratoProtocolo.setPrecio(contratoProtocoloDTO.getPrecio());
+        contratoProtocolo.setPrecio(String.valueOf(contratoProtocoloDTO.getPrecio()));
         contratoProtocolo.setRucContrata(contratoProtocoloDTO.getRucContrata());
         contratoProtocolo.setFechaRegistro(contratoProtocoloDTO.getFechaRegistro());
         contratoProtocolo.setUserRegistro(contratoProtocoloDTO.getUserRegistro());

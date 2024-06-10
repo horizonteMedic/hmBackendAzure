@@ -19,7 +19,7 @@ public class ContratoProtocoloDTO {
 
     Long rucContrata;
 
-    private String precio;
+    private float precio;
 
 
     private long id_protocolo;

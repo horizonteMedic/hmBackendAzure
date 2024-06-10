@@ -58,7 +58,7 @@ public class ServicioServiceImpl implements IServicioService{
         servicioDTO.setIdServicio(servicio.getIdServicio());
         servicioDTO.setNombreServicio(servicio.getNombreServicio());
         servicioDTO.setTablaServicio(servicio.getTablaServicio());
-        servicioDTO.setMoney(servicio.getPrecio());
+        servicioDTO.setPrecio(Float.parseFloat(servicio.getPrecio()));
         servicioDTO.setEstado(servicio.getEstado());
         servicioDTO.setFechaRegistro(servicio.getFechaRegistro());
         servicioDTO.setUserRegistro(servicio.getUserRegistro());
@@ -74,7 +74,7 @@ public class ServicioServiceImpl implements IServicioService{
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
         servicio.setTablaServicio(servicioDTO.getTablaServicio());
-        servicio.setPrecio(servicioDTO.getMoney());
+        servicio.setPrecio(String.valueOf(servicioDTO.getPrecio()));
         servicio.setFechaRegistro(servicioDTO.getFechaRegistro());
         servicio.setUserRegistro(servicioDTO.getUserRegistro());
         servicio.setFechaActualizacion(servicioDTO.getFechaActualizacion());
@@ -86,7 +86,7 @@ public class ServicioServiceImpl implements IServicioService{
         servicio.setNombreServicio(servicioDTO.getNombreServicio());
         servicio.setEstado(servicioDTO.getEstado());
         servicio.setTablaServicio(servicioDTO.getTablaServicio());
-        servicio.setPrecio(servicioDTO.getMoney());
+        servicio.setPrecio(String.valueOf(servicioDTO.getPrecio()));
         servicio.setFechaRegistro(servicioDTO.getFechaRegistro());
         servicio.setUserRegistro(servicioDTO.getUserRegistro());
         servicio.setFechaActualizacion(servicioDTO.getFechaActualizacion());
