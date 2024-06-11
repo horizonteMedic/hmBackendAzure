@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.spTrujilloNP.repository;
 
+
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBackendNP,Long> {
+
 
     @Query(value = "select *from registro_automatico_huamachuco(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", nativeQuery=true)
     Optional<RespuestaBackendNP> registroDatosPacienteHuamachuco(long codPa, String nombresPa, String fechaNaciminetoPa, String sexoPa, String emailPa, String lugarNacPa, String nivelEstPa, String ocupacionPa, String estadoCivilPa, String direccionPa, String departamentoPa, String provinciaPa, String distritoPa, String caserioPA, String fotoPa, long codAleatorioPa, String telCasaPa, String telTrabajoPa, String celPa, String fechaRegistroPa, String apellidosPa, String horaRegistroPa, long tipoDoc);

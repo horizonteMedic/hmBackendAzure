@@ -2,7 +2,9 @@ package backendhm.serviciosRest.models.spTrujilloSD.Service;
 
 import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
 import backendhm.serviciosRest.models.spTrujilloSD.dto.RespuestaBackendDTOTSD;
+import backendhm.serviciosRest.models.spTrujilloSD.entity.BackendEntityDatosPacienteSD;
 import backendhm.serviciosRest.models.spTrujilloSD.entity.RespuestaBackendTSD;
+import backendhm.serviciosRest.models.spTrujilloSD.repository.IBackendEntityDatosPacienteSDRepository;
 import backendhm.serviciosRest.models.spTrujilloSD.repository.IRespuestaBackendSDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,14 @@ public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD
 
     @Autowired
     private IRespuestaBackendSDRepository respuestaBackendSDRepository;
+
+    @Autowired
+    private IBackendEntityDatosPacienteSDRepository backendEntityDatosPacienteSDRepository;
+
+    @Override
+    public RequestDatosPacienteDTO busquedaDatosPacienteDNI(long dni) {
+        return mapearDTODatosPaciente(backendEntityDatosPacienteSDRepository.busquedaDatosPacienteDNI(dni).orElseThrow());
+    }
 
     @Override
     public RespuestaBackendDTOTSD registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
@@ -37,5 +47,36 @@ public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD
         respuestaBackendDTOTSD.setMensaje(respuestaBackendTSD.getMensaje());
         return  respuestaBackendDTOTSD;
 
+    }
+
+    private RequestDatosPacienteDTO mapearDTODatosPaciente(BackendEntityDatosPacienteSD bk){
+        RequestDatosPacienteDTO respuestaBackendDTO=new RequestDatosPacienteDTO();
+
+        respuestaBackendDTO.setCodPa(bk.getCodPa());
+        respuestaBackendDTO.setCaserioPA(bk.getCaserioPA());
+        respuestaBackendDTO.setApellidosPa(bk.getApellidosPa());
+        respuestaBackendDTO.setCelPa(bk.getCelPa());
+        respuestaBackendDTO.setDepartamentoPa(bk.getDepartamentoPa());
+        respuestaBackendDTO.setDireccionPa(bk.getDireccionPa());
+        respuestaBackendDTO.setDistritoPa(bk.getDistritoPa());
+        respuestaBackendDTO.setEmailPa(bk.getEmailPa());
+        respuestaBackendDTO.setFotoPa(bk.getFotoPa());
+        respuestaBackendDTO.setEstadoCivilPa(bk.getEstadoCivilPa());
+        respuestaBackendDTO.setNivelEstPa(bk.getNivelEstPa());
+        respuestaBackendDTO.setFechaRegistroPa(bk.getFechaRegistroPa());
+        respuestaBackendDTO.setFechaNaciminetoPa(bk.getFechaNaciminetoPa());
+        respuestaBackendDTO.setHoraRegistroPa(bk.getHoraRegistroPa());
+        respuestaBackendDTO.setCodAleatorioPa(bk.getCodAleatorioPa());
+        respuestaBackendDTO.setLugarNacPa(bk.getLugarNacPa());
+        respuestaBackendDTO.setOcupacionPa(bk.getOcupacionPa());
+        respuestaBackendDTO.setSexoPa(bk.getSexoPa());
+        respuestaBackendDTO.setTelCasaPa(bk.getTelCasaPa());
+        respuestaBackendDTO.setTelTrabajoPa(bk.getTelTrabajoPa());
+        respuestaBackendDTO.setTipoDoc(bk.getTipoDoc());
+        respuestaBackendDTO.setNombresPa(bk.getNombresPa());
+        respuestaBackendDTO.setCaserioPA(bk.getCaserioPA());
+
+
+        return respuestaBackendDTO;
     }
 }

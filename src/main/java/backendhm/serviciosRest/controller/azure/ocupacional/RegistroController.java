@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.controller.azure.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
 import backendhm.serviciosRest.models.spTrujilloSD.Service.IRespuestaBackendServiceSD;
@@ -39,6 +40,22 @@ public class RegistroController {
 
             return new ResponseEntity<>(respuestaBackendDTO, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/datosPaciente/{sedeNomenc}/{dni}")
+    public ResponseEntity<RequestDatosPacienteDTO> busquedaDatosPacienteDNI(@PathVariable String sedeNomenc, @PathVariable Long dni) {
+
+        if (sedeNomenc.contains("T-NP")||sedeNomenc.contains("HNCY")) {
+
+            return ResponseEntity.ok(respuestaBackendService.busquedaDatosPacienteDNI(dni));
+        }
+        else {
+
+
+            return ResponseEntity.ok(respuestaBackendServiceSD.busquedaDatosPacienteDNI(dni));
+
+        }
+
     }
 
 }

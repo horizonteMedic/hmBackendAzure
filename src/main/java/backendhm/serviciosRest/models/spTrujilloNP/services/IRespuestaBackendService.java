@@ -7,6 +7,8 @@ import java.util.List;
 public interface IRespuestaBackendService {
     RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO requestDatosPacienteDTO);
 
+    RequestDatosPacienteDTO busquedaDatosPacienteDNI(long dni);
+
     RespuestaBackendDTO registroHistoriaClinica(RequestNOrdenOcupacionalDTO requestNOrdenOcupacionalDTO);
     RespuestaBackendDTO busquedaDniPorNOrden(long nOrden);
     RespuestaBackendDTO busquedaDniPorReferencia(String referencia);

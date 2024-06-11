@@ -2,13 +2,14 @@ package backendhm.serviciosRest.models.spTrujilloNP.services;
 
 
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.BackendEntityDatosPaciente;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.MatrizAdministrativa;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.ResponseMatrizSalud;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IBackendEntityDatosPacienteRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizAdminRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizSaludRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
-import ch.qos.logback.core.joran.spi.ElementSelector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,9 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     @Autowired
     private IMatrizSaludRepository matrizSaludRepository;
 
+    @Autowired
+    private IBackendEntityDatosPacienteRepository backendEntityDatosPacienteRepository;
+
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
         RespuestaBackendNP respuestaBackend=
@@ -37,6 +41,11 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
                         rdp.getTelCasaPa(),rdp.getTelTrabajoPa(),rdp.getCelPa(),rdp.getFechaRegistroPa(),rdp.getApellidosPa(),rdp.getHoraRegistroPa(),rdp.getTipoDoc()).orElseThrow();
 
         return mapearDTO(respuestaBackend);
+    }
+
+    @Override
+    public RequestDatosPacienteDTO busquedaDatosPacienteDNI(long dni) {
+        return mapearDTODatosPaciente(backendEntityDatosPacienteRepository.busquedaDatosPacienteDNI(dni).orElseThrow());
     }
 
     @Override
@@ -83,6 +92,37 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
         respuestaBackendDTO.setId(respuestaBackendNP.getId());
         respuestaBackendDTO.setMensaje(respuestaBackendNP.getMensaje());
+
+        return respuestaBackendDTO;
+    }
+
+    private RequestDatosPacienteDTO mapearDTODatosPaciente(BackendEntityDatosPaciente bk){
+        RequestDatosPacienteDTO respuestaBackendDTO=new RequestDatosPacienteDTO();
+
+        respuestaBackendDTO.setCodPa(bk.getCodPa());
+        respuestaBackendDTO.setCaserioPA(bk.getCaserioPA());
+        respuestaBackendDTO.setApellidosPa(bk.getApellidosPa());
+        respuestaBackendDTO.setCelPa(bk.getCelPa());
+        respuestaBackendDTO.setDepartamentoPa(bk.getDepartamentoPa());
+        respuestaBackendDTO.setDireccionPa(bk.getDireccionPa());
+        respuestaBackendDTO.setDistritoPa(bk.getDistritoPa());
+        respuestaBackendDTO.setEmailPa(bk.getEmailPa());
+        respuestaBackendDTO.setFotoPa(bk.getFotoPa());
+        respuestaBackendDTO.setEstadoCivilPa(bk.getEstadoCivilPa());
+        respuestaBackendDTO.setNivelEstPa(bk.getNivelEstPa());
+        respuestaBackendDTO.setFechaRegistroPa(bk.getFechaRegistroPa());
+        respuestaBackendDTO.setFechaNaciminetoPa(bk.getFechaNaciminetoPa());
+        respuestaBackendDTO.setHoraRegistroPa(bk.getHoraRegistroPa());
+        respuestaBackendDTO.setCodAleatorioPa(bk.getCodAleatorioPa());
+        respuestaBackendDTO.setLugarNacPa(bk.getLugarNacPa());
+        respuestaBackendDTO.setOcupacionPa(bk.getOcupacionPa());
+        respuestaBackendDTO.setSexoPa(bk.getSexoPa());
+        respuestaBackendDTO.setTelCasaPa(bk.getTelCasaPa());
+        respuestaBackendDTO.setTelTrabajoPa(bk.getTelTrabajoPa());
+        respuestaBackendDTO.setTipoDoc(bk.getTipoDoc());
+        respuestaBackendDTO.setNombresPa(bk.getNombresPa());
+        respuestaBackendDTO.setCaserioPA(bk.getCaserioPA());
+
 
         return respuestaBackendDTO;
     }
