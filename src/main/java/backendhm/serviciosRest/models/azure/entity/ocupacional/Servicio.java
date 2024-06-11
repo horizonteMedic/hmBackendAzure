@@ -23,13 +23,13 @@ public class Servicio implements Serializable {
     @Column(name = "id_servicio")
     private long idServicio;
 
-    @Column(name = "nombre_servicio")
+    @Column(name = "nombre_servicio",nullable = false,unique = true)
     private String nombreServicio;
 
     @Column(name = "tabla_servicio")
     private String tablaServicio;
 
-    @Column(length = 12)
+    @Column(length = 12,nullable = false)
     private String precio;
 
     private Boolean estado;

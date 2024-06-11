@@ -110,6 +110,11 @@ public class OcupacionalController {
         return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
     }
 
+    @GetMapping("/protocolos/busquedaPorName/{name}")
+    public ResponseEntity<ProtocoloDTO> obtenerProtocoloPorID(@PathVariable(name = "name") String name) {
+
+        return ResponseEntity.ok(protocoloService.busquedaProtocoloPorName(name));
+    }
 
 
 
@@ -128,6 +133,11 @@ public class OcupacionalController {
         return ResponseEntity.ok(servicioProtocoloService.obtenerServicioProtocoloPorID(id));
     }
 
+    @GetMapping("/servicioProtocolos/busquedaPorIdProtocolo/{idProtocolo}")
+    public ResponseEntity<List<ServicioProtocoloDTO>> obtenerServicioProtocoloPorIDProtocolo(@PathVariable(name = "idProtocolo") long idProtocolo) {
+
+        return ResponseEntity.ok(servicioProtocoloService.busquedaServicioProtocoloPorIDProtocolo(idProtocolo));
+    }
 
     @PostMapping("/servicioProtocolos")
     public ResponseEntity<ServicioProtocoloDTO> guardarServicioProtocolos(@Valid @RequestBody ServicioProtocoloDTO servicioProtocoloDTO) {
@@ -168,6 +178,11 @@ public class OcupacionalController {
         return ResponseEntity.ok(contratoProtocoloService.obtenerContratoProtocoloPorID(id));
     }
 
+    @GetMapping("/contrataProtocolos/busquedaIdProtocolo/{idProtocolo}")
+    public ResponseEntity<List<ContratoProtocoloDTO>>obtenerContratoProtocoloPorIDProtocolo(@PathVariable(name = "idProtocolo") long idProtocolo) {
+
+        return ResponseEntity.ok(contratoProtocoloService.busquedaContrataProtocoloPorIDProtocolo(idProtocolo));
+    }
 
     @PostMapping("/contrataProtocolos")
     public ResponseEntity<ContratoProtocoloDTO> guardarContratoProtocolos(@Valid @RequestBody ContratoProtocoloDTO contratoProtocoloDTO) {

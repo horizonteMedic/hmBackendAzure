@@ -44,6 +44,13 @@ public class ServicioProtocoloServiceImpl implements IServicioProtocoloService {
     }
 
     @Override
+    public List<ServicioProtocoloDTO> busquedaServicioProtocoloPorIDProtocolo(long idProtocolo) {
+        List<ServicioProtocolo> listarServicioProtocolo=servicioProtocoloRepository.buscarServicioProtocoloPorIdProtocolo(idProtocolo).orElseThrow();
+
+        return listarServicioProtocolo.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public ServicioProtocoloDTO obtenerServicioProtocoloPorID(long id) {
         ServicioProtocolo servicioProtocolo=servicioProtocoloRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio Protocolo","id",id));
         return mapearDTO(servicioProtocolo);

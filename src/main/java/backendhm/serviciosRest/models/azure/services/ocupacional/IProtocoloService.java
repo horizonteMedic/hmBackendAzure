@@ -7,6 +7,7 @@ import java.util.List;
 public interface IProtocoloService {
     ProtocoloDTO crearProtocolo(ProtocoloDTO protocoloDTO);
     List<ProtocoloDTO> listadoProtocolos();
+    ProtocoloDTO busquedaProtocoloPorName(String nameProtocolo);
     ProtocoloDTO obtenerProtocoloPorID(long id);
     ProtocoloDTO actualizarProtocolo(ProtocoloDTO protocoloDTO, long id);
     void eliminarProtocolo(long id);

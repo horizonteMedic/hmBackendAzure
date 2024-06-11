@@ -38,6 +38,13 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
     }
 
     @Override
+    public List<ContratoProtocoloDTO> busquedaContrataProtocoloPorIDProtocolo(long idProtocolo) {
+        List<ContratoProtocolo> listarContratoProtocolo=contratoProtocoloRepository.buscarContratoProtocoloPorIdProtocolo(idProtocolo).orElseThrow();
+
+        return listarContratoProtocolo.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public ContratoProtocoloDTO obtenerContratoProtocoloPorID(long id) {
         ContratoProtocolo contratoProtocolo=contratoProtocoloRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Contrato Protocolo","id",id));
         return mapearDTO(contratoProtocolo);

@@ -7,6 +7,7 @@ import java.util.List;
 public interface IContratoProtocoloService {
     ContratoProtocoloDTO crearContratoProtocolo(ContratoProtocoloDTO contratoProtocoloDTO);
     List<ContratoProtocoloDTO> listadoContratosProtocolos();
+    List<ContratoProtocoloDTO> busquedaContrataProtocoloPorIDProtocolo(long idProtocolo);
     ContratoProtocoloDTO obtenerContratoProtocoloPorID(long id);
     ContratoProtocoloDTO actualizarContratoProtocolo(ContratoProtocoloDTO contratoProtocoloDTO, long id);
     void eliminarContratoProtocolo(long id);

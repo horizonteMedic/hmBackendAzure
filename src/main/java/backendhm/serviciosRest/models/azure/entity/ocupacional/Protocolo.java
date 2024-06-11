@@ -27,10 +27,10 @@ public class Protocolo implements Serializable {
     @Column(name = "id_protocolo")
     private long idProtocolo;
 
-    @Column(name = "nombre_protocolo", length = 300)
+    @Column(name = "nombre_protocolo", length = 300,nullable = false,unique = true)
     private String nombreProtocolo;
 
-    @Column(name = "ruc_empresa")
+    @Column(name = "ruc_empresa",nullable = false)
     private long rucEmpresa;
 
     private Boolean estado;
@@ -51,7 +51,7 @@ public class Protocolo implements Serializable {
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
 
-    @Column(length = 12)
+    @Column(length = 12, nullable = false)
     private String precio;
 
     private String observacion;

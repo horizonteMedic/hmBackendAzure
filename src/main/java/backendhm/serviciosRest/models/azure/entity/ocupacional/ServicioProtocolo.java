@@ -23,16 +23,14 @@ public class ServicioProtocolo  implements Serializable {
     private long idServicioProtocolo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_protocolo", nullable = false)
+    @JoinColumn(name = "id_protocolo")
     private Protocolo protocolo_hm;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_servicio", nullable = false)
+    @JoinColumn(name = "id_servicio")
     private Servicio servicios_hm;
 
-
-    @Column(length = 12)
+    @Column(length = 12,nullable = false)
     private String precio;
 
     @Temporal(TemporalType.DATE)

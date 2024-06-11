@@ -24,13 +24,13 @@ public class ContratoProtocolo implements Serializable {
     private long idContratoProtocolo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_protocolo", nullable = false)
+    @JoinColumn(name = "id_protocolo")
     private Protocolo protocolo_hm;
 
     @Column(name = "ruc_contrata", nullable = false)
     Long rucContrata;
 
-    @Column(length = 12)
+    @Column(length = 12,nullable = false)
     private String precio;
 
     @Temporal(TemporalType.DATE)

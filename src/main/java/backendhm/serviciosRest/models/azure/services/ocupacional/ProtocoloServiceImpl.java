@@ -33,6 +33,11 @@ public class ProtocoloServiceImpl implements IProtocoloService{
     }
 
     @Override
+    public ProtocoloDTO busquedaProtocoloPorName(String nameProtocolo) {
+        return mapearDTO(protocoloRepository.buscarProtocoloPorNombreProto(nameProtocolo).orElseThrow());
+    }
+
+    @Override
     public ProtocoloDTO obtenerProtocoloPorID(long id) {
         Protocolo protocolo=protocoloRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("protocolos","id",id));
         return mapearDTO(protocolo);
