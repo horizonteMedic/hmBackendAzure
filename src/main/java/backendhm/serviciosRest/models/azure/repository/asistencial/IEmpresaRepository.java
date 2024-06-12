@@ -12,4 +12,8 @@ public interface IEmpresaRepository extends JpaRepository<Empresa,String> {
     @Query(value = "select *from listado_emp_por_busqueda(?,?)", nativeQuery=true)
     List<Empresa> busquedaEmpresaPorUsernameEmpresa(String userName, String tipoEmpCont);
 
+    @Query(value = "select * from empresas where ruc_empresa= CAST(? AS TEXT)", nativeQuery=true)
+    Empresa busquedaEmpresaPorRucEmpresa(String rucEmpresa);
+
+
 }

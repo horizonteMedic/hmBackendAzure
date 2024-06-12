@@ -72,7 +72,9 @@ public class ServicioProtocoloServiceImpl implements IServicioProtocoloService {
 
     private ServicioProtocoloDTO mapearDTO(ServicioProtocolo servicioProtocolo){
         ServicioProtocoloDTO servicioProtocoloDTO=new ServicioProtocoloDTO();
+        Servicio servicio=serviciosRepository.busquedaServicioPorIdServicio(servicioProtocolo.getServicios_hm().getIdServicio());
 
+        servicioProtocoloDTO.setNombreServicio(servicio.getNombreServicio());
         servicioProtocoloDTO.setIdServicioProtocolo(servicioProtocolo.getIdServicioProtocolo());
         servicioProtocoloDTO.setId_protocolo(servicioProtocolo.getProtocolo_hm().getIdProtocolo());
         servicioProtocoloDTO.setId_servicio(servicioProtocolo.getServicios_hm().getIdServicio());

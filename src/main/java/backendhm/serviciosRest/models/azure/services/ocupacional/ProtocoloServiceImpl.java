@@ -1,8 +1,10 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ProtocoloDTO;
+import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.Protocolo;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
+import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.IProtocoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class ProtocoloServiceImpl implements IProtocoloService{
 
     @Autowired
     private IProtocoloRepository protocoloRepository;
+
+    @Autowired
+    private IEmpresaRepository empresaRepository;
 
     @Override
     public ProtocoloDTO crearProtocolo(ProtocoloDTO protocoloDTO) {
@@ -59,7 +64,9 @@ public class ProtocoloServiceImpl implements IProtocoloService{
 
     private ProtocoloDTO mapearDTO(Protocolo protocolo){
         ProtocoloDTO protocoloDTO=new ProtocoloDTO();
+        Empresa empresa=empresaRepository.busquedaEmpresaPorRucEmpresa(String.valueOf(protocolo.getRucEmpresa()));
 
+        protocoloDTO.setRazonEmpresa(empresa.getRazonEmpresa());
         protocoloDTO.setIdProtocolo(protocolo.getIdProtocolo());
         protocoloDTO.setNombreProtocolo(protocolo.getNombreProtocolo());
         protocoloDTO.setEstado(protocolo.getEstado());

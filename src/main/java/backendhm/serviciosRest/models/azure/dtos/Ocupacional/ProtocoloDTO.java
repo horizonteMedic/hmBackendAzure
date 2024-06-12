@@ -22,6 +22,8 @@ public class ProtocoloDTO {
 
     private long rucEmpresa;
 
+    private String razonEmpresa;
+
     private Boolean estado;
 
     @Temporal(TemporalType.DATE)

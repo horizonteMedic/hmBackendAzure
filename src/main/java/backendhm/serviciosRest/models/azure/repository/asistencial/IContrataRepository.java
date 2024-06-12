@@ -11,4 +11,7 @@ import java.util.List;
 public interface IContrataRepository extends JpaRepository<Contrata,String> {
     @Query(value = "select *FROM listado_cont_por_busqueda(?,?)", nativeQuery=true)
     List<Contrata> porUsernameContrata(String userName, String tipoEmpCont);
+
+    @Query(value = "select * from contratas where ruc_contrata=CAST(? AS TEXT);", nativeQuery=true)
+    Contrata busquedaContrataPorRuc(String rucContrata);
 }

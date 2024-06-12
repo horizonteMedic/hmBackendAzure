@@ -1,9 +1,11 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ContratoProtocoloDTO;
+import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.ContratoProtocolo;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.Protocolo;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
+import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.IContratoProtocoloRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.IProtocoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
 
     @Autowired
     private IProtocoloRepository protocoloRepository;
+
+    @Autowired
+    private IContrataRepository contrataRepository;
 
     @Override
     public ContratoProtocoloDTO crearContratoProtocolo(ContratoProtocoloDTO contratoProtocoloDTO) {
@@ -68,6 +73,9 @@ public class ContratoProtocoloServiceImpl implements IContratoProtocoloService{
     ContratoProtocoloDTO mapearDTO(ContratoProtocolo contratoProtocolo){
         ContratoProtocoloDTO contratoProtocoloDTO=new ContratoProtocoloDTO();
 
+        Contrata contrata=contrataRepository.busquedaContrataPorRuc(String.valueOf(contratoProtocolo.getRucContrata()));
+
+        contratoProtocoloDTO.setRazonContrata(contrata.getRazonContrata());
         contratoProtocoloDTO.setIdContratoProtocolo(contratoProtocolo.getIdContratoProtocolo());
         contratoProtocoloDTO.setId_protocolo(contratoProtocolo.getProtocolo_hm().getIdProtocolo());
         contratoProtocoloDTO.setPrecio(Float.parseFloat(contratoProtocolo.getPrecio()));

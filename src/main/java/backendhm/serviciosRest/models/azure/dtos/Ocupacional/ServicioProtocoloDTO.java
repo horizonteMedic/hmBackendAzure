@@ -21,6 +21,8 @@ public class ServicioProtocoloDTO {
 
     private long id_servicio;
 
+    private String nombreServicio;
+
     private float precio;
 
     @Temporal(TemporalType.DATE)
