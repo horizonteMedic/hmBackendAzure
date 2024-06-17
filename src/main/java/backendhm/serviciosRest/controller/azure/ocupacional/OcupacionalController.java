@@ -1,13 +1,7 @@
 package backendhm.serviciosRest.controller.azure.ocupacional;
 
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ContratoProtocoloDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ProtocoloDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ServicioDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ServicioProtocoloDTO;
-import backendhm.serviciosRest.models.azure.services.ocupacional.IContratoProtocoloService;
-import backendhm.serviciosRest.models.azure.services.ocupacional.IProtocoloService;
-import backendhm.serviciosRest.models.azure.services.ocupacional.IServicioProtocoloService;
-import backendhm.serviciosRest.models.azure.services.ocupacional.IServicioService;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.*;
+import backendhm.serviciosRest.models.azure.services.ocupacional.*;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +28,9 @@ public class OcupacionalController {
 
     @Autowired
     private IContratoProtocoloService contratoProtocoloService;
+
+    @Autowired
+    private ICitaOcupacionalService citaOcupacionalService;
     private static JSONObject json=null;
 
 
@@ -202,6 +199,43 @@ public class OcupacionalController {
     @DeleteMapping("/contrataProtocolos/{id}")
     public ResponseEntity<String> eliminarContratoProtocolo(@PathVariable(name = "id") long id) {
         contratoProtocoloService.eliminarContratoProtocolo(id);
+        json=new JSONObject();
+        return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/citaOcupacional")
+    public ResponseEntity<List<CitaOcupacionalDTO>> obtenerListadoCitadoOcupacional(){
+
+        return  ResponseEntity.ok(citaOcupacionalService.listadoCitaOcupacional());
+    }
+
+    @GetMapping("/citaOcupacional/{id}")
+    public ResponseEntity<CitaOcupacionalDTO> obtenerCitaOcupacionalPorID(@PathVariable(name = "id") long id) {
+
+        return ResponseEntity.ok(citaOcupacionalService.obtenerCitaOcupacionalPorID(id));
+    }
+
+
+    @PostMapping("/citaOcupacional")
+    public ResponseEntity<CitaOcupacionalDTO> guardarCitaOcupacional(@Valid @RequestBody CitaOcupacionalDTO citaOcupacionalDTO) {
+
+        return new ResponseEntity<>(citaOcupacionalService.crearCitaOcupacional(citaOcupacionalDTO), HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/citaOcupacional/{id}")
+    public ResponseEntity<CitaOcupacionalDTO> actualizarCitaOcupacional(@Valid @RequestBody CitaOcupacionalDTO citaOcupacionalDTO,
+                                                          @PathVariable(name = "id") long id) {
+
+        CitaOcupacionalDTO citaOcupacionalDTOActualizada = citaOcupacionalService.actualizarCitaOcupacional(citaOcupacionalDTO, id);
+        return new ResponseEntity<>(citaOcupacionalDTOActualizada, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/citaOcupacional/{id}")
+    public ResponseEntity<String> eliminarCitaOcupacional(@PathVariable(name = "id") long id) {
+        citaOcupacionalService.eliminarCitaOcupacional(id);
         json=new JSONObject();
         return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
     }
