@@ -124,7 +124,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 String temporal=parts[2].trim();
                 String contenedor= StringUtils.right(temporal,4);
 
-                parte2 = parts[0].trim();git 
+                parte2 = parts[0].trim();
                 String[] partes = temporal.split(contenedor);
                 parte1=partes[0].trim();
 
