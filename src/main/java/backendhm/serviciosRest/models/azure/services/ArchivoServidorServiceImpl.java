@@ -124,7 +124,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 String temporal=parts[2].trim();
                 String contenedor= StringUtils.right(temporal,4);
 
-                parte2 = parts[0].trim();
+                parte2 = parts[0].trim();git 
                 String[] partes = temporal.split(contenedor);
                 parte1=partes[0].trim();
 
@@ -133,7 +133,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
             TipoArchivoDTO tipoArchivoDTO= new TipoArchivoDTO();
 
-            if(parte2.contains("EMOR")){
+            if(parte2.contains("EM")){
 
                 tipoArchivoDTO.setId(Long.valueOf(455));
             }
