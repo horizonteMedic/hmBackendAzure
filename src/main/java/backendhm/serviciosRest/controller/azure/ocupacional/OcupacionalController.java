@@ -205,6 +205,8 @@ public class OcupacionalController {
 
 
 
+
+
     @GetMapping("/citaOcupacional")
     public ResponseEntity<List<CitaOcupacionalDTO>> obtenerListadoCitadoOcupacional(){
 
@@ -239,4 +241,9 @@ public class OcupacionalController {
         json=new JSONObject();
         return new ResponseEntity<>(json.put("message","Registro Eliminado exitosamente!").toString(),HttpStatus.OK);
     }
+
+
+
+
+
 }

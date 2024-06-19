@@ -131,8 +131,18 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             }
 
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
+            TipoArchivoDTO tipoArchivoDTO= new TipoArchivoDTO();
 
-            TipoArchivoDTO tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
+            if(parte2.contains("EMOR")){
+
+                tipoArchivoDTO.setId(Long.valueOf(455));
+            }
+            else {
+                tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
+
+            }
+
+
             backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO respuestaBackendDTO=null;
             backendhm.serviciosRest.models.spTrujilloSD.dto.RespuestaBackendDTOTSD respuestaBackendDTOTSD=null;
             if (cargaMasivaDTO.getCodigoSede().contains("T-SD")){
