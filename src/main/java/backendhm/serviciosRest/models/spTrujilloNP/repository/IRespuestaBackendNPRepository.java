@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,6 +33,21 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
     @Query(value = "SELECT COD_PA as id_resp, Cast('valor encontrado' as text) as mensaje FROM N_ORDEN_OCUPACIONAL WHERE referencia=?", nativeQuery=true)
     Optional<RespuestaBackendNP> busquedaDniPorReferencia(String referencia);
 
+    @Query(value = "select row_number() over() as id_resp, razon_empresa as mensaje from empresas where length(ruc_empresa)>=11;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoEmpresasNP();
 
+    @Query(value = "select row_number() over() as id_resp, razon_contrata as mensaje from contratas where length(ruc_contrata)>=11;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoContratasNP();
 
+    @Query(value = "select row_number() over() as id_resp,CONCAT(NOMBRE_USER,' ',APELLIDO_USER) AS mensaje from  usuarios;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoMedicos();
+
+    @Query(value = "select row_number() over() as id_resp,descripcion as mensaje from tipoPruebas;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoTipoPrueba();
+
+    @Query(value = "select row_number() over() as id_resp,ocupacion_pa as mensaje from ocupaciones_pa;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoCargo();
+
+    @Query(value = "select row_number() over() as id_resp,area_o as mensaje from area_ocupacional;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoArea();
 }

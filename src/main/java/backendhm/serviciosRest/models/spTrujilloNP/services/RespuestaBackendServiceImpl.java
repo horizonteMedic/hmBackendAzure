@@ -87,6 +87,41 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return listadoMatrizSalud.stream().map(this::mapearDTOMSALUD).collect(Collectors.toList());
     }
 
+    @Override
+    public List<RespuestaBackendDTO> listadoEmpresasNP() {
+        List<RespuestaBackendNP> listadoEmpresas=respuestaBackendNPRepository.listadoEmpresasNP().orElseThrow();
+        return listadoEmpresas.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RespuestaBackendDTO> listadoContratasNP() {
+        List<RespuestaBackendNP> listadoContratas=respuestaBackendNPRepository.listadoContratasNP().orElseThrow();
+        return listadoContratas.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RespuestaBackendDTO> listadoMedicosNP() {
+        List<RespuestaBackendNP> listadoMedicos=respuestaBackendNPRepository.listadoMedicos().orElseThrow();
+        return listadoMedicos.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RespuestaBackendDTO> listadoTipoPruebasNP() {
+        List<RespuestaBackendNP> listadoTipoPruebas=respuestaBackendNPRepository.listadoTipoPrueba().orElseThrow();
+        return listadoTipoPruebas.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RespuestaBackendDTO> listadoCargo() {
+        List<RespuestaBackendNP> listadoCargo=respuestaBackendNPRepository.listadoCargo().orElseThrow();
+        return listadoCargo.stream().map(this::mapearDTO).collect(Collectors.toList());    }
+
+    @Override
+    public List<RespuestaBackendDTO> listadoArea() {
+        List<RespuestaBackendNP> listadoArea=respuestaBackendNPRepository.listadoArea().orElseThrow();
+        return listadoArea.stream().map(this::mapearDTO).collect(Collectors.toList());
+    }
+
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 

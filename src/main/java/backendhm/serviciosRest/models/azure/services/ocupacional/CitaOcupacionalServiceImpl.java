@@ -63,18 +63,28 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
     CitaOcupacionalDTO mapearDTO(CitaOcupacional citaOcupacional){
         CitaOcupacionalDTO citaOcupacionalDTO=new CitaOcupacionalDTO();
-        if (citaOcupacional.getRucEmpresa().toString().length()>0) {
+        if (citaOcupacional.getRucEmpresa() != null) {
             Empresa empresa = empresaRepository.findById(String.valueOf(citaOcupacional.getRucEmpresa())).orElseThrow();
             citaOcupacionalDTO.setRazonEmpresa(empresa.getRazonEmpresa());
+            citaOcupacionalDTO.setRucEmpresa(citaOcupacional.getRucEmpresa());
+
         }
-        else
+        else {
             citaOcupacionalDTO.setRazonEmpresa("");
-        if (citaOcupacional.getRucContrata().toString().length()>0) {
+            citaOcupacionalDTO.setRucEmpresa(null);
+
+        }
+        if (citaOcupacional.getRucContrata() != null) {
             Contrata contrata=contrataRepository.findById(citaOcupacional.getRucContrata().toString()).orElseThrow();
             citaOcupacionalDTO.setRazonContrata(contrata.getRazonContrata());
+            citaOcupacionalDTO.setRucContrata(citaOcupacional.getRucContrata());
+
         }
-        else
-        citaOcupacionalDTO.setRazonContrata("");
+        else {
+            citaOcupacionalDTO.setRazonContrata("");
+            citaOcupacionalDTO.setRucContrata(null);
+
+        }
 
 
         citaOcupacionalDTO.setIdCitaOcupacional(citaOcupacional.getIdCitaOcupacional());
@@ -83,8 +93,6 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         citaOcupacionalDTO.setFechaActualizacion(citaOcupacional.getFechaActualizacion());
         citaOcupacionalDTO.setFechaReserva(citaOcupacional.getFechaReserva());
         citaOcupacionalDTO.setNomenSede(citaOcupacional.getNomenSede());
-        citaOcupacionalDTO.setRucEmpresa(citaOcupacional.getRucEmpresa());
-        citaOcupacionalDTO.setRucContrata(citaOcupacional.getRucContrata());
         citaOcupacionalDTO.setUserRegistro(citaOcupacional.getUserRegistro());
         citaOcupacionalDTO.setUserActualizacion(citaOcupacional.getUserActualizacion());
 

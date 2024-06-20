@@ -17,4 +17,16 @@ public interface IRespuestaBackendService {
 
     List<ResponseMatrizSaludDTO> listadoMatrizSalud(RequesMatrizDTO requesMatrizDTO);
 
+    List<RespuestaBackendDTO> listadoEmpresasNP();
+
+    List<RespuestaBackendDTO> listadoContratasNP();
+
+    List<RespuestaBackendDTO> listadoMedicosNP();
+
+    List<RespuestaBackendDTO> listadoTipoPruebasNP();
+
+    List<RespuestaBackendDTO> listadoCargo();
+
+    List<RespuestaBackendDTO> listadoArea();
+
 }
