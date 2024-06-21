@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional("trujilloSDTransactionManagerFactory")
 public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD{
@@ -40,6 +43,87 @@ public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD
         return mapearDto(respuestaBackendTSD);
     }
 
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoEmpresasNP() {
+        List<RespuestaBackendTSD> listadoEmpresas=respuestaBackendSDRepository.listadoEmpresasNP().orElseThrow();
+        return listadoEmpresas.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoContratasNP() {
+        List<RespuestaBackendTSD> listadoContratas=respuestaBackendSDRepository.listadoContratasNP().orElseThrow();
+        return listadoContratas.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMedicosNP() {
+        List<RespuestaBackendTSD> listadoMedicos=respuestaBackendSDRepository.listadoMedicos().orElseThrow();
+        return listadoMedicos.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoPruebasNP() {
+        List<RespuestaBackendTSD> listadoTipoPrueba=respuestaBackendSDRepository.listadoTipoPrueba().orElseThrow();
+        return listadoTipoPrueba.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoCargo() {
+        List<RespuestaBackendTSD> listadoCargo=respuestaBackendSDRepository.listadoCargo().orElseThrow();
+        return listadoCargo.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoArea() {
+        List<RespuestaBackendTSD> listadoArea=respuestaBackendSDRepository.listadoArea().orElseThrow();
+        return listadoArea.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoExamen() {
+        List<RespuestaBackendTSD> listadoTipoExamen=respuestaBackendSDRepository.listadoTipoExamen().orElseThrow();
+        return listadoTipoExamen.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoExplotacion() {
+        List<RespuestaBackendTSD> listadoExplotacion=respuestaBackendSDRepository.listadoExplotacion().orElseThrow();
+        return listadoExplotacion.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMineral() {
+        List<RespuestaBackendTSD> listadoMineral=respuestaBackendSDRepository.listadoMineral().orElseThrow();
+        return listadoMineral.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoAltura() {
+        List<RespuestaBackendTSD> listadoAltura=respuestaBackendSDRepository.listadoAltura().orElseThrow();
+        return listadoAltura.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO precioExamen(String nameExamen) {
+        RespuestaBackendTSD respuestaBackendTSD=respuestaBackendSDRepository.precioExamen(nameExamen).orElseThrow();
+        return mapearDTOAzure(respuestaBackendTSD);
+    }
+    private backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO mapearDTOAzure(RespuestaBackendTSD respuestaBackendTSD){
+        backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO
+                respuestaBackendDTO= new backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO();
+        respuestaBackendDTO.setId(respuestaBackendTSD.getId());
+        respuestaBackendDTO.setMensaje(respuestaBackendTSD.getMensaje());
+
+        return respuestaBackendDTO;
+    }
     RespuestaBackendDTOTSD mapearDto(RespuestaBackendTSD respuestaBackendTSD){
         RespuestaBackendDTOTSD respuestaBackendDTOTSD=new RespuestaBackendDTOTSD();
 

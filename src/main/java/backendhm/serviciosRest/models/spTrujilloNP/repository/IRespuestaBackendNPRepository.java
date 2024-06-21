@@ -50,4 +50,19 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
 
     @Query(value = "select row_number() over() as id_resp,area_o as mensaje from area_ocupacional;", nativeQuery=true)
     Optional<List<RespuestaBackendNP>> listadoArea();
+
+    @Query(value = "select row_number() over() as id_resp, nom_examen as mensaje from examen_medico_ocupacional;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoTipoExamen();
+
+    @Query(value = "select row_number() over() as id_resp, nom_ex as mensaje from explotacion_en_po;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoExplotacion();
+
+    @Query(value = "select row_number() over() as id_resp, mineral_po as mensaje from mineral_ex_po;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoMineral();
+
+    @Query(value = "select row_number() over() as id_resp, altura_po as mensaje from altura_po;", nativeQuery=true)
+    Optional<List<RespuestaBackendNP>> listadoAltura();
+
+    @Query(value = "select precio_examen from examen_medico_ocupacional where nom_examen =?;", nativeQuery=true)
+    Optional<RespuestaBackendNP> precioExamen(String name_examen);
 }

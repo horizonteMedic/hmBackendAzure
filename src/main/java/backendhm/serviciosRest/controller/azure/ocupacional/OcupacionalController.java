@@ -1,7 +1,10 @@
 package backendhm.serviciosRest.controller.azure.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.*;
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.services.ocupacional.*;
+import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
+import backendhm.serviciosRest.models.spTrujilloSD.Service.IRespuestaBackendServiceSD;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,11 @@ import java.util.List;
 @CrossOrigin
 public class OcupacionalController {
 
+    @Autowired
+    private IRespuestaBackendServiceSD respuestaBackendServiceSD;
+
+    @Autowired
+    private IRespuestaBackendService respuestaBackendServiceNP;
 
     @Autowired
     private IServicioService servicioService;
@@ -243,7 +251,127 @@ public class OcupacionalController {
     }
 
 
+    @GetMapping("/listadoEmpresasMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoEmpresas(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoEmpresasNP());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoEmpresasNP());
+
+    }
+
+    @GetMapping("/listadoContratasMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoContratas(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoContratasNP());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoContratasNP());
+    }
+
+    @GetMapping("/listadoNombreMedicosMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoNombreMedicos(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoMedicosNP());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoMedicosNP());
+    }
+
+    @GetMapping("/listadoTipoPruebaMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoTipo(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoTipoPruebasNP());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoTipoPruebasNP());
+    }
+
+    @GetMapping("/listadoCargoMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoCargo(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoCargo());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoCargo());
+    }
+
+    @GetMapping("/listadoAreaMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoArea(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoArea());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoArea());
+    }
+
+    @GetMapping("/listadoTipoExamenMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoTipoExamen(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoTipoExamen());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoTipoExamen());
+    }
+
+    @GetMapping("/listadoExplotacionMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoExplotacion(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoExplotacion());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoExplotacion());
+    }
+
+    @GetMapping("/listadoMineralMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoMineral(@PathVariable(name = "nomenSede") String nomenSede) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoMineral());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoMineral());
+    }
 
 
+    @GetMapping("/listadoAlturaMutisucursal/{nomenSede}")
+    public ResponseEntity<List<RespuestaBackendDTO>>listadoAltura(@PathVariable(name = "nomenSede") String nomenSede) {
 
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.listadoAltura());
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.listadoAltura());
+    }
+
+
+    @GetMapping("/PrecioExamenMutisucursal/{nomenSede}/{nombreExamen}")
+    public ResponseEntity<RespuestaBackendDTO>precioExamen(@PathVariable String nomenSede, @PathVariable String nombreExamen) {
+
+        if(nomenSede.contains("T-SD") ) {
+            return ResponseEntity.ok(respuestaBackendServiceSD.precioExamen(nombreExamen));
+
+        }
+        else
+            return ResponseEntity.ok(respuestaBackendServiceNP.precioExamen(nombreExamen));
+    }
 }

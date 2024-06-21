@@ -17,16 +17,25 @@ public interface IRespuestaBackendService {
 
     List<ResponseMatrizSaludDTO> listadoMatrizSalud(RequesMatrizDTO requesMatrizDTO);
 
-    List<RespuestaBackendDTO> listadoEmpresasNP();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoEmpresasNP();
 
-    List<RespuestaBackendDTO> listadoContratasNP();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoContratasNP();
 
-    List<RespuestaBackendDTO> listadoMedicosNP();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMedicosNP();
 
-    List<RespuestaBackendDTO> listadoTipoPruebasNP();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoPruebasNP();
 
-    List<RespuestaBackendDTO> listadoCargo();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoCargo();
 
-    List<RespuestaBackendDTO> listadoArea();
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoArea();
 
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoExamen();
+
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoExplotacion();
+
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMineral();
+
+    List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoAltura();
+
+    backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO precioExamen(String nameExamen);
 }

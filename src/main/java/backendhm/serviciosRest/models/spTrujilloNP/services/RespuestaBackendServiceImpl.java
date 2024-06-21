@@ -88,40 +88,79 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     }
 
     @Override
-    public List<RespuestaBackendDTO> listadoEmpresasNP() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoEmpresasNP() {
         List<RespuestaBackendNP> listadoEmpresas=respuestaBackendNPRepository.listadoEmpresasNP().orElseThrow();
-        return listadoEmpresas.stream().map(this::mapearDTO).collect(Collectors.toList());
+        return listadoEmpresas.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
     }
 
     @Override
-    public List<RespuestaBackendDTO> listadoContratasNP() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoContratasNP() {
         List<RespuestaBackendNP> listadoContratas=respuestaBackendNPRepository.listadoContratasNP().orElseThrow();
-        return listadoContratas.stream().map(this::mapearDTO).collect(Collectors.toList());
+        return listadoContratas.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
     }
 
     @Override
-    public List<RespuestaBackendDTO> listadoMedicosNP() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMedicosNP() {
         List<RespuestaBackendNP> listadoMedicos=respuestaBackendNPRepository.listadoMedicos().orElseThrow();
-        return listadoMedicos.stream().map(this::mapearDTO).collect(Collectors.toList());
+        return listadoMedicos.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
     }
 
     @Override
-    public List<RespuestaBackendDTO> listadoTipoPruebasNP() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoPruebasNP() {
         List<RespuestaBackendNP> listadoTipoPruebas=respuestaBackendNPRepository.listadoTipoPrueba().orElseThrow();
-        return listadoTipoPruebas.stream().map(this::mapearDTO).collect(Collectors.toList());
+        return listadoTipoPruebas.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
     }
 
     @Override
-    public List<RespuestaBackendDTO> listadoCargo() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoCargo() {
         List<RespuestaBackendNP> listadoCargo=respuestaBackendNPRepository.listadoCargo().orElseThrow();
-        return listadoCargo.stream().map(this::mapearDTO).collect(Collectors.toList());    }
+        return listadoCargo.stream().map(this::mapearDTOAzure).collect(Collectors.toList());    }
 
     @Override
-    public List<RespuestaBackendDTO> listadoArea() {
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoArea() {
         List<RespuestaBackendNP> listadoArea=respuestaBackendNPRepository.listadoArea().orElseThrow();
-        return listadoArea.stream().map(this::mapearDTO).collect(Collectors.toList());
+        return listadoArea.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
     }
 
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoTipoExamen() {
+        List<RespuestaBackendNP> listadoTipoExamen=respuestaBackendNPRepository.listadoTipoExamen().orElseThrow();
+        return listadoTipoExamen.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoExplotacion() {
+        List<RespuestaBackendNP> listadoExplotacion=respuestaBackendNPRepository.listadoExplotacion().orElseThrow();
+        return listadoExplotacion.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoMineral() {
+        List<RespuestaBackendNP> listadoMineral=respuestaBackendNPRepository.listadoMineral().orElseThrow();
+        return listadoMineral.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoAltura() {
+        List<RespuestaBackendNP> listadoAltura=respuestaBackendNPRepository.listadoAltura().orElseThrow();
+        return listadoAltura.stream().map(this::mapearDTOAzure).collect(Collectors.toList());
+    }
+
+    @Override
+    public backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO precioExamen(String nameExamen) {
+        RespuestaBackendNP respuestaBackendNP=respuestaBackendNPRepository.precioExamen(nameExamen).orElseThrow();
+
+        return mapearDTOAzure(respuestaBackendNP);
+    }
+
+    private backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO mapearDTOAzure(RespuestaBackendNP respuestaBackendNP){
+        backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO
+                respuestaBackendDTO= new backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO();
+        respuestaBackendDTO.setId(respuestaBackendNP.getId());
+        respuestaBackendDTO.setMensaje(respuestaBackendNP.getMensaje());
+
+        return respuestaBackendDTO;
+    }
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
