@@ -178,6 +178,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         respuestaBackendDTO.setApellidosPa(bk.getApellidosPa());
         respuestaBackendDTO.setCelPa(bk.getCelPa());
         respuestaBackendDTO.setDepartamentoPa(bk.getDepartamentoPa());
+        respuestaBackendDTO.setProvinciaPa(bk.getProvinciaPa());
         respuestaBackendDTO.setDireccionPa(bk.getDireccionPa());
         respuestaBackendDTO.setDistritoPa(bk.getDistritoPa());
         respuestaBackendDTO.setEmailPa(bk.getEmailPa());
