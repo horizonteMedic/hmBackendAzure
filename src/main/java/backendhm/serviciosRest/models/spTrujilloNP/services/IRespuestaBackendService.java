@@ -1,5 +1,6 @@
 package backendhm.serviciosRest.models.spTrujilloNP.services;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public interface IRespuestaBackendService {
     RequestDatosPacienteDTO busquedaDatosPacienteDNI(long dni);
 
     RespuestaBackendDTO registroHistoriaClinica(RequestNOrdenOcupacionalDTO requestNOrdenOcupacionalDTO);
+
+    backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO registroHistoriaClinicaOcupacional(RequestHistoriaClinicaOcupacionalDTO requestHistoriaClinicaOcupacionalDTO);
+
     RespuestaBackendDTO busquedaDniPorNOrden(long nOrden);
     RespuestaBackendDTO busquedaDniPorReferencia(String referencia);
 

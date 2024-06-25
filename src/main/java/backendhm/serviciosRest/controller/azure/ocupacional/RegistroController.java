@@ -1,8 +1,10 @@
 package backendhm.serviciosRest.controller.azure.ocupacional;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
+import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestNOrdenOcupacionalDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
 import backendhm.serviciosRest.models.spTrujilloSD.Service.IRespuestaBackendServiceSD;
 import backendhm.serviciosRest.models.spTrujilloSD.dto.RespuestaBackendDTOTSD;
@@ -22,6 +24,7 @@ public class RegistroController {
 
     @Autowired
     private IRespuestaBackendServiceSD respuestaBackendServiceSD;
+
 
     @PostMapping("/datosPaciente/{sedeNomenc}")
     public ResponseEntity<RespuestaBackendDTO> datosP(@PathVariable(name = "sedeNomenc") String sedeNomenc, @RequestBody RequestDatosPacienteDTO rdp) {
@@ -58,7 +61,11 @@ public class RegistroController {
 
     }
 
+    @PostMapping("/historiaClinicaOcupacional")
+    public ResponseEntity<RespuestaBackendDTO> registrarHistoriaClinicaOcupacional(@RequestBody RequestHistoriaClinicaOcupacionalDTO rdp) {
+        return new ResponseEntity<>(respuestaBackendService.registroHistoriaClinicaOcupacional(rdp),HttpStatus.OK);
 
+    }
 
 
 }
