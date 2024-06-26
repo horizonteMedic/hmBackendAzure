@@ -17,6 +17,16 @@ public interface IRespuestaBackendSDRepository extends JpaRepository<RespuestaBa
     @Query(value = "select *from registro_automatico_servidorSantoDomingo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", nativeQuery=true)
     Optional<RespuestaBackendTSD> registroDatosPacienteServidorSD(long codPa, String nombresPa, String fechaNaciminetoPa, String sexoPa, String emailPa, String lugarNacPa, String nivelEstPa, String ocupacionPa, String estadoCivilPa, String direccionPa, String departamentoPa, String provinciaPa, String distritoPa, String caserioPA, String fotoPa, long codAleatorioPa, String telCasaPa, String telTrabajoPa, String celPa, String fechaRegistroPa, String apellidosPa, String horaRegistroPa, long tipoDoc);
 
+    @Query(value = "select * from backend_registro_historiaclinica_ocupacional(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", nativeQuery=true)
+    Optional<RespuestaBackendTSD> backendRegistroHistoriaClinica(long tipoOperacion ,long n_orden_exp, long cod_pa_exp, String razon_empresa_exp,String razon_contrata_exp,
+                                                                 String nom_ex_exp,String altura_po_exp,String mineral_po_exp,String fecha_apertura_po_exp,
+                                                                 String precio_po_exp,String estado_ex_exp,String nom_examen_exp,String cargo_de_exp,String area_o_exp,
+                                                                 String n_medico_exp,String n_hora_exp,String tipo_pago_exp,boolean n_fisttest_exp,boolean n_psicosen_exp,boolean n_testaltura_exp,
+                                                                 String grupo_san_exp,String grupo_factor_san_exp,String cod_clinica_exp,boolean visual_compl_exp,boolean trab_calientes_exp,
+                                                                 boolean chk_covid1_exp,boolean chk_covid2_exp,boolean manip_alimentos_exp,String txtobserv1_exp,String txtobserv2_exp,String cod_sede_exp,
+                                                                 String tipo_prueba_covid_exp,String tipo_prueba_exp,String nombre_hotel_exp,String protocolo_exp,String precio_adic_exp,String autoriza_exp,
+                                                                 String n_operacion_exp,boolean herra_manuales_exp,boolean rxc_dorso_lumbar_exp,boolean rxc_lumbar_exp,boolean rxc_lumbosacra_exp,boolean rxc_plomos_exp,
+                                                                 boolean mercurioo_exp );
 
     @Query(value = "select row_number() over() as id_resp, razon_empresa as mensaje from empresas where length(ruc_empresa)>=11;", nativeQuery=true)
     Optional<List<RespuestaBackendTSD>> listadoEmpresasNP();

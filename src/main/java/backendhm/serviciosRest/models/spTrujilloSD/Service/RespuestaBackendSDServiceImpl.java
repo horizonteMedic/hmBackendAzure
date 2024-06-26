@@ -1,5 +1,7 @@
 package backendhm.serviciosRest.models.spTrujilloSD.Service;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
+import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
 import backendhm.serviciosRest.models.spTrujilloSD.dto.RespuestaBackendDTOTSD;
 import backendhm.serviciosRest.models.spTrujilloSD.entity.BackendEntityDatosPacienteSD;
@@ -42,6 +44,18 @@ public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD
         RespuestaBackendTSD respuestaBackendTSD=respuestaBackendSDRepository.busquedaDniPorNorden(nOrden).orElseThrow();
         return mapearDto(respuestaBackendTSD);
     }
+
+    @Override
+    public RespuestaBackendDTO registroHistoriaClinicaOcupacional(RequestHistoriaClinicaOcupacionalDTO rdp) {
+        RespuestaBackendTSD respuestaBackendTSD=respuestaBackendSDRepository.backendRegistroHistoriaClinica(rdp.getTipoOperacion(),rdp.getN_orden(), rdp.getCodPa(),rdp.getRazonEmpresa(), rdp.getRazonContrata(), rdp.getNomEx(),rdp.getAlturaPo(),rdp.getMineralPo(),rdp.getFechaAperturaPo(),
+                rdp.getPrecioPo(),rdp.getEstadoEx(), rdp.getNomExamen(), rdp.getCargoDe(),rdp.getAreaO(),rdp.getN_medico(),rdp.getN_hora(),rdp.getTipoPago(),rdp.getN_fisttest(), rdp.getN_psicosen(), rdp.getN_testaltura(),
+                rdp.getGrupoSan(),rdp.getGrupoFactorSan(),rdp.getCodClinica(), rdp.getVisualCompl(), rdp.getTrabCalientes(), rdp.getChk_covid1(), rdp.getChk_covid2(), rdp.getManipAlimentos(), rdp.getTextObserv1(),
+                rdp.getTextObserv2(), rdp.getCodSede(), rdp.getTipoPruebaCovid(), rdp.getTipoPrueba(), rdp.getNombreHotel(),rdp.getProtocolo(),rdp.getPrecioAdic(), rdp.getAutoriza(), rdp.getN_operacion(), rdp.getHerraManuales(),
+                rdp.getRxcDorsoLumbar(), rdp.getRxcKLumbar(), rdp.getRxcLumbosacra(), rdp.getRxcPlomos(), rdp.getMercurioo()).orElseThrow();
+
+        return mapearDTOAZURE(respuestaBackendTSD);
+    }
+
 
     @Override
     public List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoEmpresasNP() {
@@ -132,6 +146,15 @@ public class RespuestaBackendSDServiceImpl implements IRespuestaBackendServiceSD
         return  respuestaBackendDTOTSD;
 
     }
+
+    private backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO mapearDTOAZURE(RespuestaBackendTSD respuestaBackendTSD){
+        backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO respuestaBackendDTOTSD= new backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO();
+        respuestaBackendDTOTSD.setId(respuestaBackendTSD.getId());
+        respuestaBackendDTOTSD.setMensaje(respuestaBackendTSD.getMensaje());
+        return  respuestaBackendDTOTSD;
+
+    }
+
 
     private RequestDatosPacienteDTO mapearDTODatosPaciente(BackendEntityDatosPacienteSD bk){
         RequestDatosPacienteDTO respuestaBackendDTO=new RequestDatosPacienteDTO();

@@ -63,8 +63,10 @@ public class RegistroController {
 
     @PostMapping("/historiaClinicaOcupacional")
     public ResponseEntity<RespuestaBackendDTO> registrarHistoriaClinicaOcupacional(@RequestBody RequestHistoriaClinicaOcupacionalDTO rdp) {
+        if(rdp.getCodSede().contains("T-SD"))
+            return new ResponseEntity<>(respuestaBackendServiceSD.registroHistoriaClinicaOcupacional(rdp),HttpStatus.OK);
+            else
         return new ResponseEntity<>(respuestaBackendService.registroHistoriaClinicaOcupacional(rdp),HttpStatus.OK);
-
     }
 
 

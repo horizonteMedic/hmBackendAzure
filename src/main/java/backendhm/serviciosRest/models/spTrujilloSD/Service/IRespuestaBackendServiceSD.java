@@ -1,7 +1,7 @@
 package backendhm.serviciosRest.models.spTrujilloSD.Service;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.RequestDatosPacienteDTO;
-import backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.spTrujilloSD.dto.RespuestaBackendDTOTSD;
 
 import java.util.List;
@@ -10,6 +10,8 @@ public interface IRespuestaBackendServiceSD {
     RequestDatosPacienteDTO busquedaDatosPacienteDNI(long dni);
     RespuestaBackendDTOTSD registrarDatosPaciente(RequestDatosPacienteDTO requestDatosPacienteDTO);
     RespuestaBackendDTOTSD busquedaDniPorNOrden(long nOrden);
+
+    backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO registroHistoriaClinicaOcupacional(RequestHistoriaClinicaOcupacionalDTO requestHistoriaClinicaOcupacionalDTO);
 
     List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoEmpresasNP();
 
