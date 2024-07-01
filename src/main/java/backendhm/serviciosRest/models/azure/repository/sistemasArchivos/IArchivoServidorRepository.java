@@ -18,4 +18,9 @@ public interface IArchivoServidorRepository extends JpaRepository<ArchivosServid
             "\t ars.id_tipo_archivo in (select taa.id_tipo_archivo_asignar from tipo_archivo_asignado as taa inner join usuario_rol as ur\n" +
             "\t on taa.id_rol=ur.id_rol where ur.id_user=? );", nativeQuery=true)
     Optional<List<ArchivosServidor>> listadoArchivosPorHCYIdUser(String hc, long idUser);
+
+
+    @Query(value = "select arcs.* from archivos_servidores as arcs inner join tipo_archivo as ta on arcs.id_tipo_archivo=ta.id_tipo_archivo\n" +
+            " where ruta_archivo like  '%T-NP%'", nativeQuery=true)
+    Optional<List<ArchivosServidor>> listadoArchivoServidoresExistentes();
 }

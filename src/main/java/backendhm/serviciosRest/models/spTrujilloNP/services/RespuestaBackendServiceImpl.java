@@ -1,16 +1,16 @@
 package backendhm.serviciosRest.models.spTrujilloNP.services;
 
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendHistoriaOcupacionalDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ResponseMatrizArchivosDTO;
+import backendhm.serviciosRest.models.azure.entity.TipoArchivo;
+import backendhm.serviciosRest.models.azure.entity.sistemaArchivos.ArchivosServidor;
+import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.IArchivoServidorRepository;
+import backendhm.serviciosRest.models.azure.repository.sistemasArchivos.ITipoArchivoRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
-import backendhm.serviciosRest.models.spTrujilloNP.entity.BackendEntityDatosPaciente;
-import backendhm.serviciosRest.models.spTrujilloNP.entity.MatrizAdministrativa;
-import backendhm.serviciosRest.models.spTrujilloNP.entity.ResponseMatrizSalud;
-import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
-import backendhm.serviciosRest.models.spTrujilloNP.repository.IBackendEntityDatosPacienteRepository;
-import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizAdminRepository;
-import backendhm.serviciosRest.models.spTrujilloNP.repository.IMatrizSaludRepository;
-import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.*;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,10 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     private IRespuestaBackendNPRepository respuestaBackendNPRepository;
 
     @Autowired
+    ITipoArchivoRepository archivoRepository;
+    @Autowired
+    private IArchivoServidorRepository archivoServidorRepository;
+    @Autowired
     private IMatrizAdminRepository matrizAdminRepository;
 
     @Autowired
@@ -33,6 +37,9 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     @Autowired
     private IBackendEntityDatosPacienteRepository backendEntityDatosPacienteRepository;
+
+    @Autowired
+    private IBackendEntityHistorialOcupacionalRepository backendEntityHistorialOcupacionalRepository;
 
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
@@ -167,6 +174,19 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         return mapearDTOAzure(respuestaBackendNP);
     }
 
+    @Override
+    public List<BackendHistoriaOcupacionalDTO> listadoHistoriaOcupacionalSede(String codSede) {
+        List<BackendEntityHistoriaOcupacional> listadobackendEntityHistoriaOcupacional=
+                backendEntityHistorialOcupacionalRepository.listadoHistoriaOcupacionalSede(codSede).orElseThrow();
+        return listadobackendEntityHistoriaOcupacional.stream().map(this::mapearDTOListadoHistorialOcupacional).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ResponseMatrizArchivosDTO> listadoMatrizArchivos() {
+        List<ArchivosServidor> listadoArchivoServidores=archivoServidorRepository.listadoArchivoServidoresExistentes().orElseThrow();
+        return listadoArchivoServidores.stream().map(this::mapearDTOArchivos).collect(Collectors.toList());
+    }
+
     private backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO mapearDTOAzure(RespuestaBackendNP respuestaBackendNP){
         backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO
                 respuestaBackendDTO= new backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO();
@@ -175,6 +195,25 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
         return respuestaBackendDTO;
     }
+
+
+    private ResponseMatrizArchivosDTO mapearDTOArchivos(ArchivosServidor archivosServidor){
+    ResponseMatrizArchivosDTO responseMatrizArchivosDTO=new ResponseMatrizArchivosDTO();
+        TipoArchivo tipoArchivo=archivoRepository.findById(archivosServidor.getId_tipo_archivo()).orElseThrow();
+        BackendEntityHistoriaOcupacional bk=backendEntityHistorialOcupacionalRepository.historiaOcupacionalNOrDEN(archivosServidor.getOrden()).orElseThrow();
+        responseMatrizArchivosDTO.setHistoriaClinica(archivosServidor.getHistoriaClinica());
+    responseMatrizArchivosDTO.setFechaRegistro(archivosServidor.getFechaRegistro().toString());
+    responseMatrizArchivosDTO.setUserRegistro(archivosServidor.getUserRegistro());
+    responseMatrizArchivosDTO.setNombreArchivo(tipoArchivo.getNombre());
+    responseMatrizArchivosDTO.setRazonEmpresa(bk.getRazonEmpresa());
+    responseMatrizArchivosDTO.setRazonCOntrata(bk.getRazonContrata());
+    responseMatrizArchivosDTO.setNorden(archivosServidor.getOrden());
+    responseMatrizArchivosDTO.setDni(bk.getCodPa());
+
+    System.out.println(responseMatrizArchivosDTO);
+    return  responseMatrizArchivosDTO;
+    }
+
     private RespuestaBackendDTO mapearDTO(RespuestaBackendNP respuestaBackendNP){
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
@@ -282,4 +321,55 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     }
 
+    private BackendHistoriaOcupacionalDTO mapearDTOListadoHistorialOcupacional(BackendEntityHistoriaOcupacional bk){
+        BackendHistoriaOcupacionalDTO bkdto=new BackendHistoriaOcupacionalDTO();
+
+        bkdto.setN_orden(bk.getN_orden());
+        bkdto.setCodPa(bk.getCodPa());
+        bkdto.setRazonEmpresa(bk.getRazonEmpresa());
+        bkdto.setRazonContrata(bk.getRazonContrata());
+        bkdto.setNomEx(bk.getNomEx());
+        bkdto.setAlturaPo(bk.getAlturaPo());
+        bkdto.setMineralPo(bk.getMineralPo());
+        bkdto.setFechaAperturaPo(bk.getFechaAperturaPo());
+        bkdto.setPrecioPo(bk.getPrecioPo());
+        bkdto.setEstadoEx(bk.getEstadoEx());
+        bkdto.setNomExamen(bk.getNomExamen());
+        bkdto.setCargoDe(bk.getCargoDe());
+        bkdto.setAreaO(bk.getAreaO());
+        bkdto.setN_medico(bk.getN_medico());
+        bkdto.setN_hora(bk.getN_hora());
+        bkdto.setTipoPago(bk.getTipoPago());
+        bkdto.setN_fisttest(bk.getN_fisttest());
+        bkdto.setN_psicosen(bk.getN_psicosen());
+        bkdto.setN_testaltura(bk.getN_testaltura());
+        bkdto.setColor(bk.getColor());
+        bkdto.setGrupoSan(bk.getGrupoSan());
+        bkdto.setGrupoFactorSan(bk.getGrupoFactorSan());
+        bkdto.setCodClinica(bk.getCodClinica());
+        bkdto.setVisualCompl(bk.getVisualCompl());
+        bkdto.setTrabCalientes(bk.getTrabCalientes());
+        bkdto.setChk_covid1(bk.getChk_covid1());
+        bkdto.setChk_covid2(bk.getChk_covid2());
+        bkdto.setManipAlimentos(bk.getManipAlimentos());
+        bkdto.setTextObserv1(bk.getTextObserv1());
+        bkdto.setTextObserv2(bk.getTextObserv2());
+        bkdto.setCodSede(bk.getCodSede());
+        bkdto.setTipoPruebaCovid(bk.getTipoPruebaCovid());
+        bkdto.setTipoPrueba(bk.getTipoPrueba());
+        bkdto.setNombreHotel(bk.getNombreHotel());
+        bkdto.setProtocolo(bk.getProtocolo());
+        bkdto.setPrecioAdic(bk.getPrecioAdic());
+        bkdto.setAutoriza(bk.getAutoriza());
+        bkdto.setN_operacion(bk.getN_operacion());
+        bkdto.setHerraManuales(bk.getHerraManuales());
+        bkdto.setRxcDorsoLumbar(bk.getRxcDorsoLumbar());
+        bkdto.setRxcKLumbar(bk.getRxcLumbar());
+        bkdto.setRxcLumbosacra(bk.getRxcLumbosacra());
+        bkdto.setRxcPlomos(bk.getRxcPlomos());
+        bkdto.setMercurioo(bk.getMercurioo());
+
+        return bkdto;
+
+    }
 }

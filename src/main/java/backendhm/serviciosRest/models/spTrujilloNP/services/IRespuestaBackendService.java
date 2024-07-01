@@ -1,6 +1,8 @@
 package backendhm.serviciosRest.models.spTrujilloNP.services;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendHistoriaOcupacionalDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestHistoriaClinicaOcupacionalDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ResponseMatrizArchivosDTO;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 
 import java.util.List;
@@ -42,4 +44,8 @@ public interface IRespuestaBackendService {
     List<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> listadoAltura();
 
     backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO precioExamen(String nameExamen);
+
+    List<BackendHistoriaOcupacionalDTO> listadoHistoriaOcupacionalSede(String codSede);
+
+    List<ResponseMatrizArchivosDTO> listadoMatrizArchivos();
 }
