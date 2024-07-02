@@ -1,12 +1,15 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendEntityReservaListaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.CitaOcupacionalDTO;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
+import backendhm.serviciosRest.models.azure.entity.ocupacional.BackendEntityReservaLista;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.CitaOcupacional;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
+import backendhm.serviciosRest.models.azure.repository.ocupacional.BackendEntityReservaListaRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.ICitaOcupacionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     @Autowired
     private IEmpresaRepository empresaRepository;
 
+    @Autowired
+    private BackendEntityReservaListaRepository backendEntityReservaListaRepository;
+
     @Override
     public CitaOcupacionalDTO crearCitaOcupacional(CitaOcupacionalDTO citaOcupacionalDTO) {
         CitaOcupacional citaOcupacional=mapearEntidad(citaOcupacionalDTO);
@@ -40,6 +46,12 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     public List<CitaOcupacionalDTO> listadoCitaOcupacional() {
         List<CitaOcupacional> listarCitaOcupacional=citaOcupacionalRepository.findAll();
         return listarCitaOcupacional.stream().map(this::mapearDTO).collect(Collectors.toList());    }
+
+    @Override
+    public List<BackendEntityReservaListaDTO> listadoReserevaPorUsername(String nameUser) {
+        List<BackendEntityReservaLista> backendEntityReservaListas=backendEntityReservaListaRepository.listadoReservaPorUsername(nameUser).orElseThrow();
+        return backendEntityReservaListas.stream().map(this::mapearDTOReserva).collect(Collectors.toList());
+    }
 
     @Override
     public CitaOcupacionalDTO obtenerCitaOcupacionalPorID(long id) {
@@ -59,6 +71,19 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     public void eliminarCitaOcupacional(long id) {
         CitaOcupacional citaOcupacional=citaOcupacionalRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Cita Ocupacional","id Cita Ocupacional",id));
         citaOcupacionalRepository.delete(citaOcupacional);
+    }
+
+    BackendEntityReservaListaDTO mapearDTOReserva(BackendEntityReservaLista bck){
+        BackendEntityReservaListaDTO bkl=new BackendEntityReservaListaDTO();
+        bkl.setId(bck.getId());
+        bkl.setSede(bck.getSede());
+        bkl.setCantidad(bck.getCantidad());
+        bkl.setNomensede(bck.getNomensede());
+        bkl.setUsuario(bck.getUsuario());
+        bkl.setFechaReserva(bck.getFechaReserva());
+        bkl.setFechaRegistro(bck.getFechaRegistro());
+
+        return bkl;
     }
 
     CitaOcupacionalDTO mapearDTO(CitaOcupacional citaOcupacional){
