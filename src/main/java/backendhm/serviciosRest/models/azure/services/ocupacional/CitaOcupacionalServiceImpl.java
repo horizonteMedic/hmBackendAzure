@@ -77,6 +77,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         BackendEntityReservaListaDTO bkl=new BackendEntityReservaListaDTO();
         bkl.setId(bck.getId());
         bkl.setSede(bck.getSede());
+
         bkl.setCantidad(bck.getCantidad());
         bkl.setNomensede(bck.getNomensede());
         bkl.setUsuario(bck.getUsuario());
@@ -111,7 +112,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
         }
 
-
+        citaOcupacionalDTO.setCelular(citaOcupacional.getCelular());
         citaOcupacionalDTO.setIdCitaOcupacional(citaOcupacional.getIdCitaOcupacional());
         citaOcupacionalDTO.setDni(citaOcupacional.getDni());
         citaOcupacionalDTO.setFechaRegistro(citaOcupacional.getFechaRegistro());
@@ -129,6 +130,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     CitaOcupacional mapearEntidad(CitaOcupacionalDTO citaOcupacionalDTO){
         CitaOcupacional citaOcupacional=new CitaOcupacional();
 
+        citaOcupacional.setCelular(citaOcupacionalDTO.getCelular());
         citaOcupacional.setDni(citaOcupacionalDTO.getDni());
         citaOcupacional.setFechaRegistro(citaOcupacionalDTO.getFechaRegistro());
         citaOcupacional.setFechaActualizacion(citaOcupacionalDTO.getFechaActualizacion());
@@ -144,6 +146,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
     CitaOcupacional actualizarEntidadMapeado(CitaOcupacionalDTO citaOcupacionalDTO, CitaOcupacional citaOcupacional){
 
+        citaOcupacional.setCelular(citaOcupacionalDTO.getCelular());
         citaOcupacional.setDni(citaOcupacionalDTO.getDni());
         citaOcupacional.setFechaRegistro(citaOcupacionalDTO.getFechaRegistro());
         citaOcupacional.setFechaActualizacion(citaOcupacionalDTO.getFechaActualizacion());

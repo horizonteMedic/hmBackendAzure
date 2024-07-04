@@ -19,6 +19,8 @@ public class CitaOcupacionalDTO {
 
     Long dni;
 
+    Long celular;
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaReserva;

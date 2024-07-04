@@ -26,6 +26,8 @@ public class CitaOcupacional implements Serializable {
     @Column(nullable = false)
     Long dni;
 
+    Long celular;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_reserva")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
