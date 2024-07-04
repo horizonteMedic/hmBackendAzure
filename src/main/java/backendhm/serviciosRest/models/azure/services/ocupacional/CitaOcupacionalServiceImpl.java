@@ -1,15 +1,19 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendDetalleReservaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendEntityReservaListaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.CitaOcupacionalDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestDetalleReservaDTO;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
+import backendhm.serviciosRest.models.azure.entity.ocupacional.BackendDetalleReservaOcupacionalEntity;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.BackendEntityReservaLista;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.CitaOcupacional;
 import backendhm.serviciosRest.models.azure.errors.ResourceNotFoundException;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IContrataRepository;
 import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.BackendEntityReservaListaRepository;
+import backendhm.serviciosRest.models.azure.repository.ocupacional.IBackendDetalleReservaOcupacionalRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.ICitaOcupacionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,8 @@ import java.util.stream.Collectors;
 @Service
 public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
+    @Autowired
+    private IBackendDetalleReservaOcupacionalRepository backendDetalleReservaOcupacionalRepository;
     @Autowired
     private ICitaOcupacionalRepository citaOcupacionalRepository;
 
@@ -54,6 +60,12 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     }
 
     @Override
+    public List<BackendDetalleReservaDTO> listadoDetalleReservaPorFiltros(RequestDetalleReservaDTO rq) {
+       List<BackendDetalleReservaOcupacionalEntity> backendDetalle= backendDetalleReservaOcupacionalRepository.litaDetalleReservaPorFiltros(rq.getNombreSede(),rq.getFechaReserva(),rq.getNombreUser()).orElseThrow();
+        return backendDetalle.stream().map(this::mapearDTODetalleReserva).collect(Collectors.toList());
+    }
+
+    @Override
     public CitaOcupacionalDTO obtenerCitaOcupacionalPorID(long id) {
         CitaOcupacional citaOcupacional=citaOcupacionalRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Cita Ocupacional","id cita Ocupacional",id));
         return mapearDTO(citaOcupacional);
@@ -71,6 +83,20 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     public void eliminarCitaOcupacional(long id) {
         CitaOcupacional citaOcupacional=citaOcupacionalRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Cita Ocupacional","id Cita Ocupacional",id));
         citaOcupacionalRepository.delete(citaOcupacional);
+    }
+
+    BackendDetalleReservaDTO mapearDTODetalleReserva(BackendDetalleReservaOcupacionalEntity bck){
+        BackendDetalleReservaDTO bdto= new BackendDetalleReservaDTO();
+
+        bdto.setIdResp(bck.getIdResp());
+        bdto.setSede(bck.getSede());
+        bdto.setEmpresa(bck.getEmpresa());
+        bdto.setContrata(bck.getContrata());
+        bdto.setProgramador(bck.getProgramador());
+        bdto.setFecha(bck.getFecha());
+
+        return bdto;
+
     }
 
     BackendEntityReservaListaDTO mapearDTOReserva(BackendEntityReservaLista bck){

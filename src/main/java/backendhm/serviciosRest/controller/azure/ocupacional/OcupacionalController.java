@@ -239,7 +239,11 @@ public class OcupacionalController {
         return new ResponseEntity<>(citaOcupacionalService.crearCitaOcupacional(citaOcupacionalDTO), HttpStatus.CREATED);
 
     }
+    @PostMapping("/citaOcupacional/detalleReserva")
+    public ResponseEntity<List<BackendDetalleReservaDTO>> listaDetalleReservaFiltro(@Valid @RequestBody RequestDetalleReservaDTO rq) {
 
+        return new ResponseEntity<>(citaOcupacionalService.listadoDetalleReservaPorFiltros(rq), HttpStatus.OK);
+    }
     @PutMapping("/citaOcupacional/{id}")
     public ResponseEntity<CitaOcupacionalDTO> actualizarCitaOcupacional(@Valid @RequestBody CitaOcupacionalDTO citaOcupacionalDTO,
                                                           @PathVariable(name = "id") long id) {
