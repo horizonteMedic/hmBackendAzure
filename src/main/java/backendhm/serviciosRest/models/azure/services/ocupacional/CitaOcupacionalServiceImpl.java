@@ -94,6 +94,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         bdto.setContrata(bck.getContrata());
         bdto.setProgramador(bck.getProgramador());
         bdto.setFecha(bck.getFecha());
+        bdto.setDni(bck.getDni());
 
         return bdto;
 
@@ -103,7 +104,6 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         BackendEntityReservaListaDTO bkl=new BackendEntityReservaListaDTO();
         bkl.setId(bck.getId());
         bkl.setSede(bck.getSede());
-
         bkl.setCantidad(bck.getCantidad());
         bkl.setNomensede(bck.getNomensede());
         bkl.setUsuario(bck.getUsuario());
