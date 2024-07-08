@@ -3,6 +3,7 @@ package backendhm.serviciosRest.controller.azure;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.ArchivoServidorDTO;
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpleadoTipoDocDTO;
 import backendhm.serviciosRest.models.azure.services.IArchivoServidorService;
 import jakarta.validation.Valid;
 import org.json.JSONObject;
@@ -30,6 +31,18 @@ public class FileController {
         return ResponseEntity.ok(archivoServidorService.detalleArchivoServidor(hc,ta));
     }
 
+    @GetMapping("/detalleArchivoEmpleado/{dni}/{tipoArchivo}")
+    public ResponseEntity<EmpleadoTipoDocDTO> obtenerArchivoEmpleadoDetalle(@PathVariable long dni, @PathVariable String tipoArchivo) {
+
+        return ResponseEntity.ok(archivoServidorService.detalleArchivoEmpleado(dni,tipoArchivo));
+    }
+
+    @PostMapping("/registrarEmpleado")
+    public ResponseEntity<RespuestaBackendDTO> registrarActualzarArchivoEmpleado(@Valid @RequestBody EmpleadoTipoDocDTO empleadoTipoDocDTO) {
+
+        return new ResponseEntity<>(archivoServidorService.registrarActualizarArchivoEmpleado(empleadoTipoDocDTO), HttpStatus.CREATED);
+
+    }
 
     @GetMapping()
     public ResponseEntity<List<ArchivoServidorDTO>> obtenerListadoArchivoServidorDTO(){

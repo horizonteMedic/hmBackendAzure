@@ -2,9 +2,14 @@ package backendhm.serviciosRest.models.azure.services;
 
 import backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpleadoTipoDocDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.EmpleadoTipoDoc;
+import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IEmpleadoTipoDocRepository;
+import backendhm.serviciosRest.models.spTrujilloNP.repository.IRespuestaBackendNPRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
 import backendhm.serviciosRest.models.spTrujilloSD.Service.IRespuestaBackendServiceSD;
 import com.microsoft.azure.storage.CloudStorageAccount;
@@ -38,6 +43,9 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     private IRespuestaBackendRepository respuestaBackendRepository;
 
     @Autowired
+    private IRespuestaBackendNPRepository respuestaBackendNPRepository;
+
+    @Autowired
     private IRespuestaBackendService respuestaBackendServiceNPService;
 
 
@@ -46,6 +54,11 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     @Autowired
     private ITipoArchivoService tipoArchivoService;
+
+
+    @Autowired
+    private IEmpleadoTipoDocRepository empleadoTipoDocRepository;
+
 
     @Override
     public ArchivoServidorDTO detalleArchivoServidor(String hc, long ta) {
@@ -80,10 +93,41 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     }
 
     @Override
+    public EmpleadoTipoDocDTO detalleArchivoEmpleado(long dni, String tipoArchivo) {
+        EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.listarArchivoEmpleado(dni,tipoArchivo).orElseThrow();
+    //    System.out.println("la entidad empleado es:  "+empleadoTipoDoc);
+        String resultService ="";
+        String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
+        String nameContainer="files1";
+        String  base64File="";
+        try {
+            CloudStorageAccount account = CloudStorageAccount.parse(storageConnectionAzure);
+            CloudBlobClient serviceClient = account.createCloudBlobClient();
+            CloudBlobContainer container = serviceClient.getContainerReference(nameContainer);
+            final String NOMBRE_ARCHIVO_TEMP = "temp2.pdf";
+
+            CloudBlockBlob blockBlob = container.getBlockBlobReference(empleadoTipoDoc.getRuta());
+            File file = new File(NOMBRE_ARCHIVO_TEMP);
+            blockBlob.downloadToFile(file.getAbsolutePath());
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            base64File = Base64.getEncoder().encodeToString(fileContent);
+          //  System.out.println("El archivo de base 64 : "+base64File);
+            resultService = "Download success!!!";
+
+        }catch (Exception e){
+            resultService = e.getMessage();
+        }
+        EmpleadoTipoDocDTO empleadoTipoDocDTO=mapearDTOEmpleadoTipoDoc(empleadoTipoDoc);
+        empleadoTipoDocDTO.setBase64(base64File);
+
+        return empleadoTipoDocDTO;
+    }
+
+    @Override
     public RespuestaBackendDTO registrarArchivoOActualizar(ArchivoServidorDTO archivoServidorDTO) {
 
         RespuestaBackend respuestaBackend=respuestaBackendRepository.existenciaDelArchivo(archivoServidorDTO.getHistoriaClinica(),archivoServidorDTO.getId_tipo_archivo()).orElseThrow();
-        System.out.println("la existencia del archivo:"+respuestaBackend);
+      //  System.out.println("la existencia del archivo:"+respuestaBackend);
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
         ArchivoServidorDTO archivosServidor=new ArchivoServidorDTO();
         if(respuestaBackend.getId()==0){
@@ -105,8 +149,37 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     }
 
     @Override
+    public RespuestaBackendDTO registrarActualizarArchivoEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO) {
+        RespuestaBackendNP respuestaBackend=respuestaBackendNPRepository.existenciaEmpleadoTipoDoc
+                (empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
+
+        RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
+
+        if(respuestaBackend.getId()==0){
+         //   System.out.println("entro al registrar o actualziar archivo empleado, opcion 0");
+
+            crearEmpleadoTipoDoc(empleadoTipoDocDTO);
+            respuestaBackendDTO.setId(Long.valueOf(1));
+            respuestaBackendDTO.setMensaje("Se registro con exito!");
+        }
+        else
+        {
+            // System.out.println("el id respuesta es:"+respuestaBackend.getId());
+  //          System.out.println("entro al registrar o actualziar archivo empleado, opcion actualizar");
+
+            EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.listarArchivoEmpleado(empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
+
+            EmpleadoTipoDocDTO empleadoTipoDocDTO1=actualizarArchivoServidorEmpleado(empleadoTipoDocDTO,empleadoTipoDoc.getId_empleado_tipo_doc());
+            respuestaBackendDTO.setId(Long.valueOf(2));
+            respuestaBackendDTO.setMensaje("Se actualizo con exito!!");
+        }
+
+        return respuestaBackendDTO;
+    }
+
+    @Override
     public RespuestaBackendDTO registroCargaMasiva(CargaMasivaDTO cargaMasivaDTO) {
-        System.out.println("ENTRO A LA CARGA MASIVA");
+ //       System.out.println("ENTRO A LA CARGA MASIVA");
         RespuestaBackendDTO respuestaBackendDTORespuesta=new RespuestaBackendDTO();
         try {
             String ruta = "";
@@ -159,7 +232,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
                 } else {
                     respuestaBackendDTO = respuestaBackendServiceNPService.busquedaDniPorNOrden(Long.parseLong(parte1));
-                    System.out.println("el dni es:"+respuestaBackendDTO.getId());
+              //      System.out.println("el dni es:"+respuestaBackendDTO.getId());
                     archivoServidorDTO.setDni(respuestaBackendDTO.getId());
                 }
             }
@@ -179,7 +252,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             respuestaBackendDTORespuesta.setMensaje(cargaMasivaDTO.getNombreArchivo());
         }
         catch (Exception e){
-            System.out.println("El error en la carga masiva es:"+e);
+          //  System.out.println("El error en la carga masiva es:"+e);
             respuestaBackendDTORespuesta.setId(Long.valueOf(0));
             respuestaBackendDTORespuesta.setMensaje(cargaMasivaDTO.getNombreArchivo());
 
@@ -196,7 +269,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 int i=1;
             for (Path file : stream) {
                 ruta=file.getFileName().toString();
-                System.out.println("la ruta del archivo es: "+file.getFileName());
+              //  System.out.println("la ruta del archivo es: "+file.getFileName());
                 String base64=archivoAbase64(ruta);
                 //System.out.println("base 64:"+archivoAbase64(ruta));
                 String[] parts = ruta.split("-");
@@ -227,7 +300,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
                 //System.out.println("El archivo dto a cargar es :"+archivoServidorDTO);
                 RespuestaBackendDTO respuestaBackendDTO1=registrarArchivoOActualizar(archivoServidorDTO);
                 //System.out.println("la respuesta de registrar o actualizar es:"+respuestaBackendDTO1);
-                System.out.println("Archivos cargados correctamente:"+i+" , nombre archivo: "+archivoServidorDTO.getNombreArchivo());
+               // System.out.println("Archivos cargados correctamente:"+i+" , nombre archivo: "+archivoServidorDTO.getNombreArchivo());
                 i++;
             }
         } catch (IOException | DirectoryIteratorException ex) {
@@ -235,6 +308,34 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         }
         return null;
     }
+
+    public void crearEmpleadoTipoDoc(EmpleadoTipoDocDTO empleadoTipoDocDTO){
+        String resultService ="";
+
+        String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
+        String nameContainer="files1";
+        empleadoTipoDocDTO.setRuta("EMPLEADO-DNI-"+empleadoTipoDocDTO.getDni()+"/"+empleadoTipoDocDTO.getNombreArchivo());
+        try {
+            CloudStorageAccount account = CloudStorageAccount.parse(storageConnectionAzure);
+            CloudBlobClient serviceClient = account.createCloudBlobClient();
+            CloudBlobContainer container = serviceClient.getContainerReference(nameContainer);
+
+            CloudBlob blob;
+            blob = container.getBlockBlobReference(empleadoTipoDocDTO.getRuta());
+            byte[] decodedBytes = Base64.getDecoder().decode(empleadoTipoDocDTO.getBase64());
+            blob.uploadFromByteArray(decodedBytes,0,decodedBytes.length);
+
+            resultService = "OK";
+            EmpleadoTipoDoc empleadoTipoDoc=mapearEntidadEmpleadoTipoDoc(empleadoTipoDocDTO);
+            EmpleadoTipoDoc empleadoTipoDocNuevo=empleadoTipoDocRepository.save(empleadoTipoDoc);
+
+
+        }catch (Exception e){
+            resultService = e.getMessage();
+        }
+
+    }
+
 
     @Override
     public ArchivoServidorDTO creararchivoServidor(ArchivoServidorDTO archivoServidorDTO) {
@@ -266,6 +367,46 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         ArchivoServidorDTO archivoServidorDTORespuesta=mapearDTO(archivosServidorNuevo);
 
         return archivoServidorDTORespuesta;
+    }
+
+    private EmpleadoTipoDoc mapearEntidadEmpleadoTipoDoc(EmpleadoTipoDocDTO empleadoTipoDocDTO){
+        EmpleadoTipoDoc empleadoTipoDoc=new EmpleadoTipoDoc();
+
+        empleadoTipoDoc.setTipoArchivo(empleadoTipoDocDTO.getTipoArchivo());
+        empleadoTipoDoc.setRuta(empleadoTipoDocDTO.getRuta());
+        empleadoTipoDoc.setExtension(empleadoTipoDocDTO.getExtension());
+        empleadoTipoDoc.setNombreArchivo(empleadoTipoDocDTO.getNombreArchivo());
+        empleadoTipoDoc.setDni(empleadoTipoDocDTO.getDni());
+
+        return empleadoTipoDoc;
+
+    }
+
+    private EmpleadoTipoDocDTO mapearDTOEmpleadoTipoDoc(EmpleadoTipoDoc empleadoTipoDoc){
+
+        EmpleadoTipoDocDTO empleadoTipoDocDTO=new EmpleadoTipoDocDTO();
+
+        empleadoTipoDocDTO.setId_empleado_tipo_doc(empleadoTipoDoc.getId_empleado_tipo_doc());
+        empleadoTipoDocDTO.setTipoArchivo(empleadoTipoDoc.getTipoArchivo());
+        empleadoTipoDocDTO.setNombreArchivo(empleadoTipoDoc.getNombreArchivo());
+        empleadoTipoDocDTO.setExtension(empleadoTipoDoc.getExtension());
+        empleadoTipoDocDTO.setDni(empleadoTipoDoc.getDni());
+        empleadoTipoDocDTO.setRuta(empleadoTipoDoc.getRuta());
+
+        return empleadoTipoDocDTO;
+    }
+
+    private EmpleadoTipoDoc actualizarEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO, EmpleadoTipoDoc empleadoTipoDoc){
+
+        empleadoTipoDoc.setRuta("EMPLEADO-DNI-"+empleadoTipoDocDTO.getDni()+"/"+empleadoTipoDocDTO.getNombreArchivo());
+        empleadoTipoDoc.setTipoArchivo(empleadoTipoDocDTO.getTipoArchivo());
+       // empleadoTipoDoc.setRuta(empleadoTipoDocDTO.getRuta());
+        empleadoTipoDoc.setExtension(empleadoTipoDocDTO.getExtension());
+        empleadoTipoDoc.setNombreArchivo(empleadoTipoDocDTO.getNombreArchivo());
+        empleadoTipoDoc.setDni(empleadoTipoDocDTO.getDni());
+
+        return empleadoTipoDoc;
+
     }
 
     public String archivoAbase64(String path) throws IOException {
@@ -358,6 +499,15 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         ArchivosServidor archivosServidorActualizacion=archivoServidorRepository.save(actualizarArchivoServidorEntidad(archivoServidorDTO,archivosServidor));
 
         return mapearDTO(archivosServidorActualizacion);
+    }
+
+
+    private EmpleadoTipoDocDTO actualizarArchivoServidorEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO, long id){
+        EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.findById(id).orElseThrow();
+
+        EmpleadoTipoDoc empleadoTipoDocActualizado=empleadoTipoDocRepository.save(actualizarEmpleado(empleadoTipoDocDTO,empleadoTipoDoc));
+
+        return mapearDTOEmpleadoTipoDoc(empleadoTipoDocActualizado);
     }
 
     @Override

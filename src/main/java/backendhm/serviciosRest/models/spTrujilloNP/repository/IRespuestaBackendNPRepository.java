@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.spTrujilloNP.repository;
 
 
+import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -77,4 +78,8 @@ public interface IRespuestaBackendNPRepository extends JpaRepository<RespuestaBa
 
     @Query(value = "select row_number() over() as id_resp,precio_examen as mensaje from examen_medico_ocupacional where nom_examen =?;", nativeQuery=true)
     Optional<RespuestaBackendNP> precioExamen(String name_examen);
+
+    @Query(value = "select count(dni) as id_resp, CAST('resultado' AS TEXT) as mensaje from empleado_tipo_doc  where dni=? and tipo_archivo=?;", nativeQuery=true)
+    Optional<RespuestaBackendNP> existenciaEmpleadoTipoDoc(long dni, String tipoArchivo);
+
 }
