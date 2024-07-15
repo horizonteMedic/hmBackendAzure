@@ -68,7 +68,7 @@ public class DistritoServiceImpl implements IDistritoService {
         DistritoDTO distritoDTO=new DistritoDTO();
 
         distritoDTO.setId(distrito.getId());
-        distritoDTO.setNombre(distrito.getNombre());
+        distritoDTO.setNombre(distrito.getNombre().toUpperCase());
         distritoDTO.setIdDepartamento(distrito.getIdDepartamento());
         distritoDTO.setIdProvincia(distrito.getIdProvincia());
 

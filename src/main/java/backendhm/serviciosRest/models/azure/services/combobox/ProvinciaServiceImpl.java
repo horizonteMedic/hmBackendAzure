@@ -68,7 +68,7 @@ public class ProvinciaServiceImpl implements IProvinciaService{
         ProvinciaDTO provinciaDTO=new ProvinciaDTO();
 
         provinciaDTO.setId(provincia.getId());
-        provinciaDTO.setNombre(provincia.getNombre());
+        provinciaDTO.setNombre(provincia.getNombre().toUpperCase());
         provinciaDTO.setIdDepartamento(provincia.getIdDepartamento());
 
         return provinciaDTO;

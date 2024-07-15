@@ -28,7 +28,7 @@ public class DepartamentoServiceImpl implements IDepartamentoService{
 
     @Override
     public List<DepartamentoDTO> listadoDepartamentos() {
-        List<Departamento> listadoDepartamentos=departamentoRepository.findAll();
+        List<Departamento> listadoDepartamentos=departamentoRepository.listadoDeparatamentos().orElseThrow();
         return listadoDepartamentos.stream().map(this::mapearDTO).collect(Collectors.toList());
     }
 
