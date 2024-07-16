@@ -1,9 +1,7 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendDetalleReservaDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendEntityReservaListaDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.CitaOcupacionalDTO;
-import backendhm.serviciosRest.models.azure.dtos.Ocupacional.RequestDetalleReservaDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.*;
+import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
 import backendhm.serviciosRest.models.azure.entity.ocupacional.BackendDetalleReservaOcupacionalEntity;
@@ -15,9 +13,11 @@ import backendhm.serviciosRest.models.azure.repository.asistencial.IEmpresaRepos
 import backendhm.serviciosRest.models.azure.repository.ocupacional.BackendEntityReservaListaRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.IBackendDetalleReservaOcupacionalRepository;
 import backendhm.serviciosRest.models.azure.repository.ocupacional.ICitaOcupacionalRepository;
+import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +38,9 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
     @Autowired
     private BackendEntityReservaListaRepository backendEntityReservaListaRepository;
 
+    @Autowired
+    private IRespuestaBackendRepository respuestaBackendRepository;
+
     @Override
     public CitaOcupacionalDTO crearCitaOcupacional(CitaOcupacionalDTO citaOcupacionalDTO) {
         CitaOcupacional citaOcupacional=mapearEntidad(citaOcupacionalDTO);
@@ -46,6 +49,34 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
         return mapearDTO(nuevaCitaOcupacional);
 
+    }
+
+    @Override
+    public ConsultaReservaDTO consultarReservaDatosPaciente(long dni) {
+        RespuestaBackend rB=respuestaBackendRepository.validarRserva(dni).orElseThrow();
+        ConsultaReservaDTO consultaReservaDTO=new ConsultaReservaDTO();
+        CitaOcupacional citaOcupacional=new CitaOcupacional();
+        if(rB.getId()==1){
+            citaOcupacional=citaOcupacionalRepository.buscarContratoCitaOcupacionaPorDniLimit1(dni).orElseThrow();
+                    consultaReservaDTO.setId_resp(rB.getId());
+            consultaReservaDTO.setRucEmpresa(String.valueOf(citaOcupacional.getRucEmpresa()));
+            consultaReservaDTO.setRucContrata(String.valueOf(citaOcupacional.getRucContrata()));
+            consultaReservaDTO.setCargo(citaOcupacional.getCargo());
+            consultaReservaDTO.setArea(citaOcupacional.getArea());
+            consultaReservaDTO.setTipoExamen(citaOcupacional.getTipoExamen());
+            consultaReservaDTO.setFechaReserva(citaOcupacional.getFechaReserva());
+        }
+        else {
+
+            consultaReservaDTO.setId_resp(0);
+            consultaReservaDTO.setRucContrata("");
+            consultaReservaDTO.setRucContrata("");
+            consultaReservaDTO.setCargo("");
+            consultaReservaDTO.setArea("");
+            consultaReservaDTO.setTipoExamen("");
+            consultaReservaDTO.setFechaReserva(LocalDate.parse("2024-07-16"));
+        }
+        return consultaReservaDTO;
     }
 
     @Override

@@ -227,6 +227,7 @@ public class OcupacionalController {
         return ResponseEntity.ok(citaOcupacionalService.obtenerCitaOcupacionalPorID(id));
     }
 
+
     @GetMapping("/listadoReserva/{nameUser}")
     public ResponseEntity<List<BackendEntityReservaListaDTO>> listadoReservaPorUsername(@PathVariable(name = "nameUser") String nameUser) {
 

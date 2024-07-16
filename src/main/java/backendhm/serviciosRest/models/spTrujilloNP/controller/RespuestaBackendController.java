@@ -1,7 +1,9 @@
 package backendhm.serviciosRest.models.spTrujilloNP.controller;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendHistoriaOcupacionalDTO;
+import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ConsultaReservaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ResponseMatrizArchivosDTO;
+import backendhm.serviciosRest.models.azure.services.ocupacional.ICitaOcupacionalService;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,15 @@ public class RespuestaBackendController {
 
     @Autowired
     private IRespuestaBackendService respuestaBackendService;
+
+    @Autowired
+    private ICitaOcupacionalService citaOcupacionalService;
+
+
+    @GetMapping("/consultaReserva/{dni}")
+    public ResponseEntity<ConsultaReservaDTO> listadoHistoriaOcupacional(@PathVariable Long dni){
+        return  ResponseEntity.ok(citaOcupacionalService.consultarReservaDatosPaciente(dni));
+    }
 
     @PostMapping("/datosPacienteNP")
     public ResponseEntity<RespuestaBackendDTO> datosP(@RequestBody RequestDatosPacienteDTO rdp) {

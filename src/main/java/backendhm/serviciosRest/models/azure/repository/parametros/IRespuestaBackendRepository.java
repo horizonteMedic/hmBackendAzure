@@ -1,7 +1,6 @@
 package backendhm.serviciosRest.models.azure.repository.parametros;
 
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
-import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -39,5 +38,6 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
     Optional<RespuestaBackend> validarLogin(String user);
 
 
-
+    @Query(value = "select CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END AS id_resp, 'mensaje de respuesta' as mensaje from CITA_OCUPACIONAL where dni=?", nativeQuery=true)
+    Optional<RespuestaBackend> validarRserva(long dni);
 }
