@@ -57,4 +57,11 @@ public class CitaOcupacional implements Serializable {
 
     @Column(name = "user_actualizacion", length = 20)
     private String userActualizacion;
+
+    private String cargo;
+
+    private String area;
+
+    @Column(name = "tipo_examen")
+    private String tipoExamen;
 }

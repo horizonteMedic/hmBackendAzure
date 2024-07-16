@@ -47,4 +47,10 @@ public class CitaOcupacionalDTO {
 
     private String userActualizacion;
 
+    private String cargo;
+
+    private String area;
+
+    private String tipoExamen;
+
 }

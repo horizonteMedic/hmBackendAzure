@@ -147,7 +147,9 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         citaOcupacionalDTO.setNomenSede(citaOcupacional.getNomenSede());
         citaOcupacionalDTO.setUserRegistro(citaOcupacional.getUserRegistro());
         citaOcupacionalDTO.setUserActualizacion(citaOcupacional.getUserActualizacion());
-
+        citaOcupacionalDTO.setCargo(citaOcupacional.getCargo());
+        citaOcupacionalDTO.setArea(citaOcupacional.getArea());
+        citaOcupacionalDTO.setTipoExamen(citaOcupacional.getTipoExamen());
 
 
         return citaOcupacionalDTO;
@@ -166,6 +168,9 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         citaOcupacional.setRucContrata(citaOcupacionalDTO.getRucContrata());
         citaOcupacional.setUserRegistro(citaOcupacionalDTO.getUserRegistro());
         citaOcupacional.setUserActualizacion(citaOcupacionalDTO.getUserActualizacion());
+        citaOcupacional.setCargo(citaOcupacionalDTO.getCargo());
+        citaOcupacional.setArea(citaOcupacionalDTO.getArea());
+        citaOcupacional.setTipoExamen(citaOcupacionalDTO.getTipoExamen());
 
         return citaOcupacional;
     }
@@ -182,7 +187,9 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
         citaOcupacional.setRucContrata(citaOcupacionalDTO.getRucContrata());
         citaOcupacional.setUserRegistro(citaOcupacionalDTO.getUserRegistro());
         citaOcupacional.setUserActualizacion(citaOcupacionalDTO.getUserActualizacion());
-
+        citaOcupacional.setCargo(citaOcupacionalDTO.getCargo());
+        citaOcupacional.setArea(citaOcupacionalDTO.getArea());
+        citaOcupacional.setTipoExamen(citaOcupacionalDTO.getTipoExamen());
         return citaOcupacional;
     }
 

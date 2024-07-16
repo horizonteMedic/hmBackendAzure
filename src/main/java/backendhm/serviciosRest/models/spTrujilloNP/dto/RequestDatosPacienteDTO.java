@@ -56,4 +56,10 @@ public class RequestDatosPacienteDTO {
 
     private long tipoDoc;
 
+    private String cargo;
+
+    private String area;
+
+    private String tipoExamen;
+
 }
