@@ -44,9 +44,9 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
     @Override
     public RespuestaBackendDTO registrarDatosPaciente(RequestDatosPacienteDTO rdp) {
         RespuestaBackendNP respuestaBackend=
-                respuestaBackendNPRepository.registroDatosPacienteHuamachuco(rdp.getCodPa(),rdp.getNombresPa().toUpperCase(),rdp.getFechaNaciminetoPa(),rdp.getSexoPa().toUpperCase(),rdp.getEmailPa().toUpperCase(),rdp.getLugarNacPa().toUpperCase(),rdp.getNivelEstPa().toUpperCase(),
-                        rdp.getOcupacionPa().toUpperCase(),rdp.getEstadoCivilPa().toUpperCase(),rdp.getDireccionPa().toUpperCase(),rdp.getDepartamentoPa().toUpperCase(),rdp.getProvinciaPa().toUpperCase(),rdp.getDistritoPa().toUpperCase(),rdp.getCaserioPA().toUpperCase(),rdp.getFotoPa(),rdp.getCodAleatorioPa(),
-                        rdp.getTelCasaPa().toUpperCase(),rdp.getTelTrabajoPa().toUpperCase(),rdp.getCelPa().toUpperCase(),rdp.getFechaRegistroPa(),rdp.getApellidosPa().toUpperCase(),rdp.getHoraRegistroPa(),rdp.getTipoDoc()).orElseThrow();
+                respuestaBackendNPRepository.registroDatosPacienteHuamachuco(rdp.getCodPa(),rdp.getNombresPa().toUpperCase(),rdp.getFechaNaciminetoPa(),rdp.getSexoPa(),rdp.getEmailPa(),rdp.getLugarNacPa(),rdp.getNivelEstPa(),
+                        rdp.getOcupacionPa(),rdp.getEstadoCivilPa(),rdp.getDireccionPa(),rdp.getDepartamentoPa(),rdp.getProvinciaPa(),rdp.getDistritoPa(),rdp.getCaserioPA(),rdp.getFotoPa(),rdp.getCodAleatorioPa(),
+                        rdp.getTelCasaPa(),rdp.getTelTrabajoPa(),rdp.getCelPa(),rdp.getFechaRegistroPa(),rdp.getApellidosPa().toUpperCase(),rdp.getHoraRegistroPa(),rdp.getTipoDoc()).orElseThrow();
 
         return mapearDTO(respuestaBackend);
     }
