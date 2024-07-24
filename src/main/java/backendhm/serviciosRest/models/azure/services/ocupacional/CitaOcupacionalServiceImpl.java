@@ -1,6 +1,7 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.*;
+import backendhm.serviciosRest.models.azure.dtos.asistencial.ConsultaReniecDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Contrata;
 import backendhm.serviciosRest.models.azure.entity.asistencial.Empresa;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
+
     @Autowired
     private IBackendDetalleReservaOcupacionalRepository backendDetalleReservaOcupacionalRepository;
     @Autowired
@@ -40,6 +42,7 @@ public class CitaOcupacionalServiceImpl implements ICitaOcupacionalService{
 
     @Autowired
     private IRespuestaBackendRepository respuestaBackendRepository;
+
 
     @Override
     public CitaOcupacionalDTO crearCitaOcupacional(CitaOcupacionalDTO citaOcupacionalDTO) {

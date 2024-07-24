@@ -1,10 +1,12 @@
 package backendhm.serviciosRest.models.azure.services.ocupacional;
 
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.*;
+import backendhm.serviciosRest.models.azure.dtos.asistencial.ConsultaReniecDTO;
 
 import java.util.List;
 
 public interface ICitaOcupacionalService {
+
     CitaOcupacionalDTO crearCitaOcupacional(CitaOcupacionalDTO citaOcupacionalDTO);
 
     ConsultaReservaDTO consultarReservaDatosPaciente(long dni);
