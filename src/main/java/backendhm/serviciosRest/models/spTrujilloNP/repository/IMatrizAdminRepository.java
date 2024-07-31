@@ -18,7 +18,7 @@ public interface IMatrizAdminRepository extends JpaRepository<MatrizAdministrati
             "            WHEN ama.chkno_apto = 'TRUE' THEN 'No Apto'\n" +
             "            WHEN fi.n_orden IS NOT NULL THEN 'INTERCONSULTA PENDIENTE'||':'||string_agg (fi.especialidad,'-')\n" +
             "            WHEN ama.n_orden IS NULL THEN 'APTITUD PENDIENTE'\n" +
-            "             END AS TEXT) as Aptitud_emo, CAST( noo.fecha_apertura_po AS TEXT ) as fecha_examen, cast(' ' as text) as observacion\n" +
+            "             END AS TEXT) as Aptitud_emo, CAST( noo.fecha_apertura_po AS TEXT ) as fecha_examen, cast(' ' as text) as observacion,dp.cel_pa as celular \n" +
             "  FROM datos_paciente as dp inner join n_orden_ocupacional as noo on dp.cod_pa=noo.cod_pa inner join contratas as ct on noo.razon_contrata=ct.razon_contrata\n" +
             "LEFT join ficha_interconsulta as fi ON (noo.n_orden=fi.n_orden)\n" +
             "LEFT join aptitud_medico_ocupacional_agro as ama ON (noo.n_orden=ama.n_orden)\n" +

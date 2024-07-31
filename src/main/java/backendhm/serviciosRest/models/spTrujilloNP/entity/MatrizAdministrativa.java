@@ -47,4 +47,6 @@ public class MatrizAdministrativa implements Serializable {
     private String fechaExamen;
 
     private String observacion;
+
+    private String celular;
 }

@@ -21,5 +21,7 @@ public class ResponseMatrizDTO {
     String aptitudEmo;
     String fechaExamen;
     String observacion;
+    String celular;
+
 
 }

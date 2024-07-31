@@ -277,6 +277,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizDTO.setFechaSolicitud(matrizAdministrativa.getFechaSolicitud());
         responseMatrizDTO.setFechaNacimiento(matrizAdministrativa.getFechaNacimiento());
         responseMatrizDTO.setRazonContrata(matrizAdministrativa.getRazonContrata());
+        responseMatrizDTO.setCelular(matrizAdministrativa.getCelular());
         if(responseMatrizDTO.getAptitudEmo().toUpperCase().contains("INTERCONSULTA"))
         {
         responseMatrizDTO.setObservacion(responseMatrizDTO.getAptitudEmo());
