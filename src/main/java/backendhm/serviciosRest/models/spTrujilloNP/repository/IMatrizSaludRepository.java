@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalud,Long> {
-    @Query(value = "SELECT n.n_orden AS n_orden, CAST(fecha_apertura_po AS TEXT) as FECHASOLICITUD,d.apellidos_pa ||' '|| d.nombres_pa AS apellidos_nombres, d.cod_pa as dni,\n" +
-            "      CAST(d.fecha_nacimiento_pa AS TEXT) AS FECHANACIMIENTO,\n" +
+    @Query(value = "SELECT n.n_orden AS n_orden, CAST(TO_CHAR(fecha_apertura_po,'YYYY/MM/DD') AS TEXT) as FECHASOLICITUD,d.apellidos_pa ||' '|| d.nombres_pa AS apellidos_nombres, d.cod_pa as dni,\n" +
+            "      CAST(TO_CHAR(d.fecha_nacimiento_pa,'YYYY/MM/DD') AS TEXT) AS FECHANACIMIENTO,\n" +
             "      obtener_edad(d.fecha_nacimiento_pa,n.fecha_apertura_po) AS EDAD,\n" +
             "      n.razon_contrata,  n.cargo_de AS CARGO,\n" +
             "       CASE WHEN n.n_orden is null THEN '' END  as Tipotrabajo,\n" +
