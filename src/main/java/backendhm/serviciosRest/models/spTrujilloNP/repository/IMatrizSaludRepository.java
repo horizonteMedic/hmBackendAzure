@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalud,Long> {
-    @Query(value = "SELECT n.n_orden AS n_orden, CAST(TO_CHAR(fecha_apertura_po,'YYYY/MM/DD') AS TEXT) as FECHASOLICITUD,d.apellidos_pa ||' '|| d.nombres_pa AS apellidos_nombres, d.cod_pa as dni,\n" +
-            "      CAST(TO_CHAR(d.fecha_nacimiento_pa,'YYYY/MM/DD') AS TEXT) AS FECHANACIMIENTO,\n" +
+    @Query(value = "SELECT n.n_orden AS n_orden, CAST(TO_CHAR(fecha_apertura_po,'DD/MM/YYYY') AS TEXT) as FECHASOLICITUD,d.apellidos_pa ||' '|| d.nombres_pa AS apellidos_nombres, d.cod_pa as dni,\n" +
+            "      CAST(TO_CHAR(d.fecha_nacimiento_pa,'DD/MM/YYYY') AS TEXT) AS FECHANACIMIENTO,\n" +
             "      obtener_edad(d.fecha_nacimiento_pa,n.fecha_apertura_po) AS EDAD,\n" +
             "      n.razon_contrata,  n.cargo_de AS CARGO,\n" +
             "       CASE WHEN n.n_orden is null THEN '' END  as Tipotrabajo,\n" +
@@ -21,7 +21,7 @@ public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalu
             "            WHEN ama.chkno_apto = 'TRUE' THEN 'No Apto'\n" +
             "            WHEN fi.n_orden IS NOT NULL THEN 'INTERCONSULTA PENDIENTE'||':'||string_agg (fi.especialidad,'-')\n" +
             "            WHEN ama.n_orden IS NULL THEN 'APTITUD PENDIENTE'\n" +
-            "             END as APTITUD,CAST(ama.fecha AS TEXT) AS FECHADEEVALUACION,\n" +
+            "             END as APTITUD,CAST(TO_CHAR(ama.fecha,'DD/MM/YYYY') AS TEXT) AS FECHADEEVALUACION,\n" +
             "       CASE WHEN t.peso is null THEN 'INF. NO TOMADA' ELSE t.peso END,\n" +
             "       CASE WHEN t.talla is null THEN 'INF. NO TOMADA' ELSE t.talla END,\n" +
             "       CASE WHEN t.imc is null THEN 'INF. NO TOMADA' ELSE t.imc END,\n" +
