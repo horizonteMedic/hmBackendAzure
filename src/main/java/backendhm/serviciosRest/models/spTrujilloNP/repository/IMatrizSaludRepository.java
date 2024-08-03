@@ -38,8 +38,7 @@ public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalu
             "\t     END  AS Colesterol,        \n" +
             "       CASE WHEN ab.txttrigliseridos IS NOT NULL THEN ab.txttrigliseridos ELSE '...'\n" +
             "\t     END  AS trigliceridos, \t\n" +
-            "       CASE WHEN o.e_oculares is not null THEN o.e_oculares ELSE '' END ||'.'||\n" +
-            "       CASE WHEN o.e_oculares1 is not null THEN o.e_oculares1 ELSE '' END AS DXOFTALMO,\n" +
+            "       o.agudezaVisualLejor AS DXOFTALMO,\n" +
             "       CASE WHEN au.n_orden is not null THEN au.diagnostico \n" +
             "             WHEN au3.n_orden is not null  THEN au3.txtdiag_od ||' '|| au3.txtdiag_od \n" +
             "             WHEN au1.chkdnormal='TRUE' THEN 'NORMAL'\n" +
@@ -80,6 +79,6 @@ public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalu
             "AND n.fecha_apertura_po BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n" +
             "group by n.n_orden, ama.n_orden, apellidos_nombres, FECHANACIMIENTO,edad,ama.chkapto, ama.chkapto_restriccion, ama.chkno_apto, fi.n_orden,\n" +
             "t.peso,t.talla, t.imc, lc.txtglucosabio, ab.txtcolesterol, ab.txttrigliseridos, o.v_lejos_s_od, o.v_lejos_s_oi, o.e_oculares, o.e_oculares1,\n" +
-            "au.n_orden, au.diagnostico, au3.n_orden, au3.txtdiag_od, DXAUDIO,d.cod_pa,v.txtdosis;", nativeQuery=true)
+            "au.n_orden, au.diagnostico, au3.n_orden, au3.txtdiag_od, DXAUDIO,d.cod_pa,v.txtdosis,o.agudezaVisualLejor;", nativeQuery=true)
     Optional<List<ResponseMatrizSalud>> listadoMatrizSalud(String rucContrata, String fechaInicio, String fechaFinal);
 }
