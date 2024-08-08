@@ -4,10 +4,13 @@ import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendHistoriaOcup
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ConsultaReservaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ResponseMatrizArchivosDTO;
 import backendhm.serviciosRest.models.azure.dtos.asistencial.ConsultaReniecDTO;
+import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpleadoTipoDocDTO;
+import backendhm.serviciosRest.models.azure.services.IArchivoServidorService;
 import backendhm.serviciosRest.models.azure.services.asistencial.IConsumoApisService;
 import backendhm.serviciosRest.models.azure.services.ocupacional.ICitaOcupacionalService;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +29,24 @@ public class RespuestaBackendController {
     @Autowired
     private ICitaOcupacionalService citaOcupacionalService;
 
-
+    @Autowired
+    private IArchivoServidorService archivoServidorService;
     @Autowired
     private IConsumoApisService consumoApisService;
+
+
+    @GetMapping("/detalleArchivoEmpleado/{dni}/{tipoArchivo}")
+    public ResponseEntity<EmpleadoTipoDocDTO> obtenerArchivoEmpleadoDetalle(@PathVariable long dni, @PathVariable String tipoArchivo) {
+
+        return ResponseEntity.ok(archivoServidorService.detalleArchivoEmpleado(dni,tipoArchivo));
+    }
+
+    @PostMapping("/registrarArchivoEmpleado")
+    public ResponseEntity<backendhm.serviciosRest.models.azure.dtos.RespuestaBackendDTO> registrarActualzarArchivoEmpleado(@Valid @RequestBody EmpleadoTipoDocDTO empleadoTipoDocDTO) {
+
+        return new ResponseEntity<>(archivoServidorService.registrarActualizarArchivoEmpleado(empleadoTipoDocDTO), HttpStatus.CREATED);
+
+    }
 
     @GetMapping("/consumoApis/{dni}")
     public ResponseEntity<ConsultaReniecDTO> consumoApis(@PathVariable String dni){

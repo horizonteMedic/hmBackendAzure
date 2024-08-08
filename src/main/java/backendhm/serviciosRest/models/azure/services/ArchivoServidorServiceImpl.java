@@ -5,6 +5,8 @@ import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.CargaMasivaDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpleadoTipoDocDTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.TipoArchivoDTO;
 import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
+import backendhm.serviciosRest.models.azure.entity.campaña.DesktopEmpleadoTipoDoc;
+import backendhm.serviciosRest.models.azure.repository.campaña.IDesktopEmpleadoTipoDocRepository;
 import backendhm.serviciosRest.models.azure.repository.parametros.IRespuestaBackendRepository;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.EmpleadoTipoDoc;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
@@ -59,6 +61,8 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
     @Autowired
     private IEmpleadoTipoDocRepository empleadoTipoDocRepository;
 
+    @Autowired
+    private IDesktopEmpleadoTipoDocRepository desktopEmpleadoTipoDocRepository;
 
     @Override
     public ArchivoServidorDTO detalleArchivoServidor(String hc, long ta) {
@@ -94,7 +98,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     @Override
     public EmpleadoTipoDocDTO detalleArchivoEmpleado(long dni, String tipoArchivo) {
-        EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.listarArchivoEmpleado(dni,tipoArchivo).orElseThrow();
+        DesktopEmpleadoTipoDoc empleadoTipoDoc=desktopEmpleadoTipoDocRepository.listarArchivoEmpleado(dni,tipoArchivo).orElseThrow();
     //    System.out.println("la entidad empleado es:  "+empleadoTipoDoc);
         String resultService ="";
         String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
@@ -150,7 +154,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     @Override
     public RespuestaBackendDTO registrarActualizarArchivoEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO) {
-        RespuestaBackendNP respuestaBackend=respuestaBackendNPRepository.existenciaEmpleadoTipoDoc
+        RespuestaBackend respuestaBackend=respuestaBackendRepository.existenciaEmpleadoTipoDoc
                 (empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
 
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
@@ -167,7 +171,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             // System.out.println("el id respuesta es:"+respuestaBackend.getId());
   //          System.out.println("entro al registrar o actualziar archivo empleado, opcion actualizar");
 
-            EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.listarArchivoEmpleado(empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
+            DesktopEmpleadoTipoDoc empleadoTipoDoc=desktopEmpleadoTipoDocRepository.listarArchivoEmpleado(empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
 
             EmpleadoTipoDocDTO empleadoTipoDocDTO1=actualizarArchivoServidorEmpleado(empleadoTipoDocDTO,empleadoTipoDoc.getId_empleado_tipo_doc());
             respuestaBackendDTO.setId(Long.valueOf(2));
@@ -326,8 +330,8 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             blob.uploadFromByteArray(decodedBytes,0,decodedBytes.length);
 
             resultService = "OK";
-            EmpleadoTipoDoc empleadoTipoDoc=mapearEntidadEmpleadoTipoDoc(empleadoTipoDocDTO);
-            EmpleadoTipoDoc empleadoTipoDocNuevo=empleadoTipoDocRepository.save(empleadoTipoDoc);
+            DesktopEmpleadoTipoDoc empleadoTipoDoc=mapearEntidadEmpleadoTipoDoc(empleadoTipoDocDTO);
+            DesktopEmpleadoTipoDoc empleadoTipoDocNuevo=desktopEmpleadoTipoDocRepository.save(empleadoTipoDoc);
 
 
         }catch (Exception e){
@@ -369,8 +373,8 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         return archivoServidorDTORespuesta;
     }
 
-    private EmpleadoTipoDoc mapearEntidadEmpleadoTipoDoc(EmpleadoTipoDocDTO empleadoTipoDocDTO){
-        EmpleadoTipoDoc empleadoTipoDoc=new EmpleadoTipoDoc();
+    private DesktopEmpleadoTipoDoc mapearEntidadEmpleadoTipoDoc(EmpleadoTipoDocDTO empleadoTipoDocDTO){
+        DesktopEmpleadoTipoDoc empleadoTipoDoc=new DesktopEmpleadoTipoDoc();
 
         empleadoTipoDoc.setTipoArchivo(empleadoTipoDocDTO.getTipoArchivo());
         empleadoTipoDoc.setRuta(empleadoTipoDocDTO.getRuta());
@@ -382,7 +386,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
     }
 
-    private EmpleadoTipoDocDTO mapearDTOEmpleadoTipoDoc(EmpleadoTipoDoc empleadoTipoDoc){
+    private EmpleadoTipoDocDTO mapearDTOEmpleadoTipoDoc(DesktopEmpleadoTipoDoc empleadoTipoDoc){
 
         EmpleadoTipoDocDTO empleadoTipoDocDTO=new EmpleadoTipoDocDTO();
 
@@ -396,7 +400,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         return empleadoTipoDocDTO;
     }
 
-    private EmpleadoTipoDoc actualizarEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO, EmpleadoTipoDoc empleadoTipoDoc){
+    private DesktopEmpleadoTipoDoc actualizarEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO, DesktopEmpleadoTipoDoc empleadoTipoDoc){
 
         empleadoTipoDoc.setRuta("EMPLEADO-DNI-"+empleadoTipoDocDTO.getDni()+"/"+empleadoTipoDocDTO.getNombreArchivo());
         empleadoTipoDoc.setTipoArchivo(empleadoTipoDocDTO.getTipoArchivo());
@@ -503,9 +507,9 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
 
 
     private EmpleadoTipoDocDTO actualizarArchivoServidorEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO, long id){
-        EmpleadoTipoDoc empleadoTipoDoc=empleadoTipoDocRepository.findById(id).orElseThrow();
+        DesktopEmpleadoTipoDoc empleadoTipoDoc=desktopEmpleadoTipoDocRepository.findById(id).orElseThrow();
 
-        EmpleadoTipoDoc empleadoTipoDocActualizado=empleadoTipoDocRepository.save(actualizarEmpleado(empleadoTipoDocDTO,empleadoTipoDoc));
+        DesktopEmpleadoTipoDoc empleadoTipoDocActualizado=desktopEmpleadoTipoDocRepository.save(actualizarEmpleado(empleadoTipoDocDTO,empleadoTipoDoc));
 
         return mapearDTOEmpleadoTipoDoc(empleadoTipoDocActualizado);
     }

@@ -1,7 +1,6 @@
 package backendhm.serviciosRest.models.spTrujilloNP.repository;
 
 
-import backendhm.serviciosRest.models.azure.entity.RespuestaBackend;
 import backendhm.serviciosRest.models.spTrujilloNP.entity.RespuestaBackendNP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

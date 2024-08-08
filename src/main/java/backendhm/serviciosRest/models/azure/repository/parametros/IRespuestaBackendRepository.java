@@ -40,4 +40,7 @@ public interface IRespuestaBackendRepository extends JpaRepository<RespuestaBack
 
     @Query(value = "select CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END AS id_resp, 'mensaje de respuesta' as mensaje from CITA_OCUPACIONAL where dni=?", nativeQuery=true)
     Optional<RespuestaBackend> validarRserva(long dni);
+
+    @Query(value = "select count(dni) as id_resp, CAST('resultado' AS TEXT) as mensaje from desktop_empleado_tipo_doc  where dni=? and tipo_archivo=?;", nativeQuery=true)
+    Optional<RespuestaBackend> existenciaEmpleadoTipoDoc(long dni, String tipoArchivo);
 }
