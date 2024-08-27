@@ -4,9 +4,11 @@ import backendhm.serviciosRest.models.azure.dtos.Ocupacional.BackendHistoriaOcup
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ConsultaReservaDTO;
 import backendhm.serviciosRest.models.azure.dtos.Ocupacional.ResponseMatrizArchivosDTO;
 import backendhm.serviciosRest.models.azure.dtos.asistencial.ConsultaReniecDTO;
+import backendhm.serviciosRest.models.azure.dtos.campaña.CIE10CAMPAÑADTO;
 import backendhm.serviciosRest.models.azure.dtos.sistemaArchivos.EmpleadoTipoDocDTO;
 import backendhm.serviciosRest.models.azure.services.IArchivoServidorService;
 import backendhm.serviciosRest.models.azure.services.asistencial.IConsumoApisService;
+import backendhm.serviciosRest.models.azure.services.campaña.Cie10ServiceImpl;
 import backendhm.serviciosRest.models.azure.services.ocupacional.ICitaOcupacionalService;
 import backendhm.serviciosRest.models.spTrujilloNP.dto.*;
 import backendhm.serviciosRest.models.spTrujilloNP.services.IRespuestaBackendService;
@@ -34,6 +36,21 @@ public class RespuestaBackendController {
     @Autowired
     private IConsumoApisService consumoApisService;
 
+    @Autowired
+    private Cie10ServiceImpl cie10Service;
+
+
+    @PostMapping("/cie10")
+    public ResponseEntity<CIE10CAMPAÑADTO> registrarCie10(@Valid @RequestBody CIE10CAMPAÑADTO cie10CAMPAÑADTO) {
+
+        return new ResponseEntity<>(cie10Service.crearCie10(cie10CAMPAÑADTO), HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/cie10")
+    public ResponseEntity<List<CIE10CAMPAÑADTO>> listadoCie10(){
+        return  ResponseEntity.ok(cie10Service.listadoCie10());
+    }
 
     @GetMapping("/detalleArchivoEmpleado/{dni}/{tipoArchivo}")
     public ResponseEntity<EmpleadoTipoDocDTO> obtenerArchivoEmpleadoDetalle(@PathVariable long dni, @PathVariable String tipoArchivo) {
