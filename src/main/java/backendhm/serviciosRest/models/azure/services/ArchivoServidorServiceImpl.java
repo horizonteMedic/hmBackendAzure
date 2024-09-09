@@ -160,7 +160,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         RespuestaBackendDTO respuestaBackendDTO=new RespuestaBackendDTO();
 
         if(respuestaBackend.getId()==0){
-         //   System.out.println("entro al registrar o actualziar archivo empleado, opcion 0");
+          System.out.println("entro al registrar o actualziar archivo empleado, opcion 0");
 
             crearEmpleadoTipoDoc(empleadoTipoDocDTO);
             respuestaBackendDTO.setId(Long.valueOf(1));
@@ -169,7 +169,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         else
         {
             // System.out.println("el id respuesta es:"+respuestaBackend.getId());
-  //          System.out.println("entro al registrar o actualziar archivo empleado, opcion actualizar");
+           System.out.println("entro al registrar o actualziar archivo empleado, opcion actualizar");
 
             DesktopEmpleadoTipoDoc empleadoTipoDoc=desktopEmpleadoTipoDocRepository.listarArchivoEmpleado(empleadoTipoDocDTO.getDni(), empleadoTipoDocDTO.getTipoArchivo()).orElseThrow();
 
@@ -408,9 +408,39 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
         empleadoTipoDoc.setExtension(empleadoTipoDocDTO.getExtension());
         empleadoTipoDoc.setNombreArchivo(empleadoTipoDocDTO.getNombreArchivo());
         empleadoTipoDoc.setDni(empleadoTipoDocDTO.getDni());
-
+        usarActualizarArchivoEmpleado(empleadoTipoDocDTO);
         return empleadoTipoDoc;
 
+    }
+
+    public EmpleadoTipoDocDTO usarActualizarArchivoEmpleado(EmpleadoTipoDocDTO empleadoTipoDocDTO) {
+        String resultService ="";
+        String storageConnectionAzure="DefaultEndpointsProtocol=https;AccountName=fileshm;AccountKey=ATV4bMeYq3Ie5RbJO5rug14qJFXlx4fWeFqXsdUq4xQqjvZTNu9CdJGBcyxEFo+1tVnEsDckzIGV+AStoqla/g==;EndpointSuffix=core.windows.net";
+        String nameContainer="files1";
+        empleadoTipoDocDTO.setRuta("EMPLEADO-DNI-"+empleadoTipoDocDTO.getDni()+"/"+empleadoTipoDocDTO.getNombreArchivo());
+
+        try {
+            CloudStorageAccount account = CloudStorageAccount.parse(storageConnectionAzure);
+            CloudBlobClient serviceClient = account.createCloudBlobClient();
+            CloudBlobContainer container = serviceClient.getContainerReference(nameContainer);
+
+            CloudBlob blob;
+            blob = container.getBlockBlobReference(empleadoTipoDocDTO.getRuta());
+            byte[] decodedBytes = Base64.getDecoder().decode(empleadoTipoDocDTO.getBase64());
+            blob.uploadFromByteArray(decodedBytes,0,decodedBytes.length);
+
+            resultService = "OK";
+
+        }catch (Exception e){
+            resultService = e.getMessage();
+        }
+        DesktopEmpleadoTipoDoc empleadoTipoDoc=mapearEntidadEmpleadoTipoDoc(empleadoTipoDocDTO);
+
+        //ArchivosServidor archivosServidorNuevo= archivoServidorRepository.save(archivosServidor);
+
+        EmpleadoTipoDocDTO archivoServidorDTORespuesta=mapearDTOEmpleadoTipoDoc(empleadoTipoDoc);
+
+        return archivoServidorDTORespuesta;
     }
 
     public String archivoAbase64(String path) throws IOException {
