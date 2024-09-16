@@ -97,14 +97,14 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
 
     @Override
     public List<ResponseMatrizDTO> listadoMatrizAdministrativa(RequesMatrizDTO requesMatrizDTO) {
-            List<MatrizAdministrativa> listadoMatrizAdmin=matrizAdminRepository.listadoMatrizAdmin(requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
+            List<MatrizAdministrativa> listadoMatrizAdmin=matrizAdminRepository.listadoMatrizAdmin(requesMatrizDTO.getRucEmpresa(),requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
 
         return listadoMatrizAdmin.stream().map(this::mapearDTOMADM).collect(Collectors.toList());
     }
 
     @Override
     public List<ResponseMatrizSaludDTO> listadoMatrizSalud(RequesMatrizDTO requesMatrizDTO) {
-        List<ResponseMatrizSalud> listadoMatrizSalud=matrizSaludRepository.listadoMatrizSalud(requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
+        List<ResponseMatrizSalud> listadoMatrizSalud=matrizSaludRepository.listadoMatrizSalud(requesMatrizDTO.getRucEmpresa(),requesMatrizDTO.getRucContrata(),requesMatrizDTO.getFechaInicio(), requesMatrizDTO.getFechaFinal()).orElseThrow();
         return listadoMatrizSalud.stream().map(this::mapearDTOMSALUD).collect(Collectors.toList());
     }
 
@@ -277,6 +277,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizDTO.setFechaSolicitud(matrizAdministrativa.getFechaSolicitud());
         responseMatrizDTO.setFechaNacimiento(matrizAdministrativa.getFechaNacimiento());
         responseMatrizDTO.setRazonContrata(matrizAdministrativa.getRazonContrata());
+        responseMatrizDTO.setRazonEmpresa(matrizAdministrativa.getRazonEmpresa());
         responseMatrizDTO.setCelular(matrizAdministrativa.getCelular());
         if(responseMatrizDTO.getAptitudEmo().toUpperCase().contains("INTERCONSULTA"))
         {
@@ -299,6 +300,7 @@ public class RespuestaBackendServiceImpl implements IRespuestaBackendService{
         responseMatrizSaludDTO.setFechaNacimiento(responseMatrizSalud.getFechaNacimiento());
         responseMatrizSaludDTO.setEdad(responseMatrizSalud.getEdad());
         responseMatrizSaludDTO.setRazonContrata(responseMatrizSalud.getRazonContrata());
+        responseMatrizSaludDTO.setRazonEmpresa(responseMatrizSalud.getRazonEmpresa());
         responseMatrizSaludDTO.setCargo(responseMatrizSalud.getCargo());
         responseMatrizSaludDTO.setTipoTrabajo(responseMatrizSalud.getTipotrabajo());
         responseMatrizSaludDTO.setCarnetVacunacion(responseMatrizSalud.getCarnet());

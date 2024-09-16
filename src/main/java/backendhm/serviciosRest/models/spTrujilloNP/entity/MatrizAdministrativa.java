@@ -38,6 +38,9 @@ public class MatrizAdministrativa implements Serializable {
     @Column(name = "razon_contrata")
     private String razonContrata;
 
+    @Column(name = "razon_empresa")
+    private String razonEmpresa;
+
     private String cargo;
 
     @Column(name = "aptitud_emo")

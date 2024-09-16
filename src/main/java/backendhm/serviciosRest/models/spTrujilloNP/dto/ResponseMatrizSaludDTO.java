@@ -16,6 +16,7 @@ public class ResponseMatrizSaludDTO {
     String fechaNacimiento;
     Integer edad;
     String razonContrata;
+    String razonEmpresa;
     String cargo;
     String tipoTrabajo;
     String carnetVacunacion;

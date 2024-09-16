@@ -35,6 +35,9 @@ public class ResponseMatrizSalud implements Serializable {
     @Column(name = "razon_contrata")
     private String razonContrata;
 
+    @Column(name = "razon_empresa")
+    private String razonEmpresa;
+
     private String cargo;
 
     private String tipotrabajo;

@@ -13,7 +13,7 @@ public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalu
     @Query(value = "SELECT n.n_orden AS n_orden, CAST(TO_CHAR(fecha_apertura_po,'DD/MM/YYYY') AS TEXT) as FECHASOLICITUD,d.apellidos_pa ||' '|| d.nombres_pa AS apellidos_nombres, d.cod_pa as dni,\n" +
             "      CAST(TO_CHAR(d.fecha_nacimiento_pa,'DD/MM/YYYY') AS TEXT) AS FECHANACIMIENTO,\n" +
             "      obtener_edad(d.fecha_nacimiento_pa,n.fecha_apertura_po) AS EDAD,\n" +
-            "      n.razon_contrata,  n.cargo_de AS CARGO,\n" +
+            "      n.razon_contrata,n.razon_empresa,  n.cargo_de AS CARGO,\n" +
             "       CASE WHEN n.n_orden is null THEN '' END  as Tipotrabajo,\n" +
             "       v.txtdosis as carnet,\n" +
             "       CASE WHEN ama.chkapto = 'TRUE' THEN 'Apto'\n" +
@@ -74,11 +74,11 @@ public interface IMatrizSaludRepository extends JpaRepository<ResponseMatrizSalu
             "LEFT join observaciones as ob ON (n.n_orden=ob.n_orden)\n" +
             "left join antecedentes_patologicos as v ON(n.n_orden = v.n_orden)\n" +
             "LEFT join ficha_interconsulta as fi ON (n.n_orden=fi.n_orden)\n" +
-            "inner join contratas as ct on n.razon_contrata=ct.razon_contrata\n" +
-            "WHERE ct.ruc_contrata=?\n" +
+            "left  join contratas as ct on n.razon_contrata=ct.razon_contrata  left join empresas as ep on n.razon_empresa=ep.razon_empresa \n" +
+            "WHERE (ep.ruc_empresa=? OR ct.ruc_contrata=?) \n" +
             "AND n.fecha_apertura_po BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)\n" +
-            "group by n.n_orden, ama.n_orden, apellidos_nombres, FECHANACIMIENTO,edad,ama.chkapto, ama.chkapto_restriccion, ama.chkno_apto, fi.n_orden,\n" +
+            "group by n.n_orden, ama.n_orden, apellidos_nombres, FECHANACIMIENTO,edad,n.razon_empresa,ama.chkapto, ama.chkapto_restriccion, ama.chkno_apto, fi.n_orden,\n" +
             "t.peso,t.talla, t.imc, lc.txtglucosabio, ab.txtcolesterol, ab.txttrigliseridos, o.v_lejos_s_od, o.v_lejos_s_oi, o.e_oculares, o.e_oculares1,\n" +
             "au.n_orden, au.diagnostico, au3.n_orden, au3.txtdiag_od, DXAUDIO,d.cod_pa,v.txtdosis,o.agudezaVisualLejor;", nativeQuery=true)
-    Optional<List<ResponseMatrizSalud>> listadoMatrizSalud(String rucContrata, String fechaInicio, String fechaFinal);
+    Optional<List<ResponseMatrizSalud>> listadoMatrizSalud(String rucEmpresa, String rucContrata, String fechaInicio, String fechaFinal);
 }
