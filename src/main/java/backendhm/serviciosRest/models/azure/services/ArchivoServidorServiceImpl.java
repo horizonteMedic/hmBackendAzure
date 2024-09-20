@@ -208,16 +208,7 @@ public class ArchivoServidorServiceImpl implements IArchivoServidorService {
             }
 
             ArchivoServidorDTO archivoServidorDTO = new ArchivoServidorDTO();
-            TipoArchivoDTO tipoArchivoDTO= new TipoArchivoDTO();
-
-            if(parte2.contains("EM")){
-
-                tipoArchivoDTO.setId(Long.valueOf(455));
-            }
-            else {
-                tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
-
-            }
+            TipoArchivoDTO  tipoArchivoDTO = tipoArchivoService.tipoArchivoPorNomencaltura(parte2);
 
 
             backendhm.serviciosRest.models.spTrujilloNP.dto.RespuestaBackendDTO respuestaBackendDTO=null;
